@@ -1,14 +1,15 @@
 # KABADIWALA CONNECT - Backend API
-# version 0.6
+# version 0.6+
 
 
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Query
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional, Literal
 
 import math
 import random
+import uuid
 
 
 app = FastAPI(title = 'Kabadiwala Connect',
@@ -164,8 +165,6 @@ def create_pickup(pickup: PickupCreate):
     "I have scrap to give away, please come pick it up," along with
     their exact latitude/longitude so nearby collectors can find them.
     """
-    global next_pickup_id
-
     if pickup.mobile_number not in users_db:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -173,7 +172,9 @@ def create_pickup(pickup: PickupCreate):
             'Please register first')
 
     new_pickup = {
-        "pickup_id": len(pickup_history) + len(pickup_requests),
+        # uuid4() generates a random unique ID; we keep only the first 8
+        # characters since a full UUID is overkill for a prototype
+        "pickup_id": str(uuid.uuid4())[:8],
         "requested_by": pickup.user_name,
         "mobile_number": pickup.mobile_number,
         "address": pickup.address,
@@ -230,8 +231,9 @@ def view_nearby_pickups(latitude: float, longitude: float, radius_km: float = 5)
 @app.post("/pickups/complete/{pickup_id}")
 def update_pickup_status(pickup_id: int, data: PickupUpdate):
     """
-    Called when a collector finishes/cancels a pickup.
-    This moves the pickup from the "active" list into "history".
+    Called when a collector finishes weighing and paying for a pickup.
+    Saves the actual weight and amount paid, then moves the pickup
+    from the "active" list into "history".
     """
     for p in pickup_requests:
         if p["pickup_id"] == pickup_id and p["status"] == "pending":
@@ -255,16 +257,16 @@ def update_pickup_status(pickup_id: int, data: PickupUpdate):
 # 4. PICKUP HISTORY
 @app.get("/pickups/history/{mobile_number}")
 def view_pickup_history(
-    mobile_number: Optional[str] = None,
-    collector_name: Optional[str] = None,
-    sender_name: Optional[str] = None
+    mobile_number: Optional[str] = Query(None),
+    collector_name: Optional[str] = Query(None),
+    sender_name: Optional[str] = Query(None)
 ):
     """
-    View past (completed/cancelled) pickups.
+    View past (completed) pickups.
     - Pass ?mobile_number=... to see history for a specific household.
     - Pass ?collector_name=... to see history for a specific collector.
     - Pass ?sender_name=... to see history related to a specific sender.
-    - Pass neither to see the full history.
+    - Pass none of these to see the full history.
     """
 
     results = pickup_history
