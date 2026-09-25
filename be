@@ -1,20 +1,19 @@
 # KABADIWALA CONNECT - Backend API
-# version 0.5
+# version 0.6
 
 from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional, Literal
 
+import math
+
 app = FastAPI(title = 'Kabadiwala Connect',
               description = 'Bringing the Informal Collector into a Formal Recycling Chain')
 
-#uvicorn be:app --reload
-#http://127.0.0.1:8000/docs
-
 # In Memory Databases(for now, until i develop actual databases -- lol)
 users_db = {}           # key: mobile_number -> value: {"name", "mobile_number"}
-otp_db = {}             # key: mobile_number -> value: current OTP(fixed for now i am lazy)
+otp_db = {}             # key: mobile_number -> value: current OTP(now randomly generated)
 pickup_requests = []    # list of pickup dicts that are still "pending"
 pickup_history = []     # list of pickup dicts that are "completed"
 
@@ -35,7 +34,9 @@ class PickupCreate(BaseModel):
     user_name: str
     mobile_number: str
     address: str
-    scrap_type: list[Literal['Organic', 'Plastic', 'Paper', 'E-Waste', 'Metal', 'Other']]
+    latitude: float     # needs this to calculate distance
+    longitude: float
+    scrap_type: list[Literal['Organic', 'Plastic', 'Paper', 'Metal', 'E-Waste', 'Other']]
 
 class PickupUpdate(BaseModel):
     mobile_number: str
@@ -43,7 +44,28 @@ class PickupUpdate(BaseModel):
     total_amount_paid: float
     collector_name: str
     sender_name: str
+
+# Helper Funtion(for proximity calculation)
+def calculate_distance_km(lat1, lon1, lat2, lon2):
+    """
+        Calculates the real-world distance (in km) between two lat/lon points
+        using the Haversine formula. A simple straight-line (Pythagoras) distance
+        doesn't work well on a sphere like Earth, so we use this instead.
+    """
+    R = 6371  # Average radius of Earth in km
+
+    # Convert all the degrees to radians, since math.sin/cos expect radians
+    lat1_rad, lon1_rad = math.radians(lat1), math.radians(lon1)
+    lat2_rad, lon2_rad = math.radians(lat2), math.radians(lon2)
+
+    dlat = lat2_rad - lat1_rad
+    dlon = lon1_rad - lon2_rad
+
+    # The Haversine formula itself
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     
+    return R * c   # distance in kilometers
 
 #Home Route(Home Page)
 @app.get('/')
@@ -170,6 +192,8 @@ def update_pickup_status(pickup_id: int, data: PickupUpdate):
             p["status"] = "completed"
             p["collector_name"] = data.collector_name
             p["sender_name"] = data.sender_name
+            p["accurate_weight"] = data.accurate_weight
+            p["total_amount_paid"] = data.total_amount_paid
             p["completed_at"] = str(datetime.now())
 
             pickup_history.append(p)
