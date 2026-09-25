@@ -1,21 +1,26 @@
 # KABADIWALA CONNECT - Backend API
 # version 0.6
 
+
 from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional, Literal
 
 import math
+import random
+
 
 app = FastAPI(title = 'Kabadiwala Connect',
               description = 'Bringing the Informal Collector into a Formal Recycling Chain')
+
 
 # In Memory Databases(for now, until i develop actual databases -- lol)
 users_db = {}           # key: mobile_number -> value: {"name", "mobile_number"}
 otp_db = {}             # key: mobile_number -> value: current OTP(now randomly generated)
 pickup_requests = []    # list of pickup dicts that are still "pending"
 pickup_history = []     # list of pickup dicts that are "completed"
+
 
 #Pydantic Schemas(for validation)
 class UserRegister(BaseModel):
@@ -45,6 +50,7 @@ class PickupUpdate(BaseModel):
     collector_name: str
     sender_name: str
 
+
 # Helper Funtion(for proximity calculation)
 def calculate_distance_km(lat1, lon1, lat2, lon2):
     """
@@ -67,11 +73,13 @@ def calculate_distance_km(lat1, lon1, lat2, lon2):
     
     return R * c   # distance in kilometers
 
-#Home Route(Home Page)
+
+# Home Route(Home Page)
 @app.get('/')
 def home():
     """A simple welcome message to know if FastAPI is running."""
     return {'Message' : 'Welcome to KabaadPe'}
+
 
 #1. USER REGISTRATION
 @app.post("/register")
@@ -95,13 +103,16 @@ def register_user(user: UserRegister):
         "message": "User registered successfully",
         "user": users_db[user.mobile_number]}
 
+
 # 2. LOGIN / OTP VERIFICATION
 @app.post("/login/request-otp")
 def request_otp(data: OTPRequest):
     """
     Step 1 of login: request an OTP for a registered mobile number.
-    In a real app this would send an SMS. Here we just "mock" it by
-    always using the OTP 1234, and storing it against the mobile number.
+    In a real app this would send an SMS. Here we generate a random
+    4-digit OTP using Python's `random` module and store it against
+    the mobile number. We also return it in the response so you can
+    test/demo the login flow without needing a real SMS gateway.
     """
     if data.mobile_number not in users_db:
         raise HTTPException(
@@ -109,10 +120,15 @@ def request_otp(data: OTPRequest):
             detail="Mobile number not registered\n" \
             "Please register first")
 
-    # Mocked OTP
-    otp_db[data.mobile_number] = "1234"
+    # random.randint(0, 9999) gives a number from 0-9999,
+    # and :04d pads it with leading zeros so it's always 4 digits (e.g. "0042")
+    generated_otp = f"{random.randint(0, 9999):04d}"
+    otp_db[data.mobile_number] = generated_otp
 
-    return {"message": f"OTP sent to {data.mobile_number}"}     # OTP is 1234 for testing
+    return {
+        "message": f"OTP sent to {data.mobile_number}",
+        "otp": generated_otp}   # NOTE: only returned here for demo/testing!
+
 
 @app.post("/login/verify-otp")
 def verify_otp(data: OTPVerify):
@@ -139,12 +155,14 @@ def verify_otp(data: OTPVerify):
     user = users_db[data.mobile_number]
     return {"message": "Login successful", "user": user}
 
+
 # 3. PICKUP REQUESTS
 @app.post("/pickups")
 def create_pickup(pickup: PickupCreate):
     """
     Create a new pickup request. A household uses this to say
-    "I have scrap to give away, please come pick it up."
+    "I have scrap to give away, please come pick it up," along with
+    their exact latitude/longitude so nearby collectors can find them.
     """
     global next_pickup_id
 
@@ -159,6 +177,8 @@ def create_pickup(pickup: PickupCreate):
         "requested_by": pickup.user_name,
         "mobile_number": pickup.mobile_number,
         "address": pickup.address,
+        "latitude": pickup.latitude,
+        "longitude": pickup.longitude,
         "scrap_type": pickup.scrap_type,
         "status": "pending",
         "created_at": str(datetime.now())
@@ -180,6 +200,32 @@ def view_active_pickups():
 
     return {"total_pending": len(active),
             "active_pickups": active}
+
+
+@app.get("/pickups/nearby")
+def view_nearby_pickups(latitude: float, longitude: float, radius_km: float = 5):
+    """
+    Same as /pickups/active, but only returns pickups within `radius_km`
+    of the collector's current location (defaults to 5 km). Each result
+    gets a `distance_km` field added, and the closest pickup is listed first.
+    """
+    nearby = []
+
+    for p in pickup_requests:
+        if p["status"] != "pending":
+            continue
+
+        distance = calculate_distance_km(latitude, longitude, p["latitude"], p["longitude"])
+
+        if distance <= radius_km:
+            pickup_with_distance = p.copy()          # copy so we don't modify the original dict
+            pickup_with_distance["distance_km"] = round(distance, 2)
+            nearby.append(pickup_with_distance)
+
+    nearby.sort(key=lambda p: p["distance_km"])   # closest pickups show up first
+
+    return {"total_nearby": len(nearby), "nearby_pickups": nearby}
+
 
 @app.post("/pickups/complete/{pickup_id}")
 def update_pickup_status(pickup_id: int, data: PickupUpdate):
@@ -204,6 +250,7 @@ def update_pickup_status(pickup_id: int, data: PickupUpdate):
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
         detail="No active pickup found with this ID")
+
 
 # 4. PICKUP HISTORY
 @app.get("/pickups/history/{mobile_number}")
