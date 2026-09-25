@@ -1,23 +1,28 @@
 # KABADIWALA CONNECT - Backend API
-# #version 0.5
+# version 0.5
 
-from fastapi import FastAPI,  HTTPException, status
+from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional, Literal
 
 app = FastAPI(title = 'Kabadiwala Connect',
               description = 'Bringing the Informal Collector into a Formal Recycling Chain')
+
+#uvicorn be:app --reload
+#http://127.0.0.1:8000/docs
 
 # In Memory Databases(for now, until i develop actual databases -- lol)
 users_db = {}           # key: mobile_number -> value: {"name", "mobile_number"}
 otp_db = {}             # key: mobile_number -> value: current OTP(fixed for now i am lazy)
 pickup_requests = []    # list of pickup dicts that are still "pending"
+pickup_history = []     # list of pickup dicts that are "completed"
 
 #Pydantic Schemas(for validation)
 class UserRegister(BaseModel):
     name : str
     mobile_number : str
-    user_type : str     # options: 'Household' or 'Collector'
+    user_type : Literal['Household', 'Collector']
 
 class OTPRequest(BaseModel):
     mobile_number: str
@@ -30,16 +35,20 @@ class PickupCreate(BaseModel):
     user_name: str
     mobile_number: str
     address: str
-    scrap_type: str                 # options: 'Plastic', 'Paper', 'E-Waste'
+    scrap_type: list[Literal['Organic', 'Plastic', 'Paper', 'E-Waste', 'Metal', 'Other']]
 
 class PickupUpdate(BaseModel):
     mobile_number: str
     accurate_weight: float
     total_amount_paid: float
+    collector_name: str
+    sender_name: str
+    
 
 #Home Route(Home Page)
 @app.get('/')
 def home():
+    """A simple welcome message to know if FastAPI is running."""
     return {'Message' : 'Welcome to KabaadPe'}
 
 #1. USER REGISTRATION
@@ -51,7 +60,7 @@ def register_user(user: UserRegister):
     """
     if user.mobile_number in users_db:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUESTstatus.HTTP_400_BAD_REQUEST,     #or =400
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail="A user with this mobile number is already registered\n" \
             "If this is your mobile number; Please Login")
 
@@ -75,7 +84,8 @@ def request_otp(data: OTPRequest):
     if data.mobile_number not in users_db:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Mobile number not registered\nPlease register first")
+            detail="Mobile number not registered\n" \
+            "Please register first")
 
     # Mocked OTP
     otp_db[data.mobile_number] = "1234"
@@ -119,10 +129,11 @@ def create_pickup(pickup: PickupCreate):
     if pickup.mobile_number not in users_db:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail='User not registered\nPlease register first')
+            detail='User not registered\n' \
+            'Please register first')
 
     new_pickup = {
-        "pickup_id": len(pickup_history) + 1,
+        "pickup_id": len(pickup_history) + len(pickup_requests),
         "requested_by": pickup.user_name,
         "mobile_number": pickup.mobile_number,
         "address": pickup.address,
@@ -136,7 +147,7 @@ def create_pickup(pickup: PickupCreate):
     return {"message": "Pickup request created successfully!", "pickup": new_pickup}
 
 
-@app.get("/pickups/active/{pickup_id}")
+@app.get("/pickups/active")
 def view_active_pickups():
     """
     View all currently active (pending) pickup requests.
@@ -169,3 +180,31 @@ def update_pickup_status(pickup_id: int, data: PickupUpdate):
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
         detail="No active pickup found with this ID")
+
+# 4. PICKUP HISTORY
+@app.get("/pickups/history/{mobile_number}")
+def view_pickup_history(
+    mobile_number: Optional[str] = None,
+    collector_name: Optional[str] = None,
+    sender_name: Optional[str] = None
+):
+    """
+    View past (completed/cancelled) pickups.
+    - Pass ?mobile_number=... to see history for a specific household.
+    - Pass ?collector_name=... to see history for a specific collector.
+    - Pass ?sender_name=... to see history related to a specific sender.
+    - Pass neither to see the full history.
+    """
+
+    results = pickup_history
+
+    if mobile_number:
+        results = [p for p in results if p["mobile_number"] == mobile_number]
+
+    if collector_name:
+        results = [p for p in results if p.get("collector_name") == collector_name]
+
+    if sender_name:
+        results = [p for p in results if p.get("sender_name") == sender_name]
+
+    return {"pickup_history": results}
