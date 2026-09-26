@@ -1,5 +1,5 @@
 # KABADIWALA CONNECT - Backend API
-# version 0.6+
+# version 0.7
 
 
 from fastapi import FastAPI, HTTPException, status, Query
@@ -21,6 +21,17 @@ users_db = {}           # key: mobile_number -> value: {"name", "mobile_number"}
 otp_db = {}             # key: mobile_number -> value: current OTP(now randomly generated)
 pickup_requests = []    # list of pickup dicts that are still "pending"
 pickup_history = []     # list of pickup dicts that are "completed"
+
+
+# Standard daily market rates (Rs per kg). In a real app this would come
+# from a live market feed, but a fixed dict is enough for a prototype.
+SCRAP_RATES = {
+    "Plastic": 15,
+    "Paper": 12,
+    "Metal": 35,
+    "E-Waste": 50,
+    "Organic": 5
+}
 
 
 #Pydantic Schemas(for validation)
@@ -281,3 +292,32 @@ def view_pickup_history(
         results = [p for p in results if p.get("sender_name") == sender_name]
 
     return {"pickup_history": results}
+
+
+# 5. Scrap Pricing
+@app.get("/scrap-rates")
+def get_scrap_rates():
+    """
+    Returns the standard market price (Rs/kg) for each scrap type.
+    Households can use this to estimate what their scrap is worth,
+    and collectors can use it as a reference while weighing items.
+    """
+    return {"scrap_rates_per_kg": SCRAP_RATES}
+
+
+# 6. ANALYTICS / IMPACT DASHBOARD
+@app.get("/analytics/summary")
+def analytics_summary():
+    """
+    A simple dashboard endpoint that adds up real-world impact numbers:
+    total recyclables collected (kg) and total money paid out to
+    households, across every completed pickup.
+    """
+    total_weight_kg = sum(p.get("accurate_weight", 0) for p in pickup_history)
+    total_payout = sum(p.get("total_amount_paid", 0) for p in pickup_history)
+
+    return {
+        "total_completed_pickups": len(pickup_history),
+        "total_recyclables_collected_kg": round(total_weight_kg, 2),
+        "total_amount_paid_out": round(total_payout, 2)
+    }
