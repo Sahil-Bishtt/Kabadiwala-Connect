@@ -23,17 +23,6 @@ pickup_requests = []    # list of pickup dicts that are still "pending"
 pickup_history = []     # list of pickup dicts that are "completed"
 
 
-# Standard daily market rates (Rs per kg). In a real app this would come
-# from a live market feed, but a fixed dict is enough for a prototype.
-SCRAP_RATES = {
-    "Plastic": 15,
-    "Paper": 12,
-    "Metal": 35,
-    "E-Waste": 50,
-    "Organic": 5
-}
-
-
 #Pydantic Schemas(for validation)
 class UserRegister(BaseModel):
     name : str
@@ -64,23 +53,19 @@ class PickupUpdate(BaseModel):
 
 
 # Helper Funtion(for proximity calculation)
-def calculate_distance_km(lat1, lon1, lat2, lon2):
+def calculate_distance_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     """
         Calculates the real-world distance (in km) between two lat/lon points
-        using the Haversine formula. A simple straight-line (Pythagoras) distance
-        doesn't work well on a sphere like Earth, so we use this instead.
+        using the Haversine formula.
     """
     R = 6371  # Average radius of Earth in km
 
     # Convert all the degrees to radians, since math.sin/cos expect radians
-    lat1_rad, lon1_rad = math.radians(lat1), math.radians(lon1)
-    lat2_rad, lon2_rad = math.radians(lat2), math.radians(lon2)
-
-    dlat = lat2_rad - lat1_rad
-    dlon = lon1_rad - lon2_rad
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
 
     # The Haversine formula itself
-    a = math.sin(dlat / 2) ** 2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2) ** 2
+    a = math.sin(dlat / 2) ** 2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat1)) * math.sin(dlon / 2) ** 2
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     
     return R * c   # distance in kilometers
@@ -89,11 +74,11 @@ def calculate_distance_km(lat1, lon1, lat2, lon2):
 # Home Route(Home Page)
 @app.get('/')
 def home():
-    """A simple welcome message to know if FastAPI is running."""
+    """A simple welcome message to verify that the API server is active."""
     return {'Message' : 'Welcome to KabaadPe'}
 
 
-#1. USER REGISTRATION
+# 1. USER REGISTRATION
 @app.post("/register")
 def register_user(user: UserRegister):
     """
@@ -103,8 +88,7 @@ def register_user(user: UserRegister):
     if user.mobile_number in users_db:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="A user with this mobile number is already registered\n" \
-            "If this is your mobile number; Please Login")
+            detail="A user with this mobile number is already registered\nIf this is your mobile number; Please Login")
 
     users_db[user.mobile_number] = {
         "name": user.name,
@@ -120,17 +104,13 @@ def register_user(user: UserRegister):
 @app.post("/login/request-otp")
 def request_otp(data: OTPRequest):
     """
-    Step 1 of login: request an OTP for a registered mobile number.
-    In a real app this would send an SMS. Here we generate a random
-    4-digit OTP using Python's `random` module and store it against
-    the mobile number. We also return it in the response so you can
-    test/demo the login flow without needing a real SMS gateway.
+    Generates a dynamic 4-digit numeric OTP and stores it for verification.
+    The OTP is returned in the response for prototype testing.
     """
     if data.mobile_number not in users_db:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Mobile number not registered\n" \
-            "Please register first")
+            detail="Mobile number not registered\nPlease register first")
 
     # random.randint(0, 9999) gives a number from 0-9999,
     # and :04d pads it with leading zeros so it's always 4 digits (e.g. "0042")
@@ -145,8 +125,7 @@ def request_otp(data: OTPRequest):
 @app.post("/login/verify-otp")
 def verify_otp(data: OTPVerify):
     """
-    Step 2 of login: verify the OTP the user entered, using their
-    mobile number to look up the correct OTP and the user's details.
+    Verifies the user's input OTP against the generated record.
     """
     correct_otp = otp_db.get(data.mobile_number)
 
@@ -163,7 +142,7 @@ def verify_otp(data: OTPVerify):
     #Clear the OTP after succesful verfication
     del otp_db[data.mobile_number]
 
-    # OTP is correct -> "log the user in" (no JWT/session for now, just confirm)
+    # OTP is correct -> "log the user in"
     user = users_db[data.mobile_number]
     return {"message": "Login successful", "user": user}
 
@@ -172,19 +151,16 @@ def verify_otp(data: OTPVerify):
 @app.post("/pickups")
 def create_pickup(pickup: PickupCreate):
     """
-    Create a new pickup request. A household uses this to say
-    "I have scrap to give away, please come pick it up," along with
-    their exact latitude/longitude so nearby collectors can find them.
+    Creates a new pickup request with coordinates and a unique pickup ID.
     """
     if pickup.mobile_number not in users_db:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail='User not registered\n' \
-            'Please register first')
+            detail='User not registered\nPlease register first')
 
     new_pickup = {
         # uuid4() generates a random unique ID; we keep only the first 8
-        # characters since a full UUID is overkill for a prototype
+        # characters since a full UUID is pretty overkill.
         "pickup_id": str(uuid.uuid4())[:8],
         "requested_by": pickup.user_name,
         "mobile_number": pickup.mobile_number,
@@ -193,8 +169,7 @@ def create_pickup(pickup: PickupCreate):
         "longitude": pickup.longitude,
         "scrap_type": pickup.scrap_type,
         "status": "pending",
-        "created_at": str(datetime.now())
-    }
+        "created_at": str(datetime.now())}
 
     pickup_requests.append(new_pickup)
 
@@ -204,9 +179,7 @@ def create_pickup(pickup: PickupCreate):
 @app.get("/pickups/active")
 def view_active_pickups():
     """
-    View all currently active (pending) pickup requests.
-    Collectors (kabadiwalas) can call this to see what pickups
-    are available nearby.
+    Returns all pending(active) pickup requests.
     """
     active = [p for p in pickup_requests if p["status"] == "pending"]
 
@@ -215,7 +188,7 @@ def view_active_pickups():
 
 
 @app.get("/pickups/nearby")
-def view_nearby_pickups(latitude: float, longitude: float, radius_km: float = 5):
+def view_nearby_pickups(latitude: float, longitude: float, radius_km: float = Query(5.0, description="Search radius in kilometers")):
     """
     Same as /pickups/active, but only returns pickups within `radius_km`
     of the collector's current location (defaults to 5 km). Each result
@@ -224,15 +197,12 @@ def view_nearby_pickups(latitude: float, longitude: float, radius_km: float = 5)
     nearby = []
 
     for p in pickup_requests:
-        if p["status"] != "pending":
-            continue
-
-        distance = calculate_distance_km(latitude, longitude, p["latitude"], p["longitude"])
-
-        if distance <= radius_km:
-            pickup_with_distance = p.copy()          # copy so we don't modify the original dict
-            pickup_with_distance["distance_km"] = round(distance, 2)
-            nearby.append(pickup_with_distance)
+        if p["status"] == "pending":
+            distance = calculate_distance_km(latitude, longitude, p["latitude"], p["longitude"])
+            if distance <= radius_km:
+                pickup_with_distance = p.copy()          # copy so we don't modify the original dict
+                pickup_with_distance["distance_km"] = round(distance, 2)
+                nearby.append(pickup_with_distance)
 
     nearby.sort(key=lambda p: p["distance_km"])   # closest pickups show up first
 
@@ -240,11 +210,10 @@ def view_nearby_pickups(latitude: float, longitude: float, radius_km: float = 5)
 
 
 @app.post("/pickups/complete/{pickup_id}")
-def update_pickup_status(pickup_id: int, data: PickupUpdate):
+def update_pickup_status(pickup_id: str, data: PickupUpdate):
     """
-    Called when a collector finishes weighing and paying for a pickup.
-    Saves the actual weight and amount paid, then moves the pickup
-    from the "active" list into "history".
+    Marks a pickup as completed, saves actual collection weight & payout metrics, 
+    and transfers the pickup into history.
     """
     for p in pickup_requests:
         if p["pickup_id"] == pickup_id and p["status"] == "pending":
@@ -255,6 +224,7 @@ def update_pickup_status(pickup_id: int, data: PickupUpdate):
             p["total_amount_paid"] = data.total_amount_paid
             p["completed_at"] = str(datetime.now())
 
+            # Transfer record to pickup_history
             pickup_history.append(p)
             pickup_requests.remove(p)
 
@@ -266,12 +236,11 @@ def update_pickup_status(pickup_id: int, data: PickupUpdate):
 
 
 # 4. PICKUP HISTORY
-@app.get("/pickups/history/{mobile_number}")
+@app.get("/pickups/history")
 def view_pickup_history(
-    mobile_number: Optional[str] = Query(None),
-    collector_name: Optional[str] = Query(None),
-    sender_name: Optional[str] = Query(None)
-):
+    mobile_number: Optional[str] = Query(None, description="Filter by household mobile number"),
+    collector_name: Optional[str] = Query(None, description="Filter by collector name"),
+    sender_name: Optional[str] = Query(None, description="Filter by sender name")):
     """
     View past (completed) pickups.
     - Pass ?mobile_number=... to see history for a specific household.
@@ -291,7 +260,7 @@ def view_pickup_history(
     if sender_name:
         results = [p for p in results if p.get("sender_name") == sender_name]
 
-    return {"pickup_history": results}
+    return {"total_records": len(results), "pickup_history": results}
 
 
 # 5. Scrap Pricing
@@ -302,6 +271,16 @@ def get_scrap_rates():
     Households can use this to estimate what their scrap is worth,
     and collectors can use it as a reference while weighing items.
     """
+    # Standard daily market rates (Rs per kg). In a real app this would come
+    # from a live market feed, but a fixed dict is enough for a prototype.
+    SCRAP_RATES = {
+        "Plastic": 15,
+        "Paper": 12,
+        "Metal": 35,
+        "E-Waste": 50,
+        "Organic": 5
+    }
+
     return {"scrap_rates_per_kg": SCRAP_RATES}
 
 
@@ -309,9 +288,8 @@ def get_scrap_rates():
 @app.get("/analytics/summary")
 def analytics_summary():
     """
-    A simple dashboard endpoint that adds up real-world impact numbers:
-    total recyclables collected (kg) and total money paid out to
-    households, across every completed pickup.
+    Calculates impact metrics across all completed pickups for SIH presentations.
+    Calculates total weight collected (in KG) and total financial payment distributed to households
     """
     total_weight_kg = sum(p.get("accurate_weight", 0) for p in pickup_history)
     total_payout = sum(p.get("total_amount_paid", 0) for p in pickup_history)
