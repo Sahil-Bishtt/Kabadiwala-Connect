@@ -5,36 +5,181 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login | Kabadiwala Connect</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style>
+    body { transition: background-color .25s, color .25s; }
+    body.dark-mode { background: #111827; color: #f3f4f6; }
+    body.dark-mode header,
+    body.dark-mode #loginCard { background: #1f2937; color: #f3f4f6; border-color: #374151; }
+    body.dark-mode input,
+    body.dark-mode select,
+    body.dark-mode #themeToggle { background: #111827; color: #f3f4f6; border-color: #4b5563; }
+    body.dark-mode p { color: #d1d5db; }
+  </style>
 </head>
 
 <body class="min-h-screen bg-amber-50 text-gray-800">
+  <!-- Header -->
   <header class="bg-white shadow-sm">
-    <div class="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
-      <a href="index.html" class="font-bold text-green-800">♻ Kabadiwala Connect</a>
-      <a href="index.html" class="text-green-700 hover:underline">Back to home</a>
+    <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-5 py-4">
+      <a href="index.html" class="font-bold text-green-800">
+        ♻ Kabadiwala Connect
+      </a>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <select id="languageSelect" aria-label="Choose language"
+                class="rounded-lg border border-green-700 bg-white px-3 py-2 font-semibold text-green-800">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+        </select>
+
+        <button id="themeToggle" type="button"
+                class="rounded-lg border border-green-700 px-4 py-2 font-semibold text-green-800">
+          🌙 Dark mode
+        </button>
+
+        <a href="index.html" class="text-green-700 hover:underline"
+           data-en="Back to home" data-hi="मुखपृष्ठ पर वापस जाएँ">
+          Back to home
+        </a>
+      </div>
     </div>
   </header>
 
   <main class="mx-auto max-w-md px-5 py-16">
-    <form class="rounded-2xl bg-white p-8 shadow-sm" onsubmit="event.preventDefault(); alert('Login is a prototype and is not connected yet.');">
-      <h1 class="text-3xl font-bold">Login</h1>
-      <p class="mt-2 text-gray-600">Enter your mobile number to continue.</p>
+    <!-- Login form -->
+    <section id="loginCard" class="rounded-2xl border border-green-100 bg-white p-8 shadow-sm">
+      <h1 class="text-3xl font-bold"
+          data-en="Login" data-hi="लॉग इन">
+        Login
+      </h1>
 
-      <label class="mt-6 block font-semibold">
+      <p class="mt-2 text-gray-600"
+         data-en="Enter your registered mobile number to continue."
+         data-hi="जारी रखने के लिए अपना पंजीकृत मोबाइल नंबर दर्ज करें।">
+        Enter your registered mobile number to continue.
+      </p>
+
+      <label class="mt-6 block font-semibold" for="mobile"
+             data-en="Mobile number" data-hi="मोबाइल नंबर">
         Mobile number
-        <input type="tel" required placeholder="Enter your mobile number"
-               class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3" />
       </label>
 
-      <button type="submit"
-              class="mt-5 w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800">
-        Continue
+      <input id="mobile" type="tel" placeholder="Enter your mobile number"
+             class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3" />
+
+      <button id="requestButton" type="button"
+              class="mt-5 w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800"
+              data-en="Request OTP" data-hi="OTP माँगें">
+        Request OTP
       </button>
 
-      <p class="mt-4 text-center text-sm text-gray-500">
-        Prototype login: it is not connected to the backend yet.
-      </p>
-    </form>
+      <!-- Shown after the user requests an OTP -->
+      <div id="otpArea" class="mt-5 hidden">
+        <label class="block font-semibold" for="otp"
+               data-en="Enter OTP" data-hi="OTP दर्ज करें">
+          Enter OTP
+        </label>
+
+        <input id="otp" type="text" inputmode="numeric" maxlength="4"
+               placeholder="4-digit OTP"
+               class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3" />
+
+        <button id="verifyButton" type="button"
+                class="mt-4 w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800"
+                data-en="Verify and log in" data-hi="सत्यापित करें और लॉग इन करें">
+          Verify and log in
+        </button>
+      </div>
+
+      <p id="message" role="status" class="mt-4 text-sm"></p>
+    </section>
   </main>
+
+  <!-- Theme, language and login scripts -->
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+    const languageSelect = document.getElementById("languageSelect");
+    const message = document.getElementById("message");
+
+    function applyTheme() {
+      const isDark = localStorage.getItem("kabadiwala-theme") === "dark";
+      document.body.classList.toggle("dark-mode", isDark);
+      themeToggle.textContent = isDark ? "☀️ Light mode" : "🌙 Dark mode";
+    }
+
+    function applyLanguage(language) {
+      document.documentElement.lang = language;
+
+      document.querySelectorAll("[data-en][data-hi]").forEach((element) => {
+        element.textContent = element.dataset[language];
+      });
+    }
+
+    applyTheme();
+
+    themeToggle.addEventListener("click", () => {
+      const isDark = !document.body.classList.contains("dark-mode");
+      localStorage.setItem("kabadiwala-theme", isDark ? "dark" : "light");
+      applyTheme();
+    });
+
+    languageSelect.addEventListener("change", (event) => {
+      applyLanguage(event.target.value);
+    });
+
+    // FastAPI backend address
+    const API_URL = "http://127.0.0.1:8000";
+    const mobileInput = document.getElementById("mobile");
+    const otpInput = document.getElementById("otp");
+    const otpArea = document.getElementById("otpArea");
+
+    // Request an OTP from the backend
+    document.getElementById("requestButton").addEventListener("click", async () => {
+      const mobile_number = mobileInput.value.trim();
+
+      if (!mobile_number) {
+        message.textContent = "Enter your mobile number first.";
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/login/request-otp`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mobile_number })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || "Could not request OTP.");
+
+        otpArea.classList.remove("hidden");
+        message.textContent = `Demo OTP: ${data.otp}`;
+      } catch (error) {
+        message.textContent = error.message;
+      }
+    });
+
+    // Verify the OTP with the backend
+    document.getElementById("verifyButton").addEventListener("click", async () => {
+      try {
+        const response = await fetch(`${API_URL}/login/verify-otp`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            mobile_number: mobileInput.value.trim(),
+            otp: otpInput.value.trim()
+          })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || "OTP verification failed.");
+
+        message.textContent = `Welcome, ${data.user.name}! Login successful.`;
+      } catch (error) {
+        message.textContent = error.message;
+      }
+    });
+  </script>
 </body>
 </html>
