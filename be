@@ -3,7 +3,7 @@
 
 
 from fastapi import FastAPI, HTTPException, status, Query
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional, Literal
 
@@ -25,7 +25,7 @@ pickup_history = []     # list of pickup dicts that are "completed"
 
 #Pydantic Schemas(for validation)
 class UserRegister(BaseModel):
-    name : str
+    name : str = Field(..., min_length=2, max_length=40)
     mobile_number : str
     user_type : Literal['Household', 'Collector']
 
@@ -40,14 +40,14 @@ class PickupCreate(BaseModel):
     user_name: str
     mobile_number: str
     address: str
-    latitude: float     # needs this to calculate distance
-    longitude: float
+    latitude: float = Field(..., ge=-90, le=90)
+    longitude: float = Field(..., ge=-180, le=180)
     scrap_type: list[Literal['Organic', 'Plastic', 'Paper', 'Metal', 'E-Waste', 'Other']]
 
 class PickupUpdate(BaseModel):
     mobile_number: str
-    accurate_weight: float
-    total_amount_paid: float
+    accurate_weight: float = Field(..., gt=0)
+    total_amount_paid: float = Field(..., ge=0)
     collector_name: str
     sender_name: str
 
@@ -58,6 +58,7 @@ def calculate_distance_km(lat1: float, lon1: float, lat2: float, lon2: float) ->
         Calculates the real-world distance (in km) between two lat/lon points
         using the Haversine formula.
     """
+
     R = 6371  # Average radius of Earth in km
 
     # Convert all the degrees to radians, since math.sin/cos expect radians
@@ -65,7 +66,7 @@ def calculate_distance_km(lat1: float, lon1: float, lat2: float, lon2: float) ->
     dlon = math.radians(lon2 - lon1)
 
     # The Haversine formula itself
-    a = math.sin(dlat / 2) ** 2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat1)) * math.sin(dlon / 2) ** 2
+    a = math.sin(dlat / 2) ** 2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlon / 2) ** 2
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     
     return R * c   # distance in kilometers
@@ -75,6 +76,7 @@ def calculate_distance_km(lat1: float, lon1: float, lat2: float, lon2: float) ->
 @app.get('/')
 def home():
     """A simple welcome message to verify that the API server is active."""
+
     return {'Message' : 'Welcome to KabaadPe'}
 
 
@@ -85,6 +87,7 @@ def register_user(user: UserRegister):
     Register a new user (this can be a household OR a kabadiwala/collector)
     using just their name and mobile number.
     """
+
     if user.mobile_number in users_db:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -107,6 +110,7 @@ def request_otp(data: OTPRequest):
     Generates a dynamic 4-digit numeric OTP and stores it for verification.
     The OTP is returned in the response for prototype testing.
     """
+
     if data.mobile_number not in users_db:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -127,6 +131,7 @@ def verify_otp(data: OTPVerify):
     """
     Verifies the user's input OTP against the generated record.
     """
+
     correct_otp = otp_db.get(data.mobile_number)
 
     if correct_otp is None:
@@ -153,11 +158,17 @@ def create_pickup(pickup: PickupCreate):
     """
     Creates a new pickup request with coordinates and a unique pickup ID.
     """
-    if pickup.mobile_number not in users_db:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail='User not registered\nPlease register first')
 
+    if pickup.mobile_number not in users_db:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail='User not registered\nPlease register first')
+    
+    if users_db["user_type"] != "Household":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail='Only Household users can request pickups.')
+    
     new_pickup = {
         # uuid4() generates a random unique ID; we keep only the first 8
         # characters since a full UUID is pretty overkill.
@@ -181,6 +192,7 @@ def view_active_pickups():
     """
     Returns all pending(active) pickup requests.
     """
+
     active = [p for p in pickup_requests if p["status"] == "pending"]
 
     return {"total_pending": len(active),
@@ -188,12 +200,19 @@ def view_active_pickups():
 
 
 @app.get("/pickups/nearby")
-def view_nearby_pickups(latitude: float, longitude: float, radius_km: float = Query(5.0, description="Search radius in kilometers")):
+def view_nearby_pickups(
+    latitude: float,
+    longitude: float,
+    radius_km: float = Query(5.0, ge=1.0, le=15.0, description="Search radius in kilometers")):
     """
     Same as /pickups/active, but only returns pickups within `radius_km`
     of the collector's current location (defaults to 5 km). Each result
     gets a `distance_km` field added, and the closest pickup is listed first.
     """
+
+    if users_db["user_type"] != "Collector":
+        raise HTTPException(status_code=403, detail="Only registered collectors can search nearby pickups.")
+    
     nearby = []
 
     for p in pickup_requests:
@@ -204,7 +223,7 @@ def view_nearby_pickups(latitude: float, longitude: float, radius_km: float = Qu
                 pickup_with_distance["distance_km"] = round(distance, 2)
                 nearby.append(pickup_with_distance)
 
-    nearby.sort(key=lambda p: p["distance_km"])   # closest pickups show up first
+    nearby.sort(key=lambda x: x["distance_km"])   # closest pickups show up first
 
     return {"total_nearby": len(nearby), "nearby_pickups": nearby}
 
@@ -215,6 +234,7 @@ def update_pickup_status(pickup_id: str, data: PickupUpdate):
     Marks a pickup as completed, saves actual collection weight & payout metrics, 
     and transfers the pickup into history.
     """
+
     for p in pickup_requests:
         if p["pickup_id"] == pickup_id and p["status"] == "pending":
             p["status"] = "completed"
@@ -224,11 +244,11 @@ def update_pickup_status(pickup_id: str, data: PickupUpdate):
             p["total_amount_paid"] = data.total_amount_paid
             p["completed_at"] = str(datetime.now())
 
-            # Transfer record to pickup_history
-            pickup_history.append(p)
-            pickup_requests.remove(p)
+        # Transfer record to pickup_history
+        pickup_history.append(p)
+        pickup_requests.remove(p)
 
-            return {"message": "Pickup marked as completed", "pickup": p}
+        return {"message": "Pickup marked as completed", "pickup": p}
 
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
@@ -242,11 +262,7 @@ def view_pickup_history(
     collector_name: Optional[str] = Query(None, description="Filter by collector name"),
     sender_name: Optional[str] = Query(None, description="Filter by sender name")):
     """
-    View past (completed) pickups.
-    - Pass ?mobile_number=... to see history for a specific household.
-    - Pass ?collector_name=... to see history for a specific collector.
-    - Pass ?sender_name=... to see history related to a specific sender.
-    - Pass none of these to see the full history.
+    Returns completed pickup history with optional filtering query parameters.
     """
 
     results = pickup_history
@@ -271,6 +287,7 @@ def get_scrap_rates():
     Households can use this to estimate what their scrap is worth,
     and collectors can use it as a reference while weighing items.
     """
+
     # Standard daily market rates (Rs per kg). In a real app this would come
     # from a live market feed, but a fixed dict is enough for a prototype.
     SCRAP_RATES = {
@@ -278,8 +295,7 @@ def get_scrap_rates():
         "Paper": 12,
         "Metal": 35,
         "E-Waste": 50,
-        "Organic": 5
-    }
+        "Organic": 5}
 
     return {"scrap_rates_per_kg": SCRAP_RATES}
 
@@ -291,11 +307,31 @@ def analytics_summary():
     Calculates impact metrics across all completed pickups for SIH presentations.
     Calculates total weight collected (in KG) and total financial payment distributed to households
     """
-    total_weight_kg = sum(p.get("accurate_weight", 0) for p in pickup_history)
-    total_payout = sum(p.get("total_amount_paid", 0) for p in pickup_history)
+
+    # Environmental Conversion Metrics (kg of material to kg CO2 saved)
+    CO2_SAVINGS_PER_KG = {
+        "Plastic": 1.5,
+        "Paper": 0.9,
+        "Metal": 2.1,
+        "E-Waste": 3.0,
+        "Organic": 0.2,
+        "Other": 0.5}
+    
+    # Calculate approximate CO2 offset based on collection
+
+    for p in pickup_history:
+        weight = p.get("accurate_weight_kg", 0)
+        types = p.get("scrap_types", ["Other"])
+        factor = sum(CO2_SAVINGS_PER_KG.get(t, 0.5) for t in types) / len(types)
+        total_co2_offset = sum(p.get(weight * factor))
+        total_weight_kg = sum(p.get("accurate_weight", 0))
+        total_payout = sum(p.get("total_amount_paid", 0))
 
     return {
         "total_completed_pickups": len(pickup_history),
         "total_recyclables_collected_kg": round(total_weight_kg, 2),
-        "total_amount_paid_out": round(total_payout, 2)
-    }
+        "total_amount_paid_out": round(total_payout, 2),
+        "environmental_impact": {
+            "co2_offset_kg": round(total_co2_offset, 2),
+            "equivalent_trees_planted": round(total_co2_offset / 21.0, 1)  # ~21kg CO2/tree/year
+                }}
