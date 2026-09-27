@@ -1,181 +1,231 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  </head>
-  <body>
-    <h1 class="text-3xl font-bold underline">
-        
-    </h1>
-    <header class="text-gray-600 body-font">
-  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-      </svg>
-      
-      <span class="ml-3 text-xl">Kabadiwala-connect</span>
-    </a>
-    <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-      <a class="mr-5 hover:text-gray-900">Scraplist</a>
-      <a class="mr-5 hover:text-gray-900">Pricing</a>
-      <a class="mr-5 hover:text-gray-900">login</a>
-      <a class="mr-5 hover:text-gray-900">User Info</a>
-    </nav>
-    <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Enroll now 
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
-  </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kabadiwala Connect</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+  <style>
+    body { transition: background-color .25s, color .25s; }
+    body.dark-mode { background: #111827; color: #f3f4f6; }
+    body.dark-mode header,
+    body.dark-mode article,
+    body.dark-mode form { background: #1f2937; color: #f3f4f6; border-color: #374151; }
+    body.dark-mode #scrap-list,
+    body.dark-mode #about { background: #111827; color: #f3f4f6; }
+    body.dark-mode #pickup,
+    body.dark-mode #team { background: #17251d; color: #f3f4f6; }
+    body.dark-mode input,
+    body.dark-mode textarea,
+    body.dark-mode select { background: #111827; color: #f3f4f6; border-color: #4b5563; }
+    body.dark-mode p { color: #d1d5db; }
+    body.dark-mode hr { border-color: #374151; }
+  </style>
+</head>
 
-</header>
-<section class="text-gray-400 bg-gray-900 body-font">
-  <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-    <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Welcome to Kabadiwala-connect
-        <br class="hidden lg:inline-block">readymade scrap collection and delivery  
-      </h1>
-      <p class="mb-8 leading-relaxed">We provide convenient and efficient scrap collection and delivery services in your area </p>
-      <div class="flex justify-center">
-        <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Profile</button>
-        <button class="ml-4 inline-flex text-gray-400 bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg">Notifications</button>
-      </div>
-    </div>
-    <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-      <img class="object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600">
-    </div>
-  </div>
-
-
-
-
-<footer class="text-gray-400 bg-gray-900 body-font">
-  <div class="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
-    <div class="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
-      <a class="flex title-font font-medium items-center md:justify-start justify-center text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-        </svg>
-        <span class="ml-3 text-xl">Kabadiwala-connect</span>
+<body class="bg-amber-50 text-gray-800">
+  <header class="bg-white shadow-sm">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-4">
+      <a href="index.html" class="flex items-center gap-3 font-bold text-green-800">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-green-700 text-xl text-white">♻</span>
+        <span class="text-xl" data-en="Kabadiwala Connect" data-hi="कबाड़ीवाला कनेक्ट">Kabadiwala Connect</span>
       </a>
-      <p class="mt-2 text-sm text-gray-500">Thankyou for choosing our services!</p>
-    </div>
-    <div class="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
-      <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
-        <nav class="list-none mb-10">
-          <li>
-            <a class="text-gray-400 hover:text-white">First Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Second Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Third Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Fourth Link</a>
-          </li>
-        </nav>
-      </div>
-      <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
-        <nav class="list-none mb-10">
-          <li>
-            <a class="text-gray-400 hover:text-white">First Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Second Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Third Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Fourth Link</a>
-          </li>
-        </nav>
-      </div>
-      <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
-        <nav class="list-none mb-10">
-          <li>
-            <a class="text-gray-400 hover:text-white">First Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Second Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Third Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Fourth Link</a>
-          </li>
-        </nav>
-      </div>
-      <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
-        <nav class="list-none mb-10">
-          <li>
-            <a class="text-gray-400 hover:text-white">First Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Second Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Third Link</a>
-          </li>
-          <li>
-            <a class="text-gray-400 hover:text-white">Fourth Link</a>
-          </li>
-        </nav>
+
+      <nav class="flex flex-wrap items-center gap-5 text-sm font-medium">
+        <a href="#scrap-list" class="hover:text-green-700" data-en="Scrap list" data-hi="कबाड़ की सूची">Scrap list</a>
+        <a href="#pricing" class="hover:text-green-700" data-en="Pricing" data-hi="कीमतें">Pricing</a>
+        <a href="#pickup" class="hover:text-green-700" data-en="Request a pickup" data-hi="पिकअप बुक करें">Request a pickup</a>
+        <a href="#about" class="hover:text-green-700" data-en="About" data-hi="हमारे बारे में">About</a>
+        <a href="#team" class="hover:text-green-700" data-en="Our team" data-hi="हमारी टीम">Our team</a>
+      </nav>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <select id="languageSelect" aria-label="Choose language"
+                class="rounded-lg border border-green-700 bg-white px-3 py-2 font-semibold text-green-800">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+        </select>
+
+        <button id="themeToggle" type="button"
+                class="rounded-lg border border-green-700 px-4 py-2 font-semibold text-green-800 hover:bg-green-50">
+          🌙 Dark mode
+        </button>
+
+        <a href="getstarted.html"
+           class="rounded-lg bg-green-700 px-5 py-2 font-semibold text-white hover:bg-green-800"
+           data-en="Get started" data-hi="शुरू करें">Get started</a>
+
+        <a href="login.html"
+           class="rounded-lg bg-green-700 px-5 py-2 font-semibold text-white hover:bg-green-800"
+           data-en="Login" data-hi="लॉग इन">Login</a>
       </div>
     </div>
-  </div>
-  <div class="bg-gray-800 bg-opacity-75">
-    <div class="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
-      <p class="text-gray-400 text-sm text-center sm:text-left">© 2020 Tailblocks —
-        <a href="https://twitter.com/knyttneve" rel="noopener noreferrer" class="text-gray-500 ml-1" target="_blank">@knyttneve</a>
+  </header>
+
+  <main>
+    <section class="bg-green-900 text-white">
+      <div class="mx-auto grid max-w-6xl items-center gap-10 px-5 py-20 md:grid-cols-2">
+        <div>
+          <p class="mb-3 font-semibold uppercase tracking-widest text-green-300"
+             data-en="A cleaner neighbourhood starts here"
+             data-hi="स्वच्छ मोहल्ले की शुरुआत यहाँ से">A cleaner neighbourhood starts here</p>
+          <h1 class="mb-5 text-4xl font-bold leading-tight md:text-5xl"
+              data-en="Turn your scrap into something useful."
+              data-hi="अपने कबाड़ को उपयोगी बनाएं।">Turn your scrap into something useful.</h1>
+          <p class="mb-8 max-w-xl text-lg text-green-100"
+             data-en="Kabadiwala Connect helps households arrange scrap collection and helps local collectors find recyclable materials nearby."
+             data-hi="कबाड़ीवाला कनेक्ट घरों को कबाड़ उठाने की सेवा लेने और स्थानीय संग्रहकर्ताओं को पास में पुनर्चक्रण योग्य सामग्री खोजने में मदद करता है।">
+            Kabadiwala Connect helps households arrange scrap collection and helps local collectors find recyclable materials nearby.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a href="#pickup" class="rounded-lg bg-lime-400 px-6 py-3 font-bold text-green-950 hover:bg-lime-300"
+               data-en="Request a pickup" data-hi="पिकअप बुक करें">Request a pickup</a>
+            <a href="#scrap-list" class="rounded-lg border border-green-200 px-6 py-3 font-semibold text-white hover:bg-green-800"
+               data-en="See accepted scrap" data-hi="स्वीकृत कबाड़ देखें">See accepted scrap</a>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-green-800 p-8 text-center">
+          <div class="mb-4 text-7xl">♻️</div>
+          <h2 class="mb-2 text-2xl font-bold" data-en="Recycle with ease" data-hi="आसानी से पुनर्चक्रण करें">Recycle with ease</h2>
+          <p class="text-green-100" data-en="A simple way to connect your scrap with a local collector."
+             data-hi="अपने कबाड़ को स्थानीय संग्रहकर्ता तक पहुँचाने का आसान तरीका।">
+            A simple way to connect your scrap with a local collector.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="scrap-list" class="mx-auto max-w-6xl px-5 py-16">
+      <div class="mb-8 text-center">
+        <p class="font-semibold uppercase tracking-widest text-green-700" data-en="What we collect" data-hi="हम क्या इकट्ठा करते हैं">What we collect</p>
+        <h2 class="mt-2 text-3xl font-bold" data-en="Scrap items and sample prices" data-hi="कबाड़ और नमूना कीमतें">Scrap items and sample prices</h2>
+        <p class="mt-3 text-gray-600" data-en="Sample prices for the prototype. Actual rates may vary."
+           data-hi="ये प्रोटोटाइप के लिए नमूना कीमतें हैं। वास्तविक दरें अलग हो सकती हैं।">
+          Sample prices for the prototype. Actual rates may vary.
+        </p>
+      </div>
+
+      <div id="pricing" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        <article class="rounded-xl border border-green-100 bg-white p-5 shadow-sm"><div class="mb-3 text-3xl">🧴</div><h3 class="font-bold" data-en="Plastic" data-hi="प्लास्टिक">Plastic</h3><p class="mt-1 text-green-700">₹15 per kg</p></article>
+        <article class="rounded-xl border border-green-100 bg-white p-5 shadow-sm"><div class="mb-3 text-3xl">📄</div><h3 class="font-bold" data-en="Paper" data-hi="कागज़">Paper</h3><p class="mt-1 text-green-700">₹12 per kg</p></article>
+        <article class="rounded-xl border border-green-100 bg-white p-5 shadow-sm"><div class="mb-3 text-3xl">🔩</div><h3 class="font-bold" data-en="Metal" data-hi="धातु">Metal</h3><p class="mt-1 text-green-700">₹35 per kg</p></article>
+        <article class="rounded-xl border border-green-100 bg-white p-5 shadow-sm"><div class="mb-3 text-3xl">💻</div><h3 class="font-bold" data-en="E-waste" data-hi="ई-कचरा">E-waste</h3><p class="mt-1 text-green-700">₹50 per kg</p></article>
+        <article class="rounded-xl border border-green-100 bg-white p-5 shadow-sm"><div class="mb-3 text-3xl">🍂</div><h3 class="font-bold" data-en="Organic" data-hi="जैविक कचरा">Organic</h3><p class="mt-1 text-green-700">₹5 per kg</p></article>
+      </div>
+    </section>
+
+    <section id="pickup" class="bg-green-100">
+      <div class="mx-auto max-w-3xl px-5 py-16">
+        <div class="mb-8 text-center">
+          <p class="font-semibold uppercase tracking-widest text-green-700" data-en="Book a collection" data-hi="कलेक्शन बुक करें">Book a collection</p>
+          <h2 class="mt-2 text-3xl font-bold" data-en="Request a scrap pickup" data-hi="कबाड़ पिकअप बुक करें">Request a scrap pickup</h2>
+          <p class="mt-3 text-gray-600" data-en="Fill this sample form to show how pickup booking will look."
+             data-hi="पिकअप बुकिंग का नमूना देखने के लिए यह फ़ॉर्म भरें।">
+            Fill this sample form to show how pickup booking will look.
+          </p>
+        </div>
+
+        <form class="rounded-2xl bg-white p-6 shadow-sm md:p-8">
+          <label class="mb-4 block"><span class="mb-1 block font-semibold" data-en="Your name" data-hi="आपका नाम">Your name</span>
+            <input type="text" placeholder="Enter your name" class="w-full rounded-lg border border-gray-300 px-4 py-3" /></label>
+          <label class="mb-4 block"><span class="mb-1 block font-semibold" data-en="Mobile number" data-hi="मोबाइल नंबर">Mobile number</span>
+            <input type="tel" placeholder="Enter your mobile number" class="w-full rounded-lg border border-gray-300 px-4 py-3" /></label>
+          <label class="mb-4 block"><span class="mb-1 block font-semibold" data-en="Pickup address" data-hi="पिकअप का पता">Pickup address</span>
+            <textarea rows="3" placeholder="Enter your full address" class="w-full rounded-lg border border-gray-300 px-4 py-3"></textarea></label>
+          <fieldset class="mb-6">
+            <legend class="mb-2 font-semibold" data-en="What would you like collected?" data-hi="आप कौन सा कबाड़ देना चाहते हैं?">What would you like collected?</legend>
+            <div class="grid gap-2 sm:grid-cols-2">
+              <label><input type="checkbox" /> Plastic</label><label><input type="checkbox" /> Paper</label>
+              <label><input type="checkbox" /> Metal</label><label><input type="checkbox" /> E-waste</label>
+              <label><input type="checkbox" /> Organic</label><label><input type="checkbox" /> Other</label>
+            </div>
+          </fieldset>
+          <button type="button" class="w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800"
+                  data-en="Submit pickup request" data-hi="पिकअप अनुरोध भेजें">Submit pickup request</button>
+          <p class="mt-3 text-center text-sm text-gray-500" data-en="Prototype form: it does not send or save your information yet."
+             data-hi="यह नमूना फ़ॉर्म है: आपकी जानकारी अभी भेजी या सहेजी नहीं जाती।">
+            Prototype form: it does not send or save your information yet.
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <section id="about" class="mx-auto max-w-6xl px-5 py-14 text-center">
+      <h2 class="text-2xl font-bold" data-en="About Kabadiwala Connect" data-hi="कबाड़ीवाला कनेक्ट के बारे में">About Kabadiwala Connect</h2>
+      <p class="mx-auto mt-3 max-w-2xl text-gray-600"
+         data-en="Our goal is to make scrap collection more convenient for households and create better connections with local recycling collectors."
+         data-hi="हमारा उद्देश्य घरों के लिए कबाड़ संग्रह को आसान बनाना और स्थानीय पुनर्चक्रण संग्रहकर्ताओं से बेहतर जुड़ाव बनाना है।">
+        Our goal is to make scrap collection more convenient for households and create better connections with local recycling collectors.
       </p>
-      <span class="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start">
-        <a class="text-gray-400">
-          <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-          </svg>
-        </a>
-        <a class="ml-3 text-gray-400">
-          <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-          </svg>
-        </a>
-        <a class="ml-3 text-gray-400">
-          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
-          </svg>
-        </a>
-        <a class="ml-3 text-gray-400">
-          <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewBox="0 0 24 24">
-            <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
-            <circle cx="4" cy="4" r="2" stroke="none"></circle>
-          </svg>
-        </a>
-      </span>
+    </section>
+
+    <section id="team" class="bg-white px-5 py-14 text-center">
+      <p class="font-semibold uppercase tracking-widest text-green-700" data-en="The people behind the project" data-hi="इस परियोजना के पीछे की टीम">The people behind the project</p>
+      <h2 class="mt-2 text-3xl font-bold" data-en="Meet our team" data-hi="हमारी टीम से मिलें">Meet our team</h2>
+
+      <div class="mx-auto mt-8 grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
+          <img src="5bd5021a-e20f-461e-aa02-d4d0b69c93a0_1000001702.jpg" alt="Garvit Kumar" class="mx-auto mb-4 h-24 w-24 rounded-full object-cover" />
+          <h3 class="text-xl font-bold">Garvit Kumar</h3><p class="mt-1 text-green-700" data-en="Project Lead" data-hi="प्रोजेक्ट लीड">Project Lead</p>
+        </article>
+
+        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
+          <img src="WhatsApp Image 2026-09-27 at 4.12.51 PM.jpeg" alt="Madhav Kanswal" class="mx-auto mb-4 h-24 w-24 rounded-full object-cover scale-110" style="object-position: center 60%;" />
+          <h3 class="text-xl font-bold">Madhav Kanswal</h3><p class="mt-1 text-green-700" data-en="Frontend Developer" data-hi="फ्रंटएंड डेवलपर">Frontend Developer</p>
+        </article>
+
+        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
+          <img src="WhatsApp Image 2026-09-27 at 4.00.13 PM.jpeg" alt="Sahil Bhist" class="mx-auto mb-4 h-24 w-24 rounded-full object-cover" />
+          <h3 class="text-xl font-bold">Sahil Bhist</h3><p class="mt-1 text-green-700" data-en="Backend Developer" data-hi="बैकएंड डेवलपर">Backend Developer</p>
+        </article>
+
+        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 text-center shadow-sm">
+          <div class="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-green-100 text-4xl">👤</div>
+          <h3 class="text-xl font-bold">Vamika Maithani</h3><p class="mt-1 text-green-700" data-en="Researcher" data-hi="शोधकर्ता">Researcher</p>
+        </article>
+
+        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 text-center shadow-sm">
+          <div class="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-green-100 text-4xl">👤</div>
+          <h3 class="text-xl font-bold">Vanshika Arya</h3><p class="mt-1 text-green-700" data-en="Representative" data-hi="प्रतिनिधि">Representative</p>
+        </article>
+
+        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
+          <img src="priyanshi.jpg" alt="Priyanshi Bora" class="mx-auto mb-4 h-24 w-24 rounded-full object-cover" />
+          <h3 class="text-xl font-bold">Priyanshi Bora</h3><p class="mt-1 text-green-700" data-en="Presentation Designer" data-hi="प्रस्तुति डिज़ाइनर">Presentation Designer</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <hr class="border-green-200" />
+
+  <footer class="bg-green-950 text-green-100">
+    <div class="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-8 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+      <p class="font-bold" data-en="Kabadiwala Connect" data-hi="कबाड़ीवाला कनेक्ट">Kabadiwala Connect</p>
+      <p class="text-sm" data-en="Making recycling easier, one pickup at a time." data-hi="हर पिकअप के साथ पुनर्चक्रण को आसान बनाते हुए।">Making recycling easier, one pickup at a time.</p>
+      <p class="text-sm">© 2026 Kabadiwala Connect</p>
     </div>
-  </div>
-</footer>
+  </footer>
 
+  <script>
+    const languageSelect = document.getElementById("languageSelect");
+    const themeToggle = document.getElementById("themeToggle");
 
+    function changeLanguage(language) {
+      document.documentElement.lang = language;
+      document.querySelectorAll("[data-en][data-hi]").forEach((element) => {
+        element.textContent = element.dataset[language];
+      });
+    }
 
+    languageSelect.addEventListener("change", (event) => changeLanguage(event.target.value));
 
-
-
-
-
-
-</section>
-  </body>
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      themeToggle.textContent = document.body.classList.contains("dark-mode")
+        ? "☀️ Light mode" : "🌙 Dark mode";
+    });
+  </script>
+</body>
 </html>
