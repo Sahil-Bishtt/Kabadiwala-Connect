@@ -1,62 +1,143 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Get Started | Kabadiwala Connect</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Started | Kabadiwala Connect</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-  <body class="min-h-screen bg-amber-50 text-gray-800">
-    <header class="bg-white shadow-sm">
-      <div class="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
-        <a href="index.html" class="font-bold text-green-800">
-          ♻ Kabadiwala Connect
-        </a>
-        <a href="index.html" class="text-green-700 hover:underline">
+  <style>
+    body { transition: background-color .25s, color .25s; }
+    body.dark-mode { background: #111827; color: #f3f4f6; }
+    body.dark-mode header,
+    body.dark-mode article { background: #1f2937; color: #f3f4f6; border-color: #374151; }
+    body.dark-mode p { color: #d1d5db; }
+    body.dark-mode select,
+    body.dark-mode #themeToggle { background: #1f2937; color: #f3f4f6; border-color: #4b5563; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-amber-50 text-gray-800">
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-5 py-4">
+      <a href="index.html" class="font-bold text-green-800">
+        ♻ Kabadiwala Connect
+      </a>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <select id="languageSelect" aria-label="Choose language"
+                class="rounded-lg border border-green-700 bg-white px-3 py-2 font-semibold text-green-800">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+        </select>
+
+        <button id="themeToggle" type="button"
+                class="rounded-lg border border-green-700 px-4 py-2 font-semibold text-green-800">
+          🌙 Dark mode
+        </button>
+
+        <a href="index.html" class="text-green-700 hover:underline"
+           data-en="Back to home" data-hi="मुखपृष्ठ पर वापस जाएँ">
           Back to home
         </a>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="mx-auto max-w-5xl px-5 py-16">
-      <div class="text-center">
-        <p class="font-semibold uppercase tracking-widest text-green-700">
-          Welcome
+  <main class="mx-auto max-w-5xl px-5 py-16">
+    <!-- Introduction -->
+    <section class="text-center">
+      <p class="font-semibold uppercase tracking-widest text-green-700"
+         data-en="Welcome" data-hi="स्वागत है">
+        Welcome
+      </p>
+
+      <h1 class="mt-2 text-4xl font-bold"
+          data-en="How would you like to use Kabadiwala Connect?"
+          data-hi="आप कबाड़ीवाला कनेक्ट का उपयोग कैसे करना चाहेंगे?">
+        How would you like to use Kabadiwala Connect?
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-600"
+         data-en="Choose the option that fits you."
+         data-hi="अपने लिए उपयुक्त विकल्प चुनें।">
+        Choose the option that fits you.
+      </p>
+    </section>
+
+    <!-- Household and collector options -->
+    <section class="mx-auto mt-10 grid max-w-3xl gap-6 md:grid-cols-2">
+
+      <article class="rounded-2xl border border-green-100 bg-white p-8 text-center shadow-sm">
+        <div class="text-5xl">🏠</div>
+        <h2 class="mt-4 text-2xl font-bold"
+            data-en="I’m a Household" data-hi="मैं एक घरेलू उपयोगकर्ता हूँ">
+          I’m a Household
+        </h2>
+        <p class="mt-3 text-gray-600"
+           data-en="I want to arrange a pickup for recyclable scrap from my home."
+           data-hi="मैं अपने घर से पुनर्चक्रण योग्य कबाड़ उठाने के लिए पिकअप बुक करना चाहता/चाहती हूँ।">
+          I want to arrange a pickup for recyclable scrap from my home.
         </p>
-        <h1 class="mt-2 text-4xl font-bold">How would you like to use Kabadiwala Connect?</h1>
-        <p class="mx-auto mt-4 max-w-2xl text-gray-600">
-          Choose the option that fits you. You can change this page as your prototype grows.
+        <a href="index.html#pickup"
+           class="mt-6 inline-block rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800"
+           data-en="Request a pickup" data-hi="पिकअप बुक करें">
+          Request a pickup
+        </a>
+      </article>
+
+      <article class="rounded-2xl border border-green-100 bg-white p-8 text-center shadow-sm">
+        <div class="text-5xl">♻️</div>
+        <h2 class="mt-4 text-2xl font-bold"
+            data-en="I’m a Collector" data-hi="मैं एक संग्रहकर्ता हूँ">
+          I’m a Collector
+        </h2>
+        <p class="mt-3 text-gray-600"
+           data-en="I collect recyclable materials and want to find pickup requests."
+           data-hi="मैं पुनर्चक्रण योग्य सामग्री इकट्ठा करता/करती हूँ और पिकअप अनुरोध देखना चाहता/चाहती हूँ।">
+          I collect recyclable materials and want to find pickup requests.
         </p>
-      </div>
+        <a href="login.html"
+           class="mt-6 inline-block rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800"
+           data-en="Login as collector" data-hi="संग्रहकर्ता के रूप में लॉग इन करें">
+          Login as collector
+        </a>
+      </article>
 
-      <div class="mx-auto mt-10 grid max-w-3xl gap-6 md:grid-cols-2">
-        <article class="rounded-2xl border border-green-100 bg-white p-8 text-center shadow-sm">
-          <div class="text-5xl">🏠</div>
-          <h2 class="mt-4 text-2xl font-bold">I’m a Household</h2>
-          <p class="mt-3 text-gray-600">
-            I want to arrange a pickup for recyclable scrap from my home.
-          </p>
-          <a href="index.html#pickup"
-             class="mt-6 inline-block rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800">
-            Request a pickup
-          </a>
-        </article>
+    </section>
+  </main>
 
-        <article class="rounded-2xl border border-green-100 bg-white p-8 text-center shadow-sm">
-          <div class="text-5xl">♻️</div>
-          <h2 class="mt-4 text-2xl font-bold">I’m a Collector</h2>
-          <p class="mt-3 text-gray-600">
-            I collect recyclable materials and want to find pickup requests.
-          </p>
-          <button
-            type="button"
-            onclick="alert('Collector features are coming soon!')"
-            class="mt-6 rounded-lg border border-green-700 px-6 py-3 font-bold text-green-800 hover:bg-green-50">
-            Continue as collector
-          </button>
-        </article>
-      </div>
-    </main>
-  </body>
+  <!-- Language and saved theme controls -->
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+    const languageSelect = document.getElementById("languageSelect");
+
+    function applyTheme() {
+      const isDark = localStorage.getItem("kabadiwala-theme") === "dark";
+      document.body.classList.toggle("dark-mode", isDark);
+      themeToggle.textContent = isDark ? "☀️ Light mode" : "🌙 Dark mode";
+    }
+
+    function applyLanguage(language) {
+      document.documentElement.lang = language;
+
+      document.querySelectorAll("[data-en][data-hi]").forEach((element) => {
+        element.textContent = element.dataset[language];
+      });
+    }
+
+    applyTheme();
+
+    themeToggle.addEventListener("click", () => {
+      const isDark = !document.body.classList.contains("dark-mode");
+      localStorage.setItem("kabadiwala-theme", isDark ? "dark" : "light");
+      applyTheme();
+    });
+
+    languageSelect.addEventListener("change", (event) => {
+      applyLanguage(event.target.value);
+    });
+  </script>
+</body>
 </html>
