@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request a Pickup | Kabadiwala Connect</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style>
+    body { transition: background-color .25s, color .25s; }
+    body.dark-mode { background: #111827; color: #f3f4f6; }
+    body.dark-mode header,
+    body.dark-mode form { background: #1f2937; color: #f3f4f6; border-color: #374151; }
+    body.dark-mode input,
+    body.dark-mode textarea,
+    body.dark-mode select { background: #111827; color: #f3f4f6; border-color: #4b5563; }
+    body.dark-mode p { color: #d1d5db; }
+    body.dark-mode #themeToggle { background: #1f2937; color: #f3f4f6; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-amber-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-5 py-4">
+      <a href="index.html" class="font-bold text-green-800">♻ Kabadiwala Connect</a>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <select id="languageSelect" aria-label="Choose language"
+                class="rounded-lg border border-green-700 bg-white px-3 py-2 font-semibold text-green-800">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+        </select>
+
+        <button id="themeToggle" type="button"
+                class="rounded-lg border border-green-700 px-4 py-2 font-semibold text-green-800">
+          🌙 Dark mode
+        </button>
+
+        <a href="index.html" class="text-green-700 hover:underline"
+           data-en="Back to home" data-hi="मुखपृष्ठ पर वापस जाएँ">
+          Back to home
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-3xl px-5 py-16">
+    <!-- Page introduction -->
+    <div class="mb-8 text-center">
+      <p class="font-semibold uppercase tracking-widest text-green-700"
+         data-en="Book a collection" data-hi="कलेक्शन बुक करें">
+        Book a collection
+      </p>
+
+      <h1 class="mt-2 text-3xl font-bold"
+          data-en="Request a scrap pickup" data-hi="कबाड़ पिकअप बुक करें">
+        Request a scrap pickup
+      </h1>
+
+      <p class="mt-3 text-gray-600"
+         data-en="Tell us what you have and where to collect it."
+         data-hi="बताएं कि आपके पास क्या कबाड़ है और उसे कहाँ से लेना है।">
+        Tell us what you have and where to collect it.
+      </p>
+    </div>
+
+    <!-- Pickup request form -->
+    <form class="rounded-2xl border border-green-100 bg-white p-6 shadow-sm md:p-8">
+      <label class="mb-4 block font-semibold">
+        <span data-en="Your name" data-hi="आपका नाम">Your name</span>
+        <input type="text" placeholder="Enter your name"
+               data-placeholder-en="Enter your name" data-placeholder-hi="अपना नाम लिखें"
+               class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3" />
+      </label>
+
+      <label class="mb-4 block font-semibold">
+        <span data-en="Mobile number" data-hi="मोबाइल नंबर">Mobile number</span>
+        <input type="tel" placeholder="Enter your mobile number"
+               data-placeholder-en="Enter your mobile number" data-placeholder-hi="अपना मोबाइल नंबर लिखें"
+               class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3" />
+      </label>
+
+      <label class="mb-4 block font-semibold">
+        <span data-en="Pickup address" data-hi="पिकअप का पता">Pickup address</span>
+        <textarea rows="3" placeholder="Enter your full address"
+                  data-placeholder-en="Enter your full address" data-placeholder-hi="अपना पूरा पता लिखें"
+                  class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3"></textarea>
+      </label>
+
+      <fieldset class="mb-6">
+        <legend class="mb-2 font-semibold"
+                data-en="What would you like collected?"
+                data-hi="आप कौन सा कबाड़ देना चाहते हैं?">
+          What would you like collected?
+        </legend>
+
+        <div class="grid gap-2 sm:grid-cols-2">
+          <label><input type="checkbox" /> Plastic</label>
+          <label><input type="checkbox" /> Paper</label>
+          <label><input type="checkbox" /> Metal</label>
+          <label><input type="checkbox" /> E-waste</label>
+          <label><input type="checkbox" /> Organic</label>
+          <label><input type="checkbox" /> Other</label>
+        </div>
+      </fieldset>
+
+      <button type="button"
+              class="w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800"
+              data-en="Submit pickup request" data-hi="पिकअप अनुरोध भेजें">
+        Submit pickup request
+      </button>
+
+      <p class="mt-3 text-center text-sm text-gray-500"
+         data-en="Prototype form: it does not send or save your information yet."
+         data-hi="यह नमूना फ़ॉर्म है: आपकी जानकारी अभी भेजी या सहेजी नहीं जाती।">
+        Prototype form: it does not send or save your information yet.
+      </p>
+    </form>
+  </main>
+
+  <!-- Shared theme and language preferences -->
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+    const languageSelect = document.getElementById("languageSelect");
+
+    function applyTheme() {
+      const isDark = localStorage.getItem("kabadiwala-theme") === "dark";
+      document.body.classList.toggle("dark-mode", isDark);
+      themeToggle.textContent = isDark ? "☀️ Light mode" : "🌙 Dark mode";
+    }
+
+    function applyLanguage(language) {
+      document.documentElement.lang = language;
+
+      document.querySelectorAll("[data-en][data-hi]").forEach((element) => {
+        element.textContent = element.dataset[language];
+      });
+
+      document.querySelectorAll("[data-placeholder-en][data-placeholder-hi]").forEach((element) => {
+        element.placeholder = language === "hi"
+          ? element.dataset.placeholderHi
+          : element.dataset.placeholderEn;
+      });
+
+      languageSelect.value = language;
+    }
+
+    applyTheme();
+    applyLanguage(localStorage.getItem("kabadiwala-language") || "en");
+
+    themeToggle.addEventListener("click", () => {
+      const isDark = !document.body.classList.contains("dark-mode");
+      localStorage.setItem("kabadiwala-theme", isDark ? "dark" : "light");
+      applyTheme();
+    });
+
+    languageSelect.addEventListener("change", (event) => {
+      localStorage.setItem("kabadiwala-language", event.target.value);
+      applyLanguage(event.target.value);
+    });
+  </script>
+</body>
+</html>
