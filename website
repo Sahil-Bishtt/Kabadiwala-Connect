@@ -9,7 +9,7 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-  <!-- Dark mode styles -->
+  <!-- Dark theme styles -->
   <style>
     body {
       transition: background-color 0.25s, color 0.25s;
@@ -21,20 +21,13 @@
     }
 
     body.dark-mode header,
-    body.dark-mode article,
-    body.dark-mode form {
+    body.dark-mode .surface {
       background: #1f2937;
       color: #f3f4f6;
       border-color: #374151;
     }
 
-    body.dark-mode #about {
-      background: #111827;
-      color: #f3f4f6;
-    }
-
-    body.dark-mode #pickup,
-    body.dark-mode #team {
+    body.dark-mode .soft-section {
       background: #17251d;
       color: #f3f4f6;
     }
@@ -51,10 +44,6 @@
       color: #d1d5db;
     }
 
-    body.dark-mode hr {
-      border-color: #374151;
-    }
-
     body.dark-mode #themeToggle {
       background: #1f2937;
       color: #f3f4f6;
@@ -65,7 +54,7 @@
 <body class="bg-amber-50 text-gray-800">
 
   <!-- =========================
-       HEADER: logo, navigation, theme and language controls
+       HEADER: logo, navigation and controls
   ========================== -->
   <header class="bg-white shadow-sm">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-4">
@@ -80,7 +69,7 @@
         </span>
       </a>
 
-      <!-- Navigation links -->
+      <!-- Navigation -->
       <nav class="flex flex-wrap gap-5 text-sm font-medium">
         <a href="scraplist.html" class="hover:text-green-700"
            data-en="Scrap list" data-hi="कबाड़ की सूची">Scrap list</a>
@@ -88,14 +77,11 @@
         <a href="scraplist.html#pricing" class="hover:text-green-700"
            data-en="Pricing" data-hi="कीमतें">Pricing</a>
 
-        <a href="#pickup" class="hover:text-green-700"
-           data-en="Request a pickup" data-hi="पिकअप बुक करें">Request a pickup</a>
+        <a href="pickup.html" class="hover:text-green-700"
+   data-en="Request a pickup" data-hi="पिकअप बुक करें">Request a pickup</a>
 
         <a href="#about" class="hover:text-green-700"
            data-en="About" data-hi="हमारे बारे में">About</a>
-
-        <!-- <a href="#team" class="hover:text-green-700"
-           data-en="Our team" data-hi="हमारी टीम">Our team</a> -->
       </nav>
 
       <!-- Language, theme and page buttons -->
@@ -129,107 +115,185 @@
   <main>
 
     <!-- =========================
-         HERO: welcome message
+         HERO: main message and action buttons
     ========================== -->
-    <section class="bg-green-900 text-white">
-      <div class="mx-auto grid max-w-6xl items-center gap-10 px-5 py-20 md:grid-cols-2">
+    <section class="overflow-hidden bg-green-950 text-white">
+      <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 md:grid-cols-2 md:py-28">
 
         <div>
-          <p class="mb-3 font-semibold uppercase tracking-widest text-green-300"
-             data-en="A cleaner neighbourhood starts here"
-             data-hi="स्वच्छ मोहल्ले की शुरुआत यहाँ से">
-            A cleaner neighbourhood starts here
+          <p class="mb-4 inline-block rounded-full bg-green-800 px-4 py-2 text-sm font-semibold text-lime-200"
+             data-en="A cleaner future starts locally"
+             data-hi="स्वच्छ भविष्य की शुरुआत अपने मोहल्ले से">
+            A cleaner future starts locally
           </p>
 
-          <h1 class="mb-5 text-4xl font-bold leading-tight md:text-5xl"
-              data-en="Turn your scrap into something useful."
-              data-hi="अपने कबाड़ को उपयोगी बनाएं।">
-            Turn your scrap into something useful.
+          <h1 class="mb-6 text-5xl font-extrabold leading-tight md:text-6xl"
+              data-en="Got scrap? Let’s give it a new life."
+              data-hi="कबाड़ है? आइए इसे नया जीवन दें।">
+            Got scrap? Let’s give it a new life.
           </h1>
 
           <p class="mb-8 max-w-xl text-lg text-green-100"
-             data-en="Kabadiwala Connect helps households arrange scrap collection and helps local collectors find recyclable materials nearby."
-             data-hi="कबाड़ीवाला कनेक्ट घरों को कबाड़ उठाने की सेवा लेने और स्थानीय संग्रहकर्ताओं को पास में पुनर्चक्रण योग्य सामग्री खोजने में मदद करता है।">
-            Kabadiwala Connect helps households arrange scrap collection and
-            helps local collectors find recyclable materials nearby.
+             data-en="Connect with local collectors and make recycling easier for your household."
+             data-hi="स्थानीय संग्रहकर्ताओं से जुड़ें और अपने घर के लिए पुनर्चक्रण को आसान बनाएं।">
+            Connect with local collectors and make recycling easier for your household.
           </p>
 
           <div class="flex flex-wrap gap-3">
             <a href="#pickup"
-               class="rounded-lg bg-lime-400 px-6 py-3 font-bold text-green-950"
+               class="rounded-lg bg-lime-400 px-6 py-3 font-bold text-green-950 hover:bg-lime-300"
                data-en="Request a pickup" data-hi="पिकअप बुक करें">
               Request a pickup
             </a>
 
-            <!-- Opens the separate scrap list page -->
             <a href="scraplist.html"
-               class="rounded-lg border border-green-200 px-6 py-3 font-semibold text-white"
-               data-en="See accepted scrap" data-hi="स्वीकृत कबाड़ देखें">
-              See accepted scrap
+               class="rounded-lg border border-green-200 px-6 py-3 font-semibold text-white hover:bg-green-900"
+               data-en="View scrap prices" data-hi="कबाड़ की कीमतें देखें">
+              View scrap prices 
             </a>
           </div>
         </div>
 
-        <!-- Welcome illustration -->
-        <div class="rounded-2xl bg-green-800 p-8 text-center">
-          <div class="mb-4 text-7xl">♻️</div>
-          <h2 class="mb-2 text-2xl font-bold"
-              data-en="Recycle with ease" data-hi="आसानी से पुनर्चक्रण करें">
-            Recycle with ease
-          </h2>
-          <p class="text-green-100"
-             data-en="A simple way to connect your scrap with a local collector."
-             data-hi="अपने कबाड़ को स्थानीय संग्रहकर्ता तक पहुँचाने का आसान तरीका।">
-            A simple way to connect your scrap with a local collector.
-          </p>
+        <!-- Hero visual -->
+        <div class="relative rounded-3xl bg-green-800 p-8 md:p-10">
+          <div class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-lime-400 opacity-20"></div>
+
+          <div class="relative text-center">
+            <div class="mb-4 text-8xl">♻️</div>
+            <h2 class="text-2xl font-bold"
+                data-en="Scrap collection, made simple"
+                data-hi="कबाड़ संग्रह अब आसान">
+              Scrap collection, made simple
+            </h2>
+            <p class="mx-auto mt-3 max-w-sm text-green-100"
+               data-en="A better connection between households and local collectors."
+               data-hi="घरों और स्थानीय संग्रहकर्ताओं के बीच बेहतर जुड़ाव।">
+              A better connection between households and local collectors.
+            </p>
+          </div>
         </div>
 
       </div>
     </section>
 
     <!-- =========================
+         QUICK BENEFITS
+    ========================== -->
+    <section class="mx-auto grid max-w-6xl gap-5 px-5 py-10 sm:grid-cols-3">
+      <article class="surface rounded-xl border border-green-100 bg-white p-6 text-center shadow-sm">
+        <div class="text-3xl">📍</div>
+        <h2 class="mt-3 font-bold" data-en="Local collectors" data-hi="स्थानीय संग्रहकर्ता">Local collectors</h2>
+        <p class="mt-2 text-sm text-gray-600" data-en="Connect with collectors in your area." data-hi="अपने क्षेत्र के संग्रहकर्ताओं से जुड़ें।">Connect with collectors in your area.</p>
+      </article>
+
+      <article class="surface rounded-xl border border-green-100 bg-white p-6 text-center shadow-sm">
+        <div class="text-3xl">🚚</div>
+        <h2 class="mt-3 font-bold" data-en="Convenient pickup" data-hi="सुविधाजनक पिकअप">Convenient pickup</h2>
+        <p class="mt-2 text-sm text-gray-600" data-en="Arrange scrap collection from home." data-hi="घर से कबाड़ संग्रह की व्यवस्था करें।">Arrange scrap collection from home.</p>
+      </article>
+
+      <article class="surface rounded-xl border border-green-100 bg-white p-6 text-center shadow-sm">
+        <div class="text-3xl">🌱</div>
+        <h2 class="mt-3 font-bold" data-en="Less waste" data-hi="कम कचरा">Less waste</h2>
+        <p class="mt-2 text-sm text-gray-600" data-en="Help recyclable materials find a new use." data-hi="पुनर्चक्रण योग्य सामग्री को नया उपयोग दिलाने में मदद करें।">Help recyclable materials find a new use.</p>
+      </article>
+    </section>
+
+    <!-- =========================
+         HOW IT WORKS
+    ========================== -->
+    <section class="soft-section bg-green-100 py-16">
+      <div class="mx-auto max-w-6xl px-5">
+        <div class="mb-10 text-center">
+          <p class="font-semibold uppercase tracking-widest text-green-700"
+             data-en="Simple process" data-hi="आसान प्रक्रिया">Simple process</p>
+          <h2 class="mt-2 text-3xl font-bold"
+              data-en="How it works" data-hi="यह कैसे काम करता है">
+            How it works
+          </h2>
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-3">
+          <article class="surface rounded-xl bg-white p-7 shadow-sm">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-green-700 font-bold text-white">1</span>
+            <h3 class="mt-5 text-xl font-bold" data-en="Choose your scrap" data-hi="अपना कबाड़ चुनें">Choose your scrap</h3>
+            <p class="mt-2 text-gray-600" data-en="See accepted items and sample prices on the Scrap List page."
+               data-hi="कबाड़ सूची पेज पर स्वीकार किए जाने वाले सामान और नमूना कीमतें देखें।">
+              See accepted items and sample prices on the Scrap List page.
+            </p>
+          </article>
+
+          <article class="surface rounded-xl bg-white p-7 shadow-sm">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-green-700 font-bold text-white">2</span>
+            <h3 class="mt-5 text-xl font-bold" data-en="Request a pickup" data-hi="पिकअप का अनुरोध करें">Request a pickup</h3>
+            <p class="mt-2 text-gray-600" data-en="Add your contact details, address and scrap types."
+               data-hi="अपनी संपर्क जानकारी, पता और कबाड़ के प्रकार जोड़ें।">
+              Add your contact details, address and scrap types.
+            </p>
+          </article>
+
+          <article class="surface rounded-xl bg-white p-7 shadow-sm">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-green-700 font-bold text-white">3</span>
+            <h3 class="mt-5 text-xl font-bold" data-en="Meet your collector" data-hi="संग्रहकर्ता से मिलें">Meet your collector</h3>
+            <p class="mt-2 text-gray-600" data-en="Coordinate with a local collector to complete the pickup."
+               data-hi="पिकअप पूरा करने के लिए स्थानीय संग्रहकर्ता से संपर्क करें।">
+              Coordinate with a local collector to complete the pickup.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
          PICKUP REQUEST FORM
     ========================== -->
-    <section id="pickup" class="bg-green-100">
-      <div class="mx-auto max-w-3xl px-5 py-16">
-
+    <!-- <section id="pickup" class="py-16">
+      <div class="mx-auto max-w-3xl px-5">
         <div class="mb-8 text-center">
           <p class="font-semibold uppercase tracking-widest text-green-700"
              data-en="Book a collection" data-hi="कलेक्शन बुक करें">
             Book a collection
           </p>
-
           <h2 class="mt-2 text-3xl font-bold"
               data-en="Request a scrap pickup" data-hi="कबाड़ पिकअप बुक करें">
             Request a scrap pickup
           </h2>
-
-          <p class="mt-3 text-gray-600">
-            Fill this sample form to show how pickup booking will look.
+          <p class="mt-3 text-gray-600"
+             data-en="Tell us what you have and where to collect it."
+             data-hi="बताएं कि आपके पास क्या कबाड़ है और उसे कहाँ से लेना है।">
+            Tell us what you have and where to collect it.
           </p>
         </div>
 
-        <form class="rounded-2xl bg-white p-6 shadow-sm md:p-8">
+        <form class="surface rounded-2xl border border-green-100 bg-white p-6 shadow-sm md:p-8">
           <label class="mb-4 block font-semibold">
-            Your name
+            <span data-en="Your name" data-hi="आपका नाम">Your name</span>
             <input type="text" placeholder="Enter your name"
+                   data-placeholder-en="Enter your name" data-placeholder-hi="अपना नाम लिखें"
                    class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3" />
           </label>
 
           <label class="mb-4 block font-semibold">
-            Mobile number
+            <span data-en="Mobile number" data-hi="मोबाइल नंबर">Mobile number</span>
             <input type="tel" placeholder="Enter your mobile number"
+                   data-placeholder-en="Enter your mobile number" data-placeholder-hi="अपना मोबाइल नंबर लिखें"
                    class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3" />
           </label>
 
           <label class="mb-4 block font-semibold">
-            Pickup address
+            <span data-en="Pickup address" data-hi="पिकअप का पता">Pickup address</span>
             <textarea rows="3" placeholder="Enter your full address"
+                      data-placeholder-en="Enter your full address" data-placeholder-hi="अपना पूरा पता लिखें"
                       class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3"></textarea>
           </label>
 
           <fieldset class="mb-6">
-            <legend class="mb-2 font-semibold">What would you like collected?</legend>
+            <legend class="mb-2 font-semibold"
+                    data-en="What would you like collected?"
+                    data-hi="आप कौन सा कबाड़ देना चाहते हैं?">
+              What would you like collected?
+            </legend>
+
             <div class="grid gap-2 sm:grid-cols-2">
               <label><input type="checkbox" /> Plastic</label>
               <label><input type="checkbox" /> Paper</label>
@@ -241,44 +305,82 @@
           </fieldset>
 
           <button type="button"
-                  class="w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white">
+                  class="w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800"
+                  data-en="Submit pickup request" data-hi="पिकअप अनुरोध भेजें">
             Submit pickup request
           </button>
 
-          <p class="mt-3 text-center text-sm text-gray-500">
+          <p class="mt-3 text-center text-sm text-gray-500"
+             data-en="Prototype form: it does not send or save your information yet."
+             data-hi="यह नमूना फ़ॉर्म है: आपकी जानकारी अभी भेजी या सहेजी नहीं जाती।">
             Prototype form: it does not send or save your information yet.
           </p>
         </form>
+      </div>
+    </section> -->
 
+    <!-- =========================
+         IMPACT HIGHLIGHTS
+    ========================== -->
+    <section class="bg-green-900 py-14 text-white">
+      <div class="mx-auto max-w-6xl px-5 text-center">
+        <p class="font-semibold uppercase tracking-widest text-lime-300"
+           data-en="Small actions add up" data-hi="छोटे कदम बड़ा बदलाव लाते हैं">
+          Small actions add up
+        </p>
+        <h2 class="mt-2 text-3xl font-bold"
+            data-en="A cleaner neighbourhood starts with one pickup"
+            data-hi="स्वच्छ मोहल्ले की शुरुआत एक पिकअप से">
+          A cleaner neighbourhood starts with one pickup
+        </h2>
+
+        <div class="mt-8 grid gap-5 sm:grid-cols-3">
+          <div class="rounded-xl bg-green-800 p-6">
+            <p class="text-4xl font-extrabold text-lime-300">♻️</p>
+            <p class="mt-2 font-semibold" data-en="More materials recycled" data-hi="अधिक सामग्री का पुनर्चक्रण">More materials recycled</p>
+          </div>
+          <div class="rounded-xl bg-green-800 p-6">
+            <p class="text-4xl font-extrabold text-lime-300">🏠</p>
+            <p class="mt-2 font-semibold" data-en="Easier household collection" data-hi="घरों के लिए आसान संग्रह">Easier household collection</p>
+          </div>
+          <div class="rounded-xl bg-green-800 p-6">
+            <p class="text-4xl font-extrabold text-lime-300">🤝</p>
+            <p class="mt-2 font-semibold" data-en="Stronger local connections" data-hi="स्थानीय स्तर पर बेहतर जुड़ाव">Stronger local connections</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- =========================
-         ABOUT THE PROJECT
+         ABOUT
     ========================== -->
-    <section id="about" class="mx-auto max-w-6xl px-5 py-14 text-center">
-      <h2 class="text-2xl font-bold"
-          data-en="About Kabadiwala Connect"
-          data-hi="कबाड़ीवाला कनेक्ट के बारे में">
-        About Kabadiwala Connect
+    <section id="about" class="mx-auto max-w-6xl px-5 py-16 text-center">
+      <p class="font-semibold uppercase tracking-widest text-green-700"
+         data-en="About the project" data-hi="परियोजना के बारे में">
+        About the project
+      </p>
+      <h2 class="mt-2 text-3xl font-bold"
+          data-en="A better connection for recycling"
+          data-hi="पुनर्चक्रण के लिए बेहतर जुड़ाव">
+        A better connection for recycling
       </h2>
-
-      <p class="mx-auto mt-3 max-w-2xl text-gray-600">
-        Our goal is to make scrap collection more convenient for households
-        and connect them with local collectors.
+      <p class="mx-auto mt-4 max-w-2xl text-gray-600"
+         data-en="Kabadiwala Connect is a prototype designed to connect households with local scrap collectors and make recycling more convenient."
+         data-hi="कबाड़ीवाला कनेक्ट एक प्रोटोटाइप है जो घरों को स्थानीय कबाड़ संग्रहकर्ताओं से जोड़ने और पुनर्चक्रण को सुविधाजनक बनाने के लिए बनाया गया है।">
+        Kabadiwala Connect is a prototype designed to connect households with
+        local scrap collectors and make recycling more convenient.
       </p>
     </section>
 
     <!-- =========================
-         TEAM MEMBER CARDS
+         TEAM
     ========================== -->
-    <section id="team" class="bg-white px-5 py-14 text-center">
+    <section id="team" class="soft-section bg-white px-5 py-16 text-center">
       <p class="font-semibold uppercase tracking-widest text-green-700"
          data-en="The people behind the project"
          data-hi="इस परियोजना के पीछे की टीम">
         The people behind the project
       </p>
-
       <h2 class="mt-2 text-3xl font-bold"
           data-en="Meet our team" data-hi="हमारी टीम से मिलें">
         Meet our team
@@ -287,8 +389,8 @@
       <div class="mx-auto mt-8 grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
 
         <!-- Garvit -->
-        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
-          <img src="5bd5021a-e20f-461e-aa02-d4d0b69c93a0_1000001702.jpg"
+        <article class="surface rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
+          <img src="WhatsApp Image 2026-09-27 at 5.02.07 PM.jpeg"
                alt="Garvit Kumar"
                class="mx-auto mb-4 h-24 w-24 rounded-full object-cover" />
           <h3 class="text-xl font-bold">Garvit Kumar</h3>
@@ -296,17 +398,16 @@
         </article>
 
         <!-- Madhav -->
-        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
-          <img src="WhatsApp Image 2026-09-27 at 4.12.51 PM.jpeg"
+        <article class="surface rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
+          <img src="My photo .jpeg"
                alt="Madhav Kanswal"
-               class="mx-auto mb-4 h-24 w-24 rounded-full object-cover scale-110"
-               style="object-position: center 60%;" />
+               class="mx-auto mb-4 h-24 w-24 rounded-full object-cover scale-110" />
           <h3 class="text-xl font-bold">Madhav Kanswal</h3>
           <p class="mt-1 text-green-700">Frontend Developer</p>
         </article>
 
         <!-- Sahil -->
-        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
+        <article class="surface rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
           <img src="WhatsApp Image 2026-09-27 at 4.00.13 PM.jpeg"
                alt="Sahil Bhist"
                class="mx-auto mb-4 h-24 w-24 rounded-full object-cover" />
@@ -315,26 +416,26 @@
         </article>
 
         <!-- Vamika -->
-        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
-          <div class="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-green-100 text-4xl">
-            👤
-          </div>
+        <article class="surface rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
+          <img src="WhatsApp Image 2026-09-27 at 6.39.15 PM.jpeg"
+               alt="Vamika Maithani"
+               class="mx-auto mb-4 h-24 w-24 rounded-full object-cover" />
           <h3 class="text-xl font-bold">Vamika Maithani</h3>
           <p class="mt-1 text-green-700">Researcher</p>
         </article>
 
         <!-- Vanshika -->
-        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
-          <div class="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-green-100 text-4xl">
-            👤
-          </div>
-          <h3 class="text-xl font-bold">Vanshika Arya</h3>
+        <article class="surface rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
+          <img src="WhatsApp Image 2026-09-27 at 6.35.01 PM.jpeg"
+               alt="Vanshika Arya"
+               class="mx-auto mb-4 h-24 w-24 rounded-full object-cover" />
+          <h3 class="text-xl font-bold">Vanshika</h3>
           <p class="mt-1 text-green-700">Representative</p>
         </article>
 
         <!-- Priyanshi -->
-        <article class="rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
-          <img src="priyanshi.jpg"
+        <article class="surface rounded-xl border border-green-100 bg-amber-50 p-6 shadow-sm">
+          <img src="priyanshi.jpg.jpg"
                alt="Priyanshi Bora"
                class="mx-auto mb-4 h-24 w-24 rounded-full object-cover" />
           <h3 class="text-xl font-bold">Priyanshi Bora</h3>
@@ -345,16 +446,15 @@
     </section>
   </main>
 
-  <!-- Separator -->
+  <!-- =========================
+       FOOTER
+  ========================== -->
   <hr class="border-green-200" />
 
-  <!-- Footer -->
-  <footer class="bg-green-950 text-green-100">
-    <div class="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-8 text-center sm:flex-row sm:justify-between">
-      <p class="font-bold">Kabadiwala Connect</p>
-      <p>Making recycling easier, one pickup at a time.</p>
-      <p>© 2026 Kabadiwala Connect</p>
-    </div>
+  <footer class="bg-green-950 py-6 text-center text-green-100">
+    <p class="font-bold">Kabadiwala Connect</p>
+    <p class="mt-1 text-sm">Making recycling easier, one pickup at a time.</p>
+    <p class="mt-1 text-sm">© 2026 Kabadiwala Connect</p>
   </footer>
 
   <!-- =========================
@@ -364,32 +464,46 @@
     const themeToggle = document.getElementById("themeToggle");
     const languageSelect = document.getElementById("languageSelect");
 
-    // Load the saved theme
+    // Load and apply saved theme
     function applyTheme() {
       const isDark = localStorage.getItem("kabadiwala-theme") === "dark";
-
       document.body.classList.toggle("dark-mode", isDark);
       themeToggle.textContent = isDark ? "☀️ Light mode" : "🌙 Dark mode";
     }
 
     applyTheme();
 
-    // Save theme choice for the other pages
+    // Save the theme for the other pages
     themeToggle.addEventListener("click", () => {
       const isDark = !document.body.classList.contains("dark-mode");
-
       localStorage.setItem("kabadiwala-theme", isDark ? "dark" : "light");
       applyTheme();
     });
 
-    // Change text when the language is selected
-    languageSelect.addEventListener("change", (event) => {
-      const language = event.target.value;
+    // Load, save and apply the selected language
+    function applyLanguage(language) {
       document.documentElement.lang = language;
 
       document.querySelectorAll("[data-en][data-hi]").forEach((element) => {
         element.textContent = element.dataset[language];
       });
+
+      document.querySelectorAll("[data-placeholder-en][data-placeholder-hi]").forEach((element) => {
+        element.placeholder =
+          language === "hi"
+            ? element.dataset.placeholderHi
+            : element.dataset.placeholderEn;
+      });
+
+      languageSelect.value = language;
+    }
+
+    const savedLanguage = localStorage.getItem("kabadiwala-language") || "en";
+    applyLanguage(savedLanguage);
+
+    languageSelect.addEventListener("change", (event) => {
+      localStorage.setItem("kabadiwala-language", event.target.value);
+      applyLanguage(event.target.value);
     });
   </script>
 </body>
