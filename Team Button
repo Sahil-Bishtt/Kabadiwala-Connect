@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Meet the Kabadiwala Connect team." />
+  <title>Our Team | Kabadiwala Connect</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @custom-variant dark (&:where(.dark, .dark *));
+  </style>
+
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem("kabadiwala-theme");
+      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+      document.documentElement.classList.toggle(
+        "dark",
+        savedTheme === "dark" || (!savedTheme && systemPrefersDark)
+      );
+    })();
+  </script>
+
+  <style>
+    html.dark body {
+      background: #030712;
+      color: #f3f4f6;
+    }
+
+    html.dark header {
+      background-color: rgba(17, 24, 39, .95) !important;
+      border-color: #1f2937 !important;
+    }
+
+    html.dark .bg-white {
+      background-color: #111827 !important;
+    }
+
+    html.dark .text-gray-900,
+    html.dark .text-gray-800 {
+      color: #f9fafb !important;
+    }
+
+    html.dark .text-gray-700,
+    html.dark .text-gray-600 {
+      color: #d1d5db !important;
+    }
+
+    html.dark .border-gray-200,
+    html.dark .border-green-100 {
+      border-color: #1f2937 !important;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-amber-50/60 text-gray-800 antialiased transition-colors duration-200 dark:bg-gray-950 dark:text-gray-100">
+  <header class="sticky top-0 z-50 border-b border-gray-200/80 bg-white/95 shadow-sm backdrop-blur-md dark:border-gray-800 dark:bg-gray-900/95">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-3.5">
+      <a href="website.html" class="flex items-center gap-3 rounded-lg p-1 font-bold text-green-800 dark:text-green-400">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-green-700 text-xl text-white" aria-hidden="true">♻</span>
+        <span data-en="Kabadiwala Connect" data-hi="कबाड़ीवाला कनेक्ट">Kabadiwala Connect</span>
+      </a>
+
+      <nav aria-label="Main navigation" class="flex flex-wrap items-center gap-5 text-sm font-semibold">
+        <a href="website.html" class="text-gray-700 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400"
+           data-en="Home" data-hi="होम">Home</a>
+        <a href="scraplist.html" class="text-gray-700 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400"
+           data-en="Scrap list" data-hi="कबाड़ की सूची">Scrap list</a>
+        <a href="pickup.html" class="text-gray-700 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400"
+           data-en="Request a pickup" data-hi="पिकअप बुक करें">Request a pickup</a>
+        <a href="team.html" aria-current="page" class="font-bold text-green-700 dark:text-green-400"
+           data-en="Our Team" data-hi="हमारी टीम">Our Team</a>
+      </nav>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <label for="languageSelect" class="sr-only">Choose language</label>
+        <select id="languageSelect" aria-label="Choose language"
+                class="rounded-lg border border-green-700 bg-white px-3 py-2 text-sm font-semibold text-green-800 dark:border-green-600 dark:bg-gray-800 dark:text-green-300">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+        </select>
+
+        <button id="themeToggle" type="button"
+                class="rounded-lg border border-green-700 bg-white px-3.5 py-2 text-sm font-semibold text-green-800 dark:border-green-600 dark:bg-gray-800 dark:text-green-300">
+          <span id="themeToggleIcon" aria-hidden="true">🌙</span>
+          <span id="themeToggleText">Dark mode</span>
+        </button>
+
+        <a href="login.html" id="loginNavLink"
+           class="rounded-lg border border-green-700 px-4 py-2 text-sm font-semibold text-green-800 hover:bg-green-700 hover:text-white dark:border-green-500 dark:text-green-300"
+           data-en="Login / Register" data-hi="लॉग इन / पंजीकरण">
+          Login / Register
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="bg-green-950 px-5 py-14 text-center text-white dark:bg-black">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-green-300"
+         data-en="The people behind the project"
+         data-hi="इस परियोजना के पीछे की टीम">
+        The people behind the project
+      </p>
+
+      <h1 class="mt-3 text-4xl font-extrabold sm:text-5xl"
+          data-en="Meet our team" data-hi="हमारी टीम से मिलें">
+        Meet our team
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-green-100"
+         data-en="Passionate developers and innovators building sustainable technology for cleaner communities."
+         data-hi="स्वच्छ समुदायों के लिए टिकाऊ तकनीक बनाने वाली हमारी टीम से मिलें।">
+        Passionate developers and innovators building sustainable technology for cleaner communities.
+      </p>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-5 py-14">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <article class="flex flex-col items-center rounded-2xl border border-green-100 bg-white p-7 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <img src="WhatsApp Image 2026-09-27 at 5.02.07 PM.jpeg" alt="Garvit Kumar"
+               class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Garvit Kumar</h2>
+          <p class="mt-1 text-sm font-semibold text-green-700 dark:text-green-400"
+             data-en="Project Lead" data-hi="प्रोजेक्ट लीड">Project Lead</p>
+        </article>
+
+        <article class="flex flex-col items-center rounded-2xl border border-green-100 bg-white p-7 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <img src="My photo .jpeg" alt="Madhav Kanswal"
+               class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Madhav Kanswal</h2>
+          <p class="mt-1 text-sm font-semibold text-green-700 dark:text-green-400"
+             data-en="Frontend Developer" data-hi="फ्रंटएंड डेवलपर">Frontend Developer</p>
+        </article>
+
+        <article class="flex flex-col items-center rounded-2xl border border-green-100 bg-white p-7 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <img src="WhatsApp Image 2026-09-27 at 4.00.13 PM.jpeg" alt="Sahil Bhist"
+               class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Sahil Bhist</h2>
+          <p class="mt-1 text-sm font-semibold text-green-700 dark:text-green-400"
+             data-en="Backend Developer" data-hi="बैकएंड डेवलपर">Backend Developer</p>
+        </article>
+
+        <article class="flex flex-col items-center rounded-2xl border border-green-100 bg-white p-7 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <img src="WhatsApp Image 2026-09-27 at 6.39.15 PM.jpeg" alt="Vamika Maithani"
+               class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Vamika Maithani</h2>
+          <p class="mt-1 text-sm font-semibold text-green-700 dark:text-green-400"
+             data-en="Researcher" data-hi="शोधकर्ता">Researcher</p>
+        </article>
+
+        <article class="flex flex-col items-center rounded-2xl border border-green-100 bg-white p-7 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <img src="WhatsApp Image 2026-09-27 at 6.35.01 PM.jpeg" alt="Vanshika Arya"
+               class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Vanshika Arya</h2>
+          <p class="mt-1 text-sm font-semibold text-green-700 dark:text-green-400"
+             data-en="Representative" data-hi="प्रतिनिधि">Representative</p>
+        </article>
+
+        <article class="flex flex-col items-center rounded-2xl border border-green-100 bg-white p-7 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <img src="priyanshi.jpg.jpg" alt="Priyanshi Bora"
+               class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Priyanshi Bora</h2>
+          <p class="mt-1 text-sm font-semibold text-green-700 dark:text-green-400"
+             data-en="Presentation Designer" data-hi="प्रेजेंटेशन डिज़ाइनर">
+            Presentation Designer
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-green-900 bg-green-950 py-8 text-center text-green-100/90 dark:border-gray-800 dark:bg-black">
+    <p class="text-lg font-bold text-white">Kabadiwala Connect</p>
+    <p class="mt-1 text-sm text-green-200/80 dark:text-gray-400"
+       data-en="Making recycling easier, one pickup at a time."
+       data-hi="हर पिकअप के साथ रीसाइक्लिंग को आसान बनाना।">
+      Making recycling easier, one pickup at a time.
+    </p>
+    <p class="mt-4 text-xs text-green-300/60 dark:text-gray-500">
+      © 2026 Kabadiwala Connect. All rights reserved.
+    </p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+    const languageSelect = document.getElementById("languageSelect");
+    const themeIcon = document.getElementById("themeToggleIcon");
+    const themeText = document.getElementById("themeToggleText");
+
+    function applyTheme() {
+      const isDark = localStorage.getItem("kabadiwala-theme") === "dark";
+
+      document.documentElement.classList.toggle("dark", isDark);
+      document.body.classList.toggle("dark", isDark);
+
+      themeIcon.textContent = isDark ? "☀️" : "🌙";
+      themeText.textContent = isDark
+        ? (languageSelect.value === "hi" ? "लाइट मोड" : "Light mode")
+        : (languageSelect.value === "hi" ? "डार्क मोड" : "Dark mode");
+    }
+
+    function applyLanguage(language) {
+      document.documentElement.lang = language;
+
+      document.querySelectorAll("[data-en][data-hi]").forEach((element) => {
+        const translated = element.dataset[language];
+        if (translated) element.textContent = translated;
+      });
+
+      languageSelect.value = language;
+      applyTheme();
+    }
+
+    applyTheme();
+    applyLanguage(localStorage.getItem("kabadiwala-language") || "en");
+
+    themeToggle.addEventListener("click", () => {
+      const isDark = !document.documentElement.classList.contains("dark");
+      localStorage.setItem("kabadiwala-theme", isDark ? "dark" : "light");
+      applyTheme();
+    });
+
+    languageSelect.addEventListener("change", (event) => {
+      localStorage.setItem("kabadiwala-language", event.target.value);
+      applyLanguage(event.target.value);
+    });
+
+    const userRaw = localStorage.getItem("kabadiwala_user");
+    const loginLink = document.getElementById("loginNavLink");
+
+    if (userRaw && loginLink) {
+      try {
+        const user = JSON.parse(userRaw);
+        const accountArea = loginLink.parentElement;
+
+        accountArea.innerHTML = `
+          <span class="rounded-lg border border-green-300 bg-green-100 px-3 py-2 text-xs font-medium text-green-800 dark:border-green-700 dark:bg-green-900/40 dark:text-green-300">
+            👤 ${user.name} (${user.user_type})
+          </span>
+          <button id="logoutBtn" type="button"
+                  class="px-2 py-2 text-xs font-semibold text-red-600 hover:underline dark:text-red-400">
+            Logout
+          </button>
+        `;
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+          localStorage.removeItem("kabadiwala_user");
+          window.location.reload();
+        });
+      } catch (error) {
+        localStorage.removeItem("kabadiwala_user");
+      }
+    }
+  </script>
+</body>
+</html>
