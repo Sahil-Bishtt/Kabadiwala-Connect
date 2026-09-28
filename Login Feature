@@ -3,45 +3,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Login or register with Kabadiwala Connect." />
   <title>Login / Register | Kabadiwala Connect</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-  <script>
-    (function () {
-      const savedTheme = localStorage.getItem("kabadiwala-theme");
-      if (savedTheme === "dark") document.documentElement.classList.add("dark");
-    })();
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @custom-variant dark (&:where(.dark, .dark *));
+  </style>
 
   <style>
-    body { transition: background-color .25s, color .25s; }
-    body.dark { background-color: #111827; color: #f3f4f6; }
-    body.dark #loginCard { background-color: #1f2937; color: #f3f4f6; border-color: #374151; }
-    body.dark input, body.dark select { background-color: #111827; color: #f3f4f6; border-color: #4b5563; }
+    body {
+      transition: background-color .25s, color .25s;
+    }
+
+    body.dark-mode {
+      background: #111827;
+      color: #f3f4f6;
+    }
+
+    body.dark-mode header,
+    body.dark-mode #loginCard {
+      background: #1f2937;
+      color: #f3f4f6;
+      border-color: #374151;
+    }
+
+    body.dark-mode input,
+    body.dark-mode select,
+    body.dark-mode #themeToggle {
+      background: #111827;
+      color: #f3f4f6;
+      border-color: #4b5563;
+    }
+
+    body.dark-mode p {
+      color: #d1d5db;
+    }
+
+    .tab-active {
+      background: #15803d;
+      color: #ffffff;
+    }
+
+    .tab-inactive {
+      background: #f3f4f6;
+      color: #14532d;
+    }
+
+    .tab-inactive:hover {
+      background: #dcfce7;
+    }
+
+    body.dark-mode .tab-active {
+      background: #22c55e;
+      color: #052e16;
+    }
+
+    body.dark-mode .tab-inactive {
+      background: #374151;
+      color: #f9fafb;
+    }
+
+    body.dark-mode .tab-inactive:hover {
+      background: #4b5563;
+      color: #ffffff;
+    }
   </style>
 </head>
 
-<body class="min-h-screen bg-amber-50 text-gray-800 dark:bg-gray-950 dark:text-gray-100">
-  <!-- Header -->
-  <header class="bg-white shadow-sm dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+<body class="min-h-screen bg-amber-50 text-gray-800">
+  <header class="bg-white shadow-sm">
     <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-5 py-4">
-      <a href="website.html" class="font-bold text-green-800 dark:text-green-400 text-lg">
+      <a href="website.html" class="font-bold text-green-800 dark:text-green-300">
         ♻ Kabadiwala Connect
       </a>
 
       <div class="flex flex-wrap items-center gap-3">
+        <label for="languageSelect" class="sr-only">Choose language</label>
         <select id="languageSelect" aria-label="Choose language"
-                class="rounded-lg border border-green-700 bg-white px-3 py-2 text-sm font-semibold text-green-800 dark:border-green-600 dark:bg-gray-800 dark:text-green-300">
+                class="rounded-lg border border-green-700 bg-white px-3 py-2 font-semibold text-green-800">
           <option value="en">English</option>
           <option value="hi">हिन्दी</option>
         </select>
 
         <button id="themeToggle" type="button"
-                class="rounded-lg border border-green-700 px-4 py-2 text-sm font-semibold text-green-800 dark:border-green-600 dark:bg-gray-800 dark:text-green-300">
+                class="rounded-lg border border-green-700 px-4 py-2 font-semibold text-green-800">
           🌙 Dark mode
         </button>
 
-        <a href="website.html" class="text-sm text-green-700 hover:underline dark:text-green-400"
+        <a href="website.html" class="text-green-700 hover:underline"
            data-en="Back to home" data-hi="मुखपृष्ठ पर वापस जाएँ">
           Back to home
         </a>
@@ -49,303 +99,513 @@
     </div>
   </header>
 
-  <main class="mx-auto max-w-md px-5 py-12">
-    <!-- Main Auth Card -->
-    <section id="loginCard" class="rounded-2xl border border-green-100 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-      
-      <!-- Session Logged-In Display -->
-      <div id="sessionBanner" class="hidden text-center mb-6 p-4 rounded-xl bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800">
-        <p class="font-bold text-green-900 dark:text-green-200 text-lg" id="sessionUserGreeting"></p>
-        <p class="text-xs text-green-700 dark:text-green-400 mt-1" id="sessionRoleDetail"></p>
-        <div class="mt-4 flex justify-center gap-3">
-          <a href="pickup.html" class="rounded-lg bg-green-700 px-4 py-2 text-xs font-bold text-white hover:bg-green-800">Request Pickup</a>
-          <button id="logoutBtnCard" type="button" class="rounded-lg border border-red-600 px-4 py-2 text-xs font-bold text-red-600 hover:bg-red-50 dark:hover:bg-red-950">Log Out</button>
-        </div>
+  <main class="mx-auto max-w-lg px-5 py-12 sm:py-16">
+    <section id="loginCard" class="rounded-2xl border border-green-100 bg-white p-6 shadow-lg sm:p-8">
+      <div class="text-center">
+        <p class="text-sm font-bold uppercase tracking-widest text-green-700"
+           data-en="Welcome" data-hi="स्वागत है">
+          Welcome
+        </p>
+
+        <h1 class="mt-2 text-3xl font-extrabold"
+            data-en="Your Kabadiwala Connect account"
+            data-hi="आपका कबाड़ीवाला कनेक्ट खाता">
+          Your Kabadiwala Connect account
+        </h1>
+
+        <p class="mt-2 text-gray-600"
+           data-en="Log in or create an account using your mobile number."
+           data-hi="अपने मोबाइल नंबर से लॉग इन करें या खाता बनाएँ।">
+          Log in or create an account using your mobile number.
+        </p>
       </div>
 
-      <!-- Auth Tabs: Login vs Register -->
-      <div id="authTabs" class="flex border-b border-gray-200 dark:border-gray-700 mb-6">
-        <button id="tabLoginBtn" type="button" class="w-1/2 py-2.5 font-bold text-green-800 dark:text-green-400 border-b-2 border-green-700 text-center"
+      <div class="mt-6 grid grid-cols-2 rounded-xl border border-green-200 bg-green-50 p-1">
+        <button id="loginTab" type="button"
+                class="tab-active rounded-lg px-4 py-2.5 font-bold"
                 data-en="Login" data-hi="लॉग इन">
           Login
         </button>
-        <button id="tabRegisterBtn" type="button" class="w-1/2 py-2.5 font-semibold text-gray-500 dark:text-gray-400 border-b-2 border-transparent text-center hover:text-green-700"
+
+        <button id="registerTab" type="button"
+                class="tab-inactive rounded-lg px-4 py-2.5 font-bold"
                 data-en="Register" data-hi="पंजीकरण">
           Register
         </button>
       </div>
 
-      <!-- FORM 1: LOGIN FLOW -->
-      <form id="loginForm" class="space-y-4">
-        <div>
-          <label class="block font-semibold text-sm" for="mobile" data-en="Mobile number" data-hi="मोबाइल नंबर">
-            Mobile number
-          </label>
-          <input id="mobile" type="tel" placeholder="Enter mobile number" required pattern="[0-9]{10}"
-                 class="mt-1.5 w-full rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm focus:ring-2 focus:ring-green-600 focus:outline-none" />
+      <!-- LOGIN PANEL -->
+      <div id="loginPanel" class="mt-6">
+        <p class="text-sm text-gray-600"
+           data-en="Enter the same country code and mobile number you used when registering."
+           data-hi="पंजीकरण के समय वाला देश कोड और मोबाइल नंबर दर्ज करें।">
+          Enter the same country code and mobile number you used when registering.
+        </p>
+
+        <label for="loginCountry" class="mt-5 block font-semibold"
+               data-en="Country code" data-hi="देश का कोड">
+          Country code
+        </label>
+
+        <div class="mt-2 grid grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-2">
+          <select id="loginCountry"
+                  class="min-w-0 rounded-lg border border-gray-300 bg-white px-3 py-3"
+                  aria-label="Login country code"></select>
+
+          <input id="loginMobile" type="tel" inputmode="numeric"
+                 autocomplete="tel-national" placeholder="Mobile number"
+                 class="min-w-0 rounded-lg border border-gray-300 px-4 py-3" />
         </div>
 
-        <button id="requestOtpBtn" type="button"
-                class="w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800 transition-colors disabled:opacity-50"
+        <div class="mt-5 rounded-xl border border-green-200 bg-green-50 p-4">
+          <label for="loginCaptchaInput" class="block font-semibold"
+                 data-en="Quick check: solve this addition"
+                 data-hi="छोटी जाँच: यह जोड़ हल करें">
+            Quick check: solve this addition
+          </label>
+
+          <div class="mt-3 flex items-center gap-3">
+            <span id="loginCaptchaQuestion"
+                  class="rounded-lg bg-white px-4 py-2 text-lg font-bold text-green-800"
+                  aria-live="polite"></span>
+
+            <button id="refreshLoginCaptcha" type="button"
+                    class="rounded-lg border border-green-700 px-3 py-2 text-sm font-semibold text-green-800"
+                    data-en="New question" data-hi="नया सवाल">
+              New question
+            </button>
+          </div>
+
+          <input id="loginCaptchaInput" type="number" inputmode="numeric"
+                 placeholder="Your answer"
+                 class="mt-3 w-full rounded-lg border border-gray-300 px-4 py-3" />
+        </div>
+
+        <button id="requestButton" type="button"
+                class="mt-5 w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800"
                 data-en="Request OTP" data-hi="OTP माँगें">
           Request OTP
         </button>
 
-        <!-- Dynamic OTP Verification Area -->
-        <div id="otpArea" class="hidden space-y-4 pt-2 border-t border-gray-100 dark:border-gray-800">
-          <div>
-            <label class="block font-semibold text-sm" for="otp" data-en="Enter OTP" data-hi="OTP दर्ज करें">
-              Enter OTP
-            </label>
-            <input id="otp" type="text" inputmode="numeric" maxlength="4" placeholder="4-digit OTP"
-                   class="mt-1.5 w-full rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm focus:ring-2 focus:ring-green-600 focus:outline-none" />
-          </div>
+        <div id="otpArea" class="mt-5 hidden">
+          <label for="otp" class="block font-semibold"
+                 data-en="Enter OTP" data-hi="OTP दर्ज करें">
+            Enter OTP
+          </label>
 
-          <button id="verifyOtpBtn" type="button"
-                  class="w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800 transition-colors disabled:opacity-50"
-                  data-en="Verify and log in" data-hi="सत्यापित करें और लॉग इन करें">
+          <input id="otp" type="text" inputmode="numeric" maxlength="4"
+                 autocomplete="one-time-code" placeholder="4-digit OTP"
+                 class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3" />
+
+          <button id="verifyButton" type="button"
+                  class="mt-4 w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800"
+                  data-en="Verify and log in"
+                  data-hi="सत्यापित करें और लॉग इन करें">
             Verify and log in
           </button>
         </div>
-      </form>
+      </div>
 
-      <!-- FORM 2: REGISTRATION FLOW -->
-      <form id="registerForm" class="hidden space-y-4">
-        <div>
-          <label class="block font-semibold text-sm" for="regName" data-en="Full Name" data-hi="पूरा नाम">Full Name</label>
-          <input id="regName" type="text" minlength="2" maxlength="40" placeholder="e.g. Rahul Sharma" required
-                 class="mt-1.5 w-full rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm focus:ring-2 focus:ring-green-600 focus:outline-none" />
+      <!-- REGISTRATION PANEL -->
+      <form id="registerPanel" class="mt-6 hidden">
+        <p class="text-sm text-gray-600"
+           data-en="Create an account to get started."
+           data-hi="शुरू करने के लिए अपना खाता बनाएँ।">
+          Create an account to get started.
+        </p>
+
+        <label for="registerName" class="mt-5 block font-semibold"
+               data-en="Full name" data-hi="पूरा नाम">
+          Full name
+        </label>
+
+        <input id="registerName" type="text" autocomplete="name"
+               required minlength="2" maxlength="40"
+               placeholder="Enter your name"
+               class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3" />
+
+        <label for="registerCountry" class="mt-4 block font-semibold"
+               data-en="Country code" data-hi="देश का कोड">
+          Country code
+        </label>
+
+        <div class="mt-2 grid grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-2">
+          <select id="registerCountry" required
+                  class="min-w-0 rounded-lg border border-gray-300 bg-white px-3 py-3"
+                  aria-label="Registration country code"></select>
+
+          <input id="registerMobile" type="tel" inputmode="numeric"
+                 autocomplete="tel-national" required
+                 placeholder="Mobile number"
+                 class="min-w-0 rounded-lg border border-gray-300 px-4 py-3" />
         </div>
 
-        <div>
-          <label class="block font-semibold text-sm" for="regMobile" data-en="Mobile Number" data-hi="मोबाइल नंबर">Mobile Number</label>
-          <input id="regMobile" type="tel" placeholder="10-digit mobile number" required pattern="[0-9]{10}"
-                 class="mt-1.5 w-full rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm focus:ring-2 focus:ring-green-600 focus:outline-none" />
+        <p class="mt-2 text-xs text-gray-500"
+           data-en="Choose your code first, then enter your number without the country code."
+           data-hi="पहले देश का कोड चुनें, फिर देश के कोड के बिना अपना नंबर दर्ज करें।">
+          Choose your code first, then enter your number without the country code.
+        </p>
+
+        <label for="userType" class="mt-4 block font-semibold"
+               data-en="I am registering as"
+               data-hi="मैं इस रूप में पंजीकरण कर रहा/रही हूँ">
+          I am registering as
+        </label>
+
+        <select id="userType" required
+                class="mt-2 w-full rounded-lg border border-gray-300 bg-white px-4 py-3">
+          <option value="Household" data-en="Household" data-hi="परिवार">
+            Household
+          </option>
+          <option value="Collector" data-en="Scrap collector" data-hi="कबाड़ संग्रहकर्ता">
+            Scrap collector
+          </option>
+        </select>
+
+        <div class="mt-5 rounded-xl border border-green-200 bg-green-50 p-4">
+          <label for="registerCaptchaInput" class="block font-semibold"
+                 data-en="Quick check: solve this addition"
+                 data-hi="छोटी जाँच: यह जोड़ हल करें">
+            Quick check: solve this addition
+          </label>
+
+          <div class="mt-3 flex items-center gap-3">
+            <span id="registerCaptchaQuestion"
+                  class="rounded-lg bg-white px-4 py-2 text-lg font-bold text-green-800"
+                  aria-live="polite"></span>
+
+            <button id="refreshRegisterCaptcha" type="button"
+                    class="rounded-lg border border-green-700 px-3 py-2 text-sm font-semibold text-green-800"
+                    data-en="New question" data-hi="नया सवाल">
+              New question
+            </button>
+          </div>
+
+          <input id="registerCaptchaInput" type="number" inputmode="numeric"
+                 required placeholder="Your answer"
+                 class="mt-3 w-full rounded-lg border border-gray-300 px-4 py-3" />
         </div>
 
-        <div>
-          <label class="block font-semibold text-sm" for="regUserType" data-en="Account Type" data-hi="खाता का प्रकार">Account Type</label>
-          <select id="regUserType" class="mt-1.5 w-full rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm focus:ring-2 focus:ring-green-600 focus:outline-none">
-            <option value="Household">Household (Sell Scrap)</option>
-            <option value="Collector">Collector (Buy Scrap)</option>
-          </select>
-        </div>
-
-        <button id="registerSubmitBtn" type="button"
-                class="w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800 transition-colors disabled:opacity-50"
-                data-en="Register Account" data-hi="खाता बनाएँ">
-          Register Account
+        <button id="registerButton" type="submit"
+                class="mt-5 w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800"
+                data-en="Create account" data-hi="खाता बनाएँ">
+          Create account
         </button>
       </form>
 
-      <!-- Global Response & Status Messaging -->
-      <div id="messageBox" aria-live="polite" class="mt-4 rounded-lg p-3 text-sm hidden"></div>
+      <p id="message" role="status" aria-live="polite" class="mt-4 text-sm"></p>
     </section>
   </main>
 
-  <!-- AUTH LOGIC & API INTEGRATION -->
   <script>
-    const API_URL = "http://127.0.0.1:8000";
+    const countries = [
+      ["IN", "+91", "India"],
+      ["US", "+1", "United States"],
+      ["GB", "+44", "United Kingdom"],
+      ["CA", "+1", "Canada"],
+      ["AU", "+61", "Australia"],
+      ["NZ", "+64", "New Zealand"],
+      ["AE", "+971", "United Arab Emirates"],
+      ["NP", "+977", "Nepal"],
+      ["PK", "+92", "Pakistan"],
+      ["BD", "+880", "Bangladesh"],
+      ["SG", "+65", "Singapore"],
+      ["DE", "+49", "Germany"],
+      ["FR", "+33", "France"],
+      ["ZA", "+27", "South Africa"]
+    ];
 
-    const themeToggle = document.getElementById("themeToggle");
     const languageSelect = document.getElementById("languageSelect");
-    const messageBox = document.getElementById("messageBox");
+    const message = document.getElementById("message");
+    const loginPanel = document.getElementById("loginPanel");
+    const registerPanel = document.getElementById("registerPanel");
+    const loginTab = document.getElementById("loginTab");
+    const registerTab = document.getElementById("registerTab");
+    const countryCodeStorageKey = "kabadiwala-country-code";
 
-    // UI Helper: Display Alerts
-    function displayMsg(text, isError = false) {
-      messageBox.classList.remove("hidden", "bg-red-100", "text-red-800", "bg-green-100", "text-green-800", "dark:bg-red-950", "dark:text-red-200", "dark:bg-green-950", "dark:text-green-200");
-      if (isError) {
-        messageBox.classList.add("bg-red-100", "text-red-800", "dark:bg-red-950", "dark:text-red-200");
-      } else {
-        messageBox.classList.add("bg-green-100", "text-green-800", "dark:bg-green-950", "dark:text-green-200");
-      }
-      messageBox.textContent = text;
+    function fillCountryOptions(select) {
+      countries.forEach(([iso, code, name]) => {
+        const option = document.createElement("option");
+        option.value = code;
+        option.textContent = `${name} (${code})`;
+        option.dataset.iso = iso;
+        select.appendChild(option);
+      });
+
+      const savedCode = localStorage.getItem(countryCodeStorageKey) || "+91";
+      select.value = countries.some((country) => country[1] === savedCode)
+        ? savedCode
+        : "+91";
     }
 
-    // Theme & Lang Sync
+    const loginCountry = document.getElementById("loginCountry");
+    const registerCountry = document.getElementById("registerCountry");
+
+    fillCountryOptions(loginCountry);
+    fillCountryOptions(registerCountry);
+
+    loginCountry.value = registerCountry.value =
+      localStorage.getItem(countryCodeStorageKey) || "+91";
+
+    [loginCountry, registerCountry].forEach((select) => {
+      select.addEventListener("change", () => {
+        localStorage.setItem(countryCodeStorageKey, select.value);
+        loginCountry.value = registerCountry.value = select.value;
+      });
+    });
+
+    // Apply and save the theme across pages.
+    const themeToggle = document.getElementById("themeToggle");
+
     function applyTheme() {
       const isDark = localStorage.getItem("kabadiwala-theme") === "dark";
+      document.body.classList.toggle("dark-mode", isDark);
       document.documentElement.classList.toggle("dark", isDark);
-      document.body.classList.toggle("dark", isDark);
+
       themeToggle.textContent = isDark ? "☀️ Light mode" : "🌙 Dark mode";
     }
 
-    function applyLanguage(language) {
-      document.documentElement.lang = language;
-      document.querySelectorAll("[data-en][data-hi]").forEach((el) => {
-        el.textContent = el.dataset[language];
-      });
-      if (languageSelect) languageSelect.value = language;
-    }
-
     applyTheme();
-    applyLanguage(localStorage.getItem("kabadiwala-language") || "en");
 
     themeToggle.addEventListener("click", () => {
-      const isDark = !document.body.classList.contains("dark");
+      const isDark = !document.body.classList.contains("dark-mode");
       localStorage.setItem("kabadiwala-theme", isDark ? "dark" : "light");
       applyTheme();
     });
 
-    languageSelect.addEventListener("change", (e) => {
-      localStorage.setItem("kabadiwala-language", e.target.value);
-      applyLanguage(e.target.value);
-    });
+    // Apply saved English or Hindi language.
+    function applyLanguage(language) {
+      document.documentElement.lang = language;
 
-    // Check Existing Session
-    function checkExistingSession() {
-      const userRaw = localStorage.getItem("kabadiwala_user");
-      if (userRaw) {
-        try {
-          const user = JSON.parse(userRaw);
-          document.getElementById("sessionBanner").classList.remove("hidden");
-          document.getElementById("sessionUserGreeting").textContent = `Welcome back, ${user.name}!`;
-          document.getElementById("sessionRoleDetail").textContent = `Logged in as ${user.user_type} (${user.mobile_number})`;
-          document.getElementById("authTabs").classList.add("hidden");
-          document.getElementById("loginForm").classList.add("hidden");
-          document.getElementById("registerForm").classList.add("hidden");
-        } catch (e) {
-          localStorage.removeItem("kabadiwala_user");
-        }
-      }
+      document.querySelectorAll("[data-en][data-hi]").forEach((element) => {
+        const translation = element.dataset[language];
+        if (translation) element.textContent = translation;
+      });
+
+      languageSelect.value = language;
+
+      const isDark = localStorage.getItem("kabadiwala-theme") === "dark";
+      themeToggle.textContent = isDark
+        ? (language === "hi" ? "☀️ लाइट मोड" : "☀️ Light mode")
+        : (language === "hi" ? "🌙 डार्क मोड" : "🌙 Dark mode");
     }
-    checkExistingSession();
 
-    document.getElementById("logoutBtnCard")?.addEventListener("click", () => {
-      localStorage.removeItem("kabadiwala_user");
-      window.location.reload();
+    applyLanguage(localStorage.getItem("kabadiwala-language") || "en");
+
+    languageSelect.addEventListener("change", (event) => {
+      localStorage.setItem("kabadiwala-language", event.target.value);
+      applyLanguage(event.target.value);
     });
 
-    // Auth Mode Tab Switcher
-    const tabLoginBtn = document.getElementById("tabLoginBtn");
-    const tabRegisterBtn = document.getElementById("tabRegisterBtn");
-    const loginForm = document.getElementById("loginForm");
-    const registerForm = document.getElementById("registerForm");
+    function switchPanel(showRegister) {
+      loginPanel.classList.toggle("hidden", showRegister);
+      registerPanel.classList.toggle("hidden", !showRegister);
 
-    tabLoginBtn.addEventListener("click", () => {
-      tabLoginBtn.className = "w-1/2 py-2.5 font-bold text-green-800 dark:text-green-400 border-b-2 border-green-700 text-center";
-      tabRegisterBtn.className = "w-1/2 py-2.5 font-semibold text-gray-500 dark:text-gray-400 border-b-2 border-transparent text-center hover:text-green-700";
-      loginForm.classList.remove("hidden");
-      registerForm.classList.add("hidden");
-      messageBox.classList.add("hidden");
-    });
+      loginTab.className = showRegister
+        ? "tab-inactive rounded-lg px-4 py-2.5 font-bold"
+        : "tab-active rounded-lg px-4 py-2.5 font-bold";
 
-    tabRegisterBtn.addEventListener("click", () => {
-      tabRegisterBtn.className = "w-1/2 py-2.5 font-bold text-green-800 dark:text-green-400 border-b-2 border-green-700 text-center";
-      tabLoginBtn.className = "w-1/2 py-2.5 font-semibold text-gray-500 dark:text-gray-400 border-b-2 border-transparent text-center hover:text-green-700";
-      registerForm.classList.remove("hidden");
-      loginForm.classList.add("hidden");
-      messageBox.classList.add("hidden");
-    });
+      registerTab.className = showRegister
+        ? "tab-active rounded-lg px-4 py-2.5 font-bold"
+        : "tab-inactive rounded-lg px-4 py-2.5 font-bold";
 
-    // 1. POST /register
-    document.getElementById("registerSubmitBtn").addEventListener("click", async () => {
-      const name = document.getElementById("regName").value.trim();
-      const mobile_number = document.getElementById("regMobile").value.trim();
-      const user_type = document.getElementById("regUserType").value;
+      message.textContent = "";
+    }
 
-      if (name.length < 2 || name.length > 40) {
-        displayMsg("Name must be between 2 and 40 characters.", true);
-        return;
-      }
-      if (!mobile_number) {
-        displayMsg("Please enter a valid mobile number.", true);
-        return;
+    loginTab.addEventListener("click", () => switchPanel(false));
+    registerTab.addEventListener("click", () => switchPanel(true));
+
+    function phoneNumber(countrySelect, phoneInput) {
+      const localDigits = phoneInput.value
+        .replace(/\D/g, "")
+        .replace(/^0+/, "");
+
+      const fullNumber = countrySelect.value + localDigits;
+      const digitCount = fullNumber.replace(/\D/g, "").length;
+
+      if (!localDigits || digitCount < 8 || digitCount > 15) {
+        throw new Error(
+          "Enter a valid phone number (8–15 digits including country code). / देश के कोड सहित 8–15 अंकों का सही नंबर दर्ज करें।"
+        );
       }
 
-      const btn = document.getElementById("registerSubmitBtn");
-      btn.disabled = true;
-      btn.textContent = "Registering...";
+      return fullNumber;
+    }
 
+    function createCaptcha(questionId, answerInputId) {
+      const first = Math.floor(Math.random() * 9) + 1;
+      const second = Math.floor(Math.random() * 9) + 1;
+
+      document.getElementById(questionId).textContent =
+        `${first} + ${second} = ?`;
+
+      document.getElementById(answerInputId).value = "";
+
+      return first + second;
+    }
+
+    let loginCaptchaAnswer = createCaptcha(
+      "loginCaptchaQuestion",
+      "loginCaptchaInput"
+    );
+
+    let registerCaptchaAnswer = createCaptcha(
+      "registerCaptchaQuestion",
+      "registerCaptchaInput"
+    );
+
+    document.getElementById("refreshLoginCaptcha").addEventListener("click", () => {
+      loginCaptchaAnswer = createCaptcha(
+        "loginCaptchaQuestion",
+        "loginCaptchaInput"
+      );
+    });
+
+    document.getElementById("refreshRegisterCaptcha").addEventListener("click", () => {
+      registerCaptchaAnswer = createCaptcha(
+        "registerCaptchaQuestion",
+        "registerCaptchaInput"
+      );
+    });
+
+    const API_URL = "http://127.0.0.1:8000";
+    const loginMobile = document.getElementById("loginMobile");
+    const otpInput = document.getElementById("otp");
+    const otpArea = document.getElementById("otpArea");
+
+    function showError(error) {
+      message.textContent =
+        error.message || "Something went wrong. Please try again.";
+      message.className = "mt-4 text-sm font-medium text-red-700";
+    }
+
+    function showSuccess(text) {
+      message.textContent = text;
+      message.className = "mt-4 text-sm font-medium text-green-700";
+    }
+
+    async function responseData(response) {
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Request failed. Please try again.");
+      }
+
+      return data;
+    }
+
+    // Request an OTP for login.
+    document.getElementById("requestButton").addEventListener("click", async () => {
       try {
-        const response = await fetch(`${API_URL}/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, mobile_number, user_type })
-        });
+        const mobile_number = phoneNumber(loginCountry, loginMobile);
+        const answer = Number(
+          document.getElementById("loginCaptchaInput").value
+        );
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.detail || "Registration failed.");
+        if (answer !== loginCaptchaAnswer) {
+          loginCaptchaAnswer = createCaptcha(
+            "loginCaptchaQuestion",
+            "loginCaptchaInput"
+          );
+          throw new Error("CAPTCHA answer is incorrect. Please try again.");
+        }
 
-        displayMsg(`Registration successful! Please login with mobile ${data.user.mobile_number}.`, false);
-        document.getElementById("mobile").value = data.user.mobile_number;
-        tabLoginBtn.click();
-      } catch (error) {
-        displayMsg(error.message, true);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Register Account";
-      }
-    });
-
-    // 2. POST /login/request-otp
-    document.getElementById("requestOtpBtn").addEventListener("click", async () => {
-      const mobile_number = document.getElementById("mobile").value.trim();
-      if (!mobile_number) {
-        displayMsg("Enter your registered mobile number first.", true);
-        return;
-      }
-
-      const btn = document.getElementById("requestOtpBtn");
-      btn.disabled = true;
-      btn.textContent = "Sending OTP...";
-
-      try {
         const response = await fetch(`${API_URL}/login/request-otp`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ mobile_number })
         });
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.detail || "Could not request OTP.");
+        const data = await responseData(response);
+        otpArea.classList.remove("hidden");
 
-        document.getElementById("otpArea").classList.remove("hidden");
-        displayMsg(`OTP sent! Prototype Demo OTP: [ ${data.otp} ]`, false);
+        showSuccess(
+          data.otp
+            ? `Demo OTP: ${data.otp}`
+            : "OTP requested. Check your phone."
+        );
       } catch (error) {
-        displayMsg(error.message, true);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Request OTP";
+        showError(error);
       }
     });
 
-    // 3. POST /login/verify-otp
-    document.getElementById("verifyOtpBtn").addEventListener("click", async () => {
-      const mobile_number = document.getElementById("mobile").value.trim();
-      const otp = document.getElementById("otp").value.trim();
-
-      if (!otp) {
-        displayMsg("Please enter the 4-digit OTP.", true);
-        return;
-      }
-
-      const btn = document.getElementById("verifyOtpBtn");
-      btn.disabled = true;
-      btn.textContent = "Verifying...";
-
+    // Verify the OTP and save the logged-in user.
+    document.getElementById("verifyButton").addEventListener("click", async () => {
       try {
+        const mobile_number = phoneNumber(loginCountry, loginMobile);
+
         const response = await fetch(`${API_URL}/login/verify-otp`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ mobile_number, otp })
+          body: JSON.stringify({
+            mobile_number,
+            otp: otpInput.value.trim()
+          })
         });
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.detail || "OTP verification failed.");
+        const data = await responseData(response);
 
-        // Store user state in localStorage
-        localStorage.setItem("kabadiwala_user", JSON.stringify(data.user));
-        displayMsg(`Welcome ${data.user.name}! Redirecting...`, false);
-        
+        if (data.user) {
+          localStorage.setItem("kabadiwala_user", JSON.stringify(data.user));
+        }
+
+        showSuccess(
+          `Welcome${data.user?.name ? `, ${data.user.name}` : ""}! Login successful.`
+        );
+
         setTimeout(() => {
-          window.location.href = "pickup.html";
-        }, 1000);
+          window.location.href = "website.html";
+        }, 900);
       } catch (error) {
-        displayMsg(error.message, true);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Verify and log in";
+        showError(error);
+      }
+    });
+
+    // Register using the FastAPI /register endpoint.
+    registerPanel.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      try {
+        const answer = Number(
+          document.getElementById("registerCaptchaInput").value
+        );
+
+        if (answer !== registerCaptchaAnswer) {
+          registerCaptchaAnswer = createCaptcha(
+            "registerCaptchaQuestion",
+            "registerCaptchaInput"
+          );
+          throw new Error("CAPTCHA answer is incorrect. Please try again.");
+        }
+
+        const mobile_number = phoneNumber(
+          registerCountry,
+          document.getElementById("registerMobile")
+        );
+
+        const response = await fetch(`${API_URL}/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: document.getElementById("registerName").value.trim(),
+            mobile_number,
+            user_type: document.getElementById("userType").value
+          })
+        });
+
+        const data = await responseData(response);
+
+        if (data.user) {
+          localStorage.setItem("kabadiwala_user", JSON.stringify(data.user));
+        }
+
+        showSuccess(data.message || "Registration successful!");
+
+        setTimeout(() => {
+          window.location.href = "website.html";
+        }, 900);
+      } catch (error) {
+        showError(error);
       }
     });
   </script>
