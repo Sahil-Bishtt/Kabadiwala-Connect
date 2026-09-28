@@ -6,14 +6,17 @@
   <meta name="description" content="Kabadiwala Connect - Connecting households with local scrap collectors to make recycling easier and convenient." />
   <title>Kabadiwala Connect | Local Scrap Recycling Made Easy</title>
 
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-  <!-- Early script to prevent Flash of Unstyled Content (FOUC) -->
+  <style type="text/tailwindcss">
+    @custom-variant dark (&:where(.dark, .dark *));
+  </style>
+
   <script>
     (function () {
       const savedTheme = localStorage.getItem("kabadiwala-theme");
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
       if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
         document.documentElement.classList.add("dark");
       } else {
@@ -23,26 +26,30 @@
   </script>
 
   <style>
-    /* Dark Mode High-Contrast Fail-safes */
     html.dark body {
       background-color: #030712;
       color: #f3f4f6;
     }
+
     html.dark header {
       background-color: rgba(17, 24, 39, 0.95) !important;
       border-color: #1f2937 !important;
     }
+
     html.dark .bg-white {
       background-color: #111827 !important;
     }
+
     html.dark .text-gray-900,
     html.dark .text-gray-800 {
       color: #f9fafb !important;
     }
+
     html.dark .text-gray-700,
     html.dark .text-gray-600 {
       color: #d1d5db !important;
     }
+
     html.dark .border-gray-200,
     html.dark .border-green-100 {
       border-color: #1f2937 !important;
@@ -52,15 +59,12 @@
 
 <body class="bg-amber-50/60 text-gray-800 transition-colors duration-200 dark:bg-gray-950 dark:text-gray-100 antialiased selection:bg-green-700 selection:text-white">
 
-  <!-- =========================
-       HEADER & NAVIGATION
-  ========================== -->
-  <header class="sticky top-0 z-50 border-b border-gray-200/80 bg-white/95 backdrop-blur-md transition-colors duration-200 dark:border-gray-800 dark:bg-gray-900/95 shadow-xs">
+  <!-- HEADER & NAVIGATION -->
+  <header class="sticky top-0 z-50 border-b border-gray-200/80 bg-white/95 shadow-xs backdrop-blur-md transition-colors duration-200 dark:border-gray-800 dark:bg-gray-900/95">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-3.5">
 
-      <!-- Brand Logo -->
-      <a href="website.html" 
-         class="group flex items-center gap-3 font-bold text-green-800 transition-colors dark:text-green-400 focus-visible:outline-2 focus-visible:outline-green-600 rounded-lg p-1">
+      <a href="website.html"
+         class="group flex items-center gap-3 rounded-lg p-1 font-bold text-green-800 transition-colors focus-visible:outline-2 focus-visible:outline-green-600 dark:text-green-400">
         <span class="flex h-10 w-10 items-center justify-center rounded-full bg-green-700 text-xl text-white shadow-md transition-transform group-hover:scale-105" aria-hidden="true">
           ♻
         </span>
@@ -69,44 +73,41 @@
         </span>
       </a>
 
-      <!-- Navigation Links -->
       <nav aria-label="Main Navigation" class="flex flex-wrap items-center gap-6 text-sm font-semibold">
-        <a href="scraplist.html" 
-           class="text-gray-700 transition-colors hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-green-600 rounded px-1"
+        <a href="scraplist.html"
+           class="rounded px-1 text-gray-700 transition-colors hover:text-green-700 focus-visible:outline-2 focus-visible:outline-green-600 dark:text-gray-300 dark:hover:text-green-400"
            data-en="Scrap list" data-hi="कबाड़ की सूची">Scrap list</a>
 
-        <a href="pickup.html" 
-           class="text-gray-700 transition-colors hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-green-600 rounded px-1"
+        <a href="pickup.html"
+           class="rounded px-1 text-gray-700 transition-colors hover:text-green-700 focus-visible:outline-2 focus-visible:outline-green-600 dark:text-gray-300 dark:hover:text-green-400"
            data-en="Request a pickup" data-hi="पिकअप बुक करें">Request a pickup</a>
 
-        <a href="#benefits" 
-           class="text-gray-700 transition-colors hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-green-600 rounded px-1"
+        <a href="#benefits"
+           class="rounded px-1 text-gray-700 transition-colors hover:text-green-700 focus-visible:outline-2 focus-visible:outline-green-600 dark:text-gray-300 dark:hover:text-green-400"
            data-en="Benefits" data-hi="लाभ">Benefits</a>
 
-        <a href="#team" 
-           class="text-gray-700 transition-colors hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-green-600 rounded px-1"
+        <a href="team.html"
+           class="rounded px-1 text-gray-700 transition-colors hover:text-green-700 focus-visible:outline-2 focus-visible:outline-green-600 dark:text-gray-300 dark:hover:text-green-400"
            data-en="Our Team" data-hi="हमारी टीम">Our Team</a>
       </nav>
 
-      <!-- Language, Theme & Auth Controls -->
       <div class="flex flex-wrap items-center gap-3">
         <label for="languageSelect" class="sr-only">Choose Language</label>
         <select id="languageSelect" aria-label="Choose language"
-                class="rounded-lg border border-green-700/80 bg-white px-3 py-2 text-sm font-semibold text-green-800 shadow-xs dark:border-green-600 dark:bg-gray-800 dark:text-green-300 focus-visible:outline-2 focus-visible:outline-green-600 cursor-pointer">
+                class="cursor-pointer rounded-lg border border-green-700/80 bg-white px-3 py-2 text-sm font-semibold text-green-800 shadow-xs focus-visible:outline-2 focus-visible:outline-green-600 dark:border-green-600 dark:bg-gray-800 dark:text-green-300">
           <option value="en">English</option>
           <option value="hi">हिन्दी</option>
         </select>
 
         <button id="themeToggle" type="button" aria-label="Toggle theme mode"
-                class="flex items-center gap-1.5 rounded-lg border border-green-700/80 bg-white px-3.5 py-2 text-sm font-semibold text-green-800 shadow-xs dark:border-green-600 dark:bg-gray-800 dark:text-green-300 dark:hover:bg-gray-700/60 focus-visible:outline-2 focus-visible:outline-green-600 cursor-pointer">
+                class="flex cursor-pointer items-center gap-1.5 rounded-lg border border-green-700/80 bg-white px-3.5 py-2 text-sm font-semibold text-green-800 shadow-xs focus-visible:outline-2 focus-visible:outline-green-600 dark:border-green-600 dark:bg-gray-800 dark:text-green-300 dark:hover:bg-gray-700/60">
           <span id="themeToggleIcon" aria-hidden="true">🌙</span>
           <span id="themeToggleText">Dark mode</span>
         </button>
 
-        <!-- Auth Dynamic Action Area -->
         <div id="authNavArea" class="flex items-center gap-2">
           <a href="login.html" id="loginNavLink"
-             class="rounded-lg border border-green-700 bg-transparent px-4 py-2 text-sm font-semibold text-green-800 transition-all hover:bg-green-700 hover:text-white dark:border-green-500 dark:text-green-300 dark:hover:bg-green-600 dark:hover:text-white focus-visible:outline-2 focus-visible:outline-green-600"
+             class="rounded-lg border border-green-700 bg-transparent px-4 py-2 text-sm font-semibold text-green-800 transition-all hover:bg-green-700 hover:text-white focus-visible:outline-2 focus-visible:outline-green-600 dark:border-green-500 dark:text-green-300 dark:hover:bg-green-600 dark:hover:text-white"
              data-en="Login / Register" data-hi="लॉग इन / पंजीकरण">
             Login / Register
           </a>
@@ -133,7 +134,7 @@
             Got scrap? Let’s give it a new life.
           </h1>
 
-          <p class="mb-8 max-w-xl text-lg text-green-100/90 leading-relaxed dark:text-gray-300"
+          <p class="mb-8 max-w-xl text-lg leading-relaxed text-green-100/90 dark:text-gray-300"
              data-en="Connect with local collectors and make recycling easier for your household."
              data-hi="स्थानीय संग्रहकर्ताओं से जुड़ें और अपने घर के लिए पुनर्चक्रण को आसान बनाएं।">
             Connect with local collectors and make recycling easier for your household.
@@ -149,12 +150,12 @@
             <a href="scraplist.html"
                class="inline-flex items-center justify-center rounded-xl border border-green-300/40 bg-green-900/40 px-6 py-3.5 font-semibold text-white transition-all hover:bg-green-900/80 focus-visible:outline-2 focus-visible:outline-green-400"
                data-en="View scrap prices" data-hi="कबाड़ की कीमतें देखें">
-              View scrap prices 
+              View scrap prices
             </a>
           </div>
         </div>
 
-        <div class="relative rounded-3xl border border-green-700/40 bg-green-900/60 p-8 text-center shadow-2xl backdrop-blur-xs md:p-10 dark:bg-gray-900/80 dark:border-gray-800">
+        <div class="relative rounded-3xl border border-green-700/40 bg-green-900/60 p-8 text-center shadow-2xl backdrop-blur-xs dark:border-gray-800 dark:bg-gray-900/80 md:p-10">
           <div class="relative z-10">
             <div class="mb-4 text-7xl md:text-8xl" aria-hidden="true">♻️</div>
             <h2 class="text-2xl font-bold tracking-tight"
@@ -174,16 +175,19 @@
 
     <!-- QUICK BENEFITS SECTION -->
     <section id="benefits" aria-labelledby="benefits-heading" class="mx-auto max-w-6xl px-5 py-16">
-      <div class="text-center mb-12">
-        <p class="font-semibold uppercase tracking-widest text-green-700 dark:text-green-400 text-xs"
+      <div class="mb-12 text-center">
+        <p class="text-xs font-semibold uppercase tracking-widest text-green-700 dark:text-green-400"
            data-en="Why Choose Us" data-hi="हमें क्यों चुनें">
           Why Choose Us
         </p>
-        <h2 id="benefits-heading" class="mt-2 text-3xl font-extrabold sm:text-4xl tracking-tight text-gray-900 dark:text-white"
+
+        <h2 id="benefits-heading"
+            class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl"
             data-en="Quick Benefits" data-hi="त्वरित लाभ">
           Quick Benefits
         </h2>
-        <p class="mx-auto mt-3 max-w-xl text-gray-600 dark:text-gray-300 text-sm leading-relaxed"
+
+        <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-600 dark:text-gray-300"
            data-en="Designed to simplify scrap disposal while supporting the circular economy."
            data-hi="कबाड़ निपटान को सरल बनाने और चक्रीय अर्थव्यवस्था का समर्थन करने के लिए डिज़ाइन किया गया।">
           Designed to simplify scrap disposal while supporting the circular economy.
@@ -191,290 +195,173 @@
       </div>
 
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <!-- Benefit Card 1 -->
         <div class="rounded-2xl border border-green-100 bg-white p-6 shadow-xs transition-transform hover:-translate-y-1 dark:border-gray-800 dark:bg-gray-900">
           <div class="mb-4 text-4xl" aria-hidden="true">🚚</div>
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white" data-en="Doorstep Pickup" data-hi="घर से पिकअप">Doorstep Pickup</h3>
-          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed"
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white"
+              data-en="Doorstep Pickup" data-hi="घर से पिकअप">Doorstep Pickup</h3>
+          <p class="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300"
              data-en="Schedule scrap collection directly from your home with precise location sharing."
              data-hi="सटीक लोकेशन शेयरिंग के साथ सीधे अपने घर से कबाड़ संग्रह का समय निर्धारित करें।">
             Schedule scrap collection directly from your home with precise location sharing.
           </p>
         </div>
 
-        <!-- Benefit Card 2 -->
         <div class="rounded-2xl border border-green-100 bg-white p-6 shadow-xs transition-transform hover:-translate-y-1 dark:border-gray-800 dark:bg-gray-900">
           <div class="mb-4 text-4xl" aria-hidden="true">📊</div>
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white" data-en="Live Fair Rates" data-hi="पारदर्शी लाइव दरें">Live Fair Rates</h3>
-          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed"
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white"
+              data-en="Live Fair Rates" data-hi="पारदर्शी लाइव दरें">Live Fair Rates</h3>
+          <p class="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300"
              data-en="Access real-time per-kg market benchmark prices for plastic, paper, metals, and e-waste."
              data-hi="प्लास्टिक, कागज, धातु और ई-कचरे के लिए वास्तविक समय की प्रति किलोग्राम बाजार दरें प्राप्त करें।">
             Access real-time per-kg market benchmark prices for plastic, paper, metals, and e-waste.
           </p>
         </div>
 
-        <!-- Benefit Card 3 -->
         <div class="rounded-2xl border border-green-100 bg-white p-6 shadow-xs transition-transform hover:-translate-y-1 dark:border-gray-800 dark:bg-gray-900">
           <div class="mb-4 text-4xl" aria-hidden="true">🌱</div>
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white" data-en="Eco-Friendly Impact" data-hi="पर्यावरण-अनुकूल प्रभाव">Eco-Friendly Impact</h3>
-          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed"
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white"
+              data-en="Eco-Friendly Impact" data-hi="पर्यावरण-अनुकूल प्रभाव">Eco-Friendly Impact</h3>
+          <p class="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300"
              data-en="Divert recyclable household waste from landfills and foster sustainable urban recycling."
-             data-hi="पुनर्चक्रण योग्य घरेलू कचरे को लैंडफिल में जाने से रोकें और टिकाऊ रीसायकलिंग को बढ़ावा दें।">
+             data-hi="पुनर्चक्रण योग्य घरेलू कचरे को लैंडफिल में जाने से रोकें और टिकाऊ रीसाइक्लिंग को बढ़ावा दें।">
             Divert recyclable household waste from landfills and foster sustainable urban recycling.
           </p>
         </div>
 
-        <!-- Benefit Card 4 -->
         <div class="rounded-2xl border border-green-100 bg-white p-6 shadow-xs transition-transform hover:-translate-y-1 dark:border-gray-800 dark:bg-gray-900">
           <div class="mb-4 text-4xl" aria-hidden="true">🤝</div>
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white" data-en="Empower Collectors" data-hi="कबाड़ीवालों का सशक्तिकरण">Empower Collectors</h3>
-          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed"
-             data-en="Connect households directly with local informal collectors to increase their daily earnings."
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white"
+              data-en="Empower Collectors" data-hi="कबाड़ीवालों का सशक्तिकरण">Empower Collectors</h3>
+          <p class="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300"
+             data-en="Connect households directly with local collectors to increase their daily earnings."
              data-hi="स्थानीय संग्रहकर्ताओं को सीधे परिवारों से जोड़ें ताकि उनकी दैनिक आय में वृद्धि हो सके।">
-            Connect households directly with local informal collectors to increase their daily earnings.
+            Connect households directly with local collectors to increase their daily earnings.
           </p>
         </div>
       </div>
     </section>
 
     <!-- HOW IT WORKS SECTION -->
-    <section id="how-it-works" aria-labelledby="how-it-works-heading" class="border-t border-gray-200/60 bg-green-50/50 py-16 dark:border-gray-800 dark:bg-gray-900/40">
+    <section id="how-it-works" aria-labelledby="how-it-works-heading"
+             class="border-t border-gray-200/60 bg-green-50/50 py-16 dark:border-gray-800 dark:bg-gray-900/40">
       <div class="mx-auto max-w-6xl px-5">
-        <div class="text-center mb-12">
-          <p class="font-semibold uppercase tracking-widest text-green-700 dark:text-green-400 text-xs"
+        <div class="mb-12 text-center">
+          <p class="text-xs font-semibold uppercase tracking-widest text-green-700 dark:text-green-400"
              data-en="Simple Step-By-Step Process" data-hi="सरल चरण-दर-चरण प्रक्रिया">
             Simple Step-By-Step Process
           </p>
-          <h2 id="how-it-works-heading" class="mt-2 text-3xl font-extrabold sm:text-4xl tracking-tight text-gray-900 dark:text-white"
+
+          <h2 id="how-it-works-heading"
+              class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl"
               data-en="How It Works" data-hi="यह कैसे काम करता है">
             How It Works
           </h2>
-          <p class="mx-auto mt-3 max-w-xl text-gray-600 dark:text-gray-300 text-sm leading-relaxed"
+
+          <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-600 dark:text-gray-300"
              data-en="Recycling made effortless. Turn your household scrap into cash in 4 easy steps."
              data-hi="पुनर्चक्रण अब आसान। केवल 4 आसान चरणों में अपने घरेलू कबाड़ को नकदी में बदलें।">
             Recycling made effortless. Turn your household scrap into cash in 4 easy steps.
           </p>
         </div>
 
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 relative">
-          <!-- Step 1 -->
-          <div class="relative flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-xs dark:border-gray-800 dark:bg-gray-900">
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-xs dark:border-gray-800 dark:bg-gray-900">
             <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-xl text-green-800 font-bold dark:bg-green-900/60 dark:text-green-300">
-                  01
-                </span>
+              <div class="mb-4 flex items-center justify-between">
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-xl font-bold text-green-800 dark:bg-green-900/60 dark:text-green-300">01</span>
                 <span class="text-3xl" aria-hidden="true">📝</span>
               </div>
               <h3 class="text-lg font-bold text-gray-900 dark:text-white"
-                  data-en="Request a Pickup" data-hi="पिकअप का अनुरोध करें">
-                Request a Pickup
-              </h3>
-              <p class="mt-2 text-xs text-gray-600 dark:text-gray-300 leading-relaxed"
+                  data-en="Request a Pickup" data-hi="पिकअप का अनुरोध करें">Request a Pickup</h3>
+              <p class="mt-2 text-xs leading-relaxed text-gray-600 dark:text-gray-300"
                  data-en="Choose your scrap categories (paper, metal, e-waste) and share your address & preferred time slot."
                  data-hi="अपनी कबाड़ श्रेणी चुनें (कागज, धातु, ई-कचरा) और अपना पता और पसंदीदा समय स्लॉट साझा करें।">
                 Choose your scrap categories (paper, metal, e-waste) and share your address & preferred time slot.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 text-[11px] font-semibold text-green-700 dark:text-green-400"
-                 data-en="Quick & 100% Free" data-hi="त्वरित और 100% मुफ्त">
+            <div class="mt-4 border-t border-gray-100 pt-3 text-[11px] font-semibold text-green-700 dark:border-gray-800 dark:text-green-400"
+                 data-en="✓ Quick & 100% Free" data-hi="✓ त्वरित और 100% मुफ्त">
               ✓ Quick & 100% Free
             </div>
-          </div>
+          </article>
 
-          <!-- Step 2 -->
-          <div class="relative flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-xs dark:border-gray-800 dark:bg-gray-900">
+          <article class="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-xs dark:border-gray-800 dark:bg-gray-900">
             <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-xl text-green-800 font-bold dark:bg-green-900/60 dark:text-green-300">
-                  02
-                </span>
+              <div class="mb-4 flex items-center justify-between">
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-xl font-bold text-green-800 dark:bg-green-900/60 dark:text-green-300">02</span>
                 <span class="text-3xl" aria-hidden="true">🛵</span>
               </div>
               <h3 class="text-lg font-bold text-gray-900 dark:text-white"
-                  data-en="Collector Assigned" data-hi="कबाड़ीवाला आवंटन">
-                Collector Assigned
-              </h3>
-              <p class="mt-2 text-xs text-gray-600 dark:text-gray-300 leading-relaxed"
+                  data-en="Collector Assigned" data-hi="कबाड़ीवाला आवंटन">Collector Assigned</h3>
+              <p class="mt-2 text-xs leading-relaxed text-gray-600 dark:text-gray-300"
                  data-en="A verified local scrap collector accepts your request and arrives right at your doorstep."
                  data-hi="एक सत्यापित स्थानीय कबाड़ीवाला आपका अनुरोध स्वीकार करता है और सीधे आपके दरवाजे पर पहुंचता है।">
                 A verified local scrap collector accepts your request and arrives right at your doorstep.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 text-[11px] font-semibold text-green-700 dark:text-green-400"
-                 data-en="Verified & Safe" data-hi="सत्यापित और सुरक्षित">
+            <div class="mt-4 border-t border-gray-100 pt-3 text-[11px] font-semibold text-green-700 dark:border-gray-800 dark:text-green-400"
+                 data-en="✓ Verified & Safe" data-hi="✓ सत्यापित और सुरक्षित">
               ✓ Verified & Safe
             </div>
-          </div>
+          </article>
 
-          <!-- Step 3 -->
-          <div class="relative flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-xs dark:border-gray-800 dark:bg-gray-900">
+          <article class="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-xs dark:border-gray-800 dark:bg-gray-900">
             <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-xl text-green-800 font-bold dark:bg-green-900/60 dark:text-green-300">
-                  03
-                </span>
+              <div class="mb-4 flex items-center justify-between">
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-xl font-bold text-green-800 dark:bg-green-900/60 dark:text-green-300">03</span>
                 <span class="text-3xl" aria-hidden="true">⚖️</span>
               </div>
               <h3 class="text-lg font-bold text-gray-900 dark:text-white"
-                  data-en="Weighing & Live Rates" data-hi="वजन और पारदर्शी दरें">
-                Weighing & Live Rates
-              </h3>
-              <p class="mt-2 text-xs text-gray-600 dark:text-gray-300 leading-relaxed"
+                  data-en="Weighing & Live Rates" data-hi="वजन और पारदर्शी दरें">Weighing & Live Rates</h3>
+              <p class="mt-2 text-xs leading-relaxed text-gray-600 dark:text-gray-300"
                  data-en="Scrap is weighed transparently on digital scales and evaluated using transparent live per-kg rates."
                  data-hi="डिजिटल तराजू पर कबाड़ का पारदर्शी वजन किया जाता है और लाइव प्रति किलोग्राम दरों के आधार पर मूल्य तय होता है।">
                 Scrap is weighed transparently on digital scales and evaluated using transparent live per-kg rates.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 text-[11px] font-semibold text-green-700 dark:text-green-400"
-                 data-en="Fair Market Pricing" data-hi="उचित बाज़ार मूल्य">
+            <div class="mt-4 border-t border-gray-100 pt-3 text-[11px] font-semibold text-green-700 dark:border-gray-800 dark:text-green-400"
+                 data-en="✓ Fair Market Pricing" data-hi="✓ उचित बाज़ार मूल्य">
               ✓ Fair Market Pricing
             </div>
-          </div>
+          </article>
 
-          <!-- Step 4 -->
-          <div class="relative flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-xs dark:border-gray-800 dark:bg-gray-900">
+          <article class="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-xs dark:border-gray-800 dark:bg-gray-900">
             <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-xl text-green-800 font-bold dark:bg-green-900/60 dark:text-green-300">
-                  04
-                </span>
+              <div class="mb-4 flex items-center justify-between">
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-xl font-bold text-green-800 dark:bg-green-900/60 dark:text-green-300">04</span>
                 <span class="text-3xl" aria-hidden="true">💵</span>
               </div>
               <h3 class="text-lg font-bold text-gray-900 dark:text-white"
-                  data-en="Instant Payout" data-hi="तुरंत भुगतान">
-                Instant Payout
-              </h3>
-              <p class="mt-2 text-xs text-gray-600 dark:text-gray-300 leading-relaxed"
+                  data-en="Instant Payout" data-hi="तुरंत भुगतान">Instant Payout</h3>
+              <p class="mt-2 text-xs leading-relaxed text-gray-600 dark:text-gray-300"
                  data-en="Get paid instantly via UPI or Cash on the spot, while your scrap gets sent to certified recycling hubs."
                  data-hi="मौके पर ही UPI या नकद के माध्यम से तुरंत भुगतान प्राप्त करें, जबकि आपका कबाड़ रिसाइक्लिंग सेंटरों में भेजा जाता है।">
                 Get paid instantly via UPI or Cash on the spot, while your scrap gets sent to certified recycling hubs.
               </p>
             </div>
-            <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 text-[11px] font-semibold text-green-700 dark:text-green-400"
-                 data-en="Immediate Payment" data-hi="तत्काल भुगतान">
+            <div class="mt-4 border-t border-gray-100 pt-3 text-[11px] font-semibold text-green-700 dark:border-gray-800 dark:text-green-400"
+                 data-en="✓ Immediate Payment" data-hi="✓ तत्काल भुगतान">
               ✓ Immediate Payment
             </div>
-          </div>
+          </article>
         </div>
       </div>
     </section>
-
-   <!-- OUR TEAM SECTION --> 
-<section id="team" aria-labelledby="team-heading" class="mx-auto max-w-6xl px-5 py-16">
-  <div class="mb-12 text-center">
-    <p class="text-xs font-semibold uppercase tracking-widest text-green-700 dark:text-green-400"
-       data-en="The Minds Behind Kabadiwala Connect"
-       data-hi="कबाड़ीवाला कनेक्ट के पीछे की टीम">
-      The Minds Behind Kabadiwala Connect
-    </p>
-
-    <h2 id="team-heading"
-        class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl"
-        data-en="Meet Our Team"
-        data-hi="हमारी टीम से मिलें">
-      Meet Our Team
-    </h2>
-
-    <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-600 dark:text-gray-300"
-       data-en="Passionate developers and innovators building sustainable technology for cleaner communities."
-       data-hi="स्वच्छ समुदायों के लिए टिकाऊ तकनीक बनाने वाली हमारी टीम से मिलें।">
-      Passionate developers and innovators building sustainable technology for cleaner communities.
-    </p>
-  </div>
-
-  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-
-    <!-- Garvit Kumar -->
-    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
-      <img src="WhatsApp Image 2026-09-27 at 5.02.07 PM.jpeg"
-           alt="Garvit Kumar"
-           class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
-      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Garvit Kumar</h3>
-      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
-         data-en="Project Lead" data-hi="प्रोजेक्ट लीड">
-        Project Lead
-      </p>
-    </article>
-
-    <!-- Madhav Kanswal -->
-    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
-      <img src="My photo .jpeg"
-           alt="Madhav Kanswal"
-           class="mb-4 h-28 w-28 scale-110 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
-      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Madhav Kanswal</h3>
-      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
-         data-en="Frontend Developer" data-hi="फ्रंटएंड डेवलपर">
-        Frontend Developer
-      </p>
-    </article>
-
-    <!-- Sahil Bhist -->
-    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
-      <img src="WhatsApp Image 2026-09-27 at 4.00.13 PM.jpeg"
-           alt="Sahil Bhist"
-           class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
-      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Sahil Bhist</h3>
-      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
-         data-en="Backend Developer" data-hi="बैकएंड डेवलपर">
-        Backend Developer
-      </p>
-    </article>
-
-    <!-- Vamika Maithani -->
-    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
-      <img src="WhatsApp Image 2026-09-27 at 6.39.15 PM.jpeg"
-           alt="Vamika Maithani"
-           class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
-      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Vamika Maithani</h3>
-      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
-         data-en="Researcher" data-hi="शोधकर्ता">
-        Researcher
-      </p>
-    </article>
-
-    <!-- Vanshika Arya -->
-    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
-      <img src="WhatsApp Image 2026-09-27 at 6.35.01 PM.jpeg"
-           alt="Vanshika Arya"
-           class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
-      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Vanshika Arya</h3>
-      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
-         data-en="Representative" data-hi="प्रतिनिधि">
-        Representative
-      </p>
-    </article>
-
-    <!-- Priyanshi Bora -->
-    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
-      <img src="priyanshi.jpg.jpg"
-           alt="Priyanshi Bora"
-           class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
-      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Priyanshi Bora</h3>
-      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
-         data-en="Presentation Designer" data-hi="प्रेजेंटेशन डिज़ाइनर">
-        Presentation Designer
-      </p>
-    </article>
-
-  </div>
-</section>
-
-
-
-
-
+  </main>
 
   <!-- FOOTER -->
-  <footer class="bg-green-950 border-t border-green-900 py-8 text-center text-green-100/90 dark:bg-black dark:border-gray-800">
+  <footer class="border-t border-green-900 bg-green-950 py-8 text-center text-green-100/90 dark:border-gray-800 dark:bg-black">
     <div class="mx-auto max-w-6xl px-5">
-      <p class="font-bold text-lg text-white">Kabadiwala Connect</p>
-      <p class="mt-1 text-sm text-green-200/80 dark:text-gray-400">Making recycling easier, one pickup at a time.</p>
-      <p class="mt-4 text-xs text-green-300/60 dark:text-gray-500">© 2026 Kabadiwala Connect. All rights reserved.</p>
+      <p class="text-lg font-bold text-white">Kabadiwala Connect</p>
+      <p class="mt-1 text-sm text-green-200/80 dark:text-gray-400">
+        Making recycling easier, one pickup at a time.
+      </p>
+      <p class="mt-4 text-xs text-green-300/60 dark:text-gray-500">
+        © 2026 Kabadiwala Connect. All rights reserved.
+      </p>
     </div>
   </footer>
 
-  <!-- GLOBAL STATE & UI SYNC SCRIPT -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const themeToggle = document.getElementById("themeToggle");
@@ -482,23 +369,14 @@
       const themeToggleText = document.getElementById("themeToggleText");
       const languageSelect = document.getElementById("languageSelect");
 
-      // 1. Theme Toggle Management
       function updateThemeUI(isDark) {
-        if (isDark) {
-          document.documentElement.classList.add("dark");
-          document.body.classList.add("dark");
-          themeToggleIcon.textContent = "☀️";
-          themeToggleText.textContent = "Light mode";
-        } else {
-          document.documentElement.classList.remove("dark");
-          document.body.classList.remove("dark");
-          themeToggleIcon.textContent = "🌙";
-          themeToggleText.textContent = "Dark mode";
-        }
+        document.documentElement.classList.toggle("dark", isDark);
+        document.body.classList.toggle("dark", isDark);
+        themeToggleIcon.textContent = isDark ? "☀️" : "🌙";
+        themeToggleText.textContent = isDark ? "Light mode" : "Dark mode";
       }
 
-      const isInitialDark = document.documentElement.classList.contains("dark");
-      updateThemeUI(isInitialDark);
+      updateThemeUI(document.documentElement.classList.contains("dark"));
 
       themeToggle.addEventListener("click", () => {
         const isDark = !document.documentElement.classList.contains("dark");
@@ -506,7 +384,6 @@
         updateThemeUI(isDark);
       });
 
-      // 2. Language Switcher Logic
       function applyLanguage(language) {
         document.documentElement.lang = language;
         document.querySelectorAll("[data-en][data-hi]").forEach((element) => {
@@ -520,14 +397,13 @@
       applyLanguage(savedLanguage);
 
       if (languageSelect) {
-        languageSelect.addEventListener("change", (e) => {
-          const lang = e.target.value;
-          localStorage.setItem("kabadiwala-language", lang);
-          applyLanguage(lang);
+        languageSelect.addEventListener("change", (event) => {
+          const language = event.target.value;
+          localStorage.setItem("kabadiwala-language", language);
+          applyLanguage(language);
         });
       }
 
-      // 3. Auth Session State Check
       const userRaw = localStorage.getItem("kabadiwala_user");
       const authNavArea = document.getElementById("authNavArea");
 
@@ -535,18 +411,20 @@
         try {
           const user = JSON.parse(userRaw);
           authNavArea.innerHTML = `
-            <span class="text-xs sm:text-sm font-medium text-green-800 dark:text-green-300 bg-green-100 dark:bg-green-900/40 px-3 py-1.5 rounded-lg border border-green-300 dark:border-green-700">
+            <span class="rounded-lg border border-green-300 bg-green-100 px-3 py-1.5 text-xs font-medium text-green-800 dark:border-green-700 dark:bg-green-900/40 dark:text-green-300 sm:text-sm">
               👤 ${user.name} (${user.user_type})
             </span>
-            <button id="logoutBtn" type="button" class="text-xs text-red-600 hover:underline dark:text-red-400 font-semibold px-2 py-1">
+            <button id="logoutBtn" type="button"
+                    class="px-2 py-1 text-xs font-semibold text-red-600 hover:underline dark:text-red-400">
               Logout
             </button>
           `;
+
           document.getElementById("logoutBtn").addEventListener("click", () => {
             localStorage.removeItem("kabadiwala_user");
             window.location.reload();
           });
-        } catch (err) {
+        } catch (error) {
           localStorage.removeItem("kabadiwala_user");
         }
       }
