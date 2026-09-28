@@ -1,8 +1,9 @@
 # KABADIWALA CONNECT - Backend API
-# version 0.7
+# version 0.8
 
 
 from fastapi import FastAPI, HTTPException, status, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional, Literal
@@ -14,6 +15,11 @@ import uuid
 
 app = FastAPI(title = 'Kabadiwala Connect',
               description = 'Bringing the Informal Collector into a Formal Recycling Chain')
+
+
+# FIX: without CORS, the browser blocks every fetch() from the HTML pages.
+# Prototype-wide open; restrict allow_origins before deploying.
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
 # In Memory Databases(for now, until i develop actual databases -- lol)
@@ -164,7 +170,7 @@ def create_pickup(pickup: PickupCreate):
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail='User not registered\nPlease register first')
     
-    if users_db["user_type"] != "Household":
+    if users_db[pickup.mobile_number]["user_type"] != "Household":   # FIX: was users_db["user_type"] (KeyError -> 500)
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail='Only Household users can request pickups.')
@@ -203,6 +209,7 @@ def view_active_pickups():
 def view_nearby_pickups(
     latitude: float,
     longitude: float,
+    mobile_number: str,   # FIX: needed to identify the collector making the request
     radius_km: float = Query(5.0, ge=1.0, le=15.0, description="Search radius in kilometers")):
     """
     Same as /pickups/active, but only returns pickups within `radius_km`
@@ -210,7 +217,7 @@ def view_nearby_pickups(
     gets a `distance_km` field added, and the closest pickup is listed first.
     """
 
-    if users_db["user_type"] != "Collector":
+    if mobile_number not in users_db or users_db[mobile_number]["user_type"] != "Collector":
         raise HTTPException(status_code=403, detail="Only registered collectors can search nearby pickups.")
     
     nearby = []
@@ -244,11 +251,12 @@ def update_pickup_status(pickup_id: str, data: PickupUpdate):
             p["total_amount_paid"] = data.total_amount_paid
             p["completed_at"] = str(datetime.now())
 
-        # Transfer record to pickup_history
-        pickup_history.append(p)
-        pickup_requests.remove(p)
+            # FIX: this block was outside the `if`, so the first pickup in the
+            # list was always completed, whatever pickup_id was requested.
+            pickup_history.append(p)
+            pickup_requests.remove(p)
 
-        return {"message": "Pickup marked as completed", "pickup": p}
+            return {"message": "Pickup marked as completed", "pickup": p}
 
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
@@ -317,15 +325,17 @@ def analytics_summary():
         "Organic": 0.2,
         "Other": 0.5}
     
-    # Calculate approximate CO2 offset based on collection
+    total_co2_offset = 0.0
+    total_weight_kg = 0.0
+    total_payout = 0.0
 
     for p in pickup_history:
-        weight = p.get("accurate_weight_kg", 0)
-        types = p.get("scrap_types", ["Other"])
+        weight = p.get("accurate_weight", 0)
+        types = p.get("scrap_type") or ["Other"]      # FIX: key is "scrap_type"
         factor = sum(CO2_SAVINGS_PER_KG.get(t, 0.5) for t in types) / len(types)
-        total_co2_offset = sum(p.get(weight * factor))
-        total_weight_kg = sum(p.get("accurate_weight", 0))
-        total_payout = sum(p.get("total_amount_paid", 0))
+        total_co2_offset += weight * factor
+        total_weight_kg += weight
+        total_payout += p.get("total_amount_paid", 0)
 
     return {
         "total_completed_pickups": len(pickup_history),
