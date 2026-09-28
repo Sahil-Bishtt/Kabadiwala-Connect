@@ -1,146 +1,188 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Page setup -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Scrap rates from Kabadiwala Connect." />
   <title>Scrap List | Kabadiwala Connect</title>
 
-  <!-- Tailwind CSS -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-  <!-- Dark mode styles -->
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem("kabadiwala-theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    })();
+  </script>
+
   <style>
-    body {
-      transition: background-color 0.25s, color 0.25s;
-    }
-
-    body.dark-mode {
-      background: #111827;
+    /* Standard CSS Dark Mode Fallbacks */
+    html.dark body {
+      background-color: #030712;
       color: #f3f4f6;
     }
-
-    body.dark-mode header,
-    body.dark-mode article {
-      background: #1f2937;
-      color: #f3f4f6;
-      border-color: #374151;
+    html.dark header {
+      background-color: rgba(17, 24, 39, 0.95);
+      border-color: #1f2937;
     }
-
-    body.dark-mode p {
-      color: #d1d5db;
+    html.dark .bg-white {
+      background-color: #111827;
     }
-
-    body.dark-mode #themeToggle {
-      background: #1f2937;
-      color: #f3f4f6;
+    html.dark .text-gray-800 {
+      color: #f9fafb;
+    }
+    html.dark .border-green-100 {
+      border-color: #1f2937;
     }
   </style>
 </head>
 
-<body class="min-h-screen bg-amber-50 text-gray-800">
+<body class="min-h-screen bg-amber-50/60 text-gray-800 antialiased transition-colors duration-200 dark:bg-gray-950 dark:text-gray-100">
 
   <!-- Header -->
-  <header class="bg-white shadow-sm">
+  <header class="sticky top-0 z-50 border-b border-gray-200/80 bg-white/95 backdrop-blur-md dark:border-gray-800 dark:bg-gray-900/95">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-4">
-      <a href="index.html" class="font-bold text-green-800">
-        ♻ Kabadiwala Connect
+      <a href="website.html" class="flex items-center gap-2 font-bold text-green-800 dark:text-green-400">
+        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-green-700 text-white">♻</span>
+        Kabadiwala Connect
       </a>
 
-      <div class="flex items-center gap-3">
-        <button id="themeToggle" type="button"
-                class="rounded-lg border border-green-700 px-4 py-2 font-semibold text-green-800">
-          🌙 Dark mode
+      <div class="flex flex-wrap items-center gap-3">
+        <label for="languageSelect" class="sr-only">Choose language</label>
+        <select id="languageSelect" aria-label="Choose language"
+                class="rounded-lg border border-green-700 bg-white px-3 py-2 text-sm font-semibold text-green-800 dark:border-green-600 dark:bg-gray-800 dark:text-green-300 cursor-pointer">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+        </select>
+
+        <button id="themeToggle" type="button" aria-label="Toggle theme"
+                class="flex items-center gap-1.5 rounded-lg border border-green-700 px-3.5 py-2 text-sm font-semibold text-green-800 dark:border-green-600 dark:bg-gray-800 dark:text-green-300 cursor-pointer">
+          <span id="themeToggleIcon" aria-hidden="true">🌙</span>
+          <span id="themeToggleText">Dark mode</span>
         </button>
 
-        <a href="index.html" class="text-green-700 hover:underline">
-          Back to home
-        </a>
+        <div id="authLinks">
+          <a href="login.html" class="rounded-lg bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-800"
+             data-en="Login" data-hi="लॉग इन">Login</a>
+        </div>
+        <div id="userMenu" class="hidden flex items-center gap-3">
+          <span id="userName" class="rounded-lg bg-green-50 px-3 py-2 text-sm font-semibold text-green-800 dark:bg-gray-800 dark:text-green-300" aria-live="polite"></span>
+          <button id="logoutBtn" type="button"
+                  class="rounded-lg border border-green-700 px-3 py-2 text-sm font-semibold text-green-800 dark:border-green-500 dark:text-green-300 cursor-pointer"
+                  data-en="Log out" data-hi="लॉग आउट">Log out</button>
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="mx-auto max-w-6xl px-5 py-16">
-
-    <!-- Page introduction -->
+  <main class="mx-auto max-w-6xl px-5 py-14" id="pricing">
     <section class="mb-10 text-center">
-      <p class="font-semibold uppercase tracking-widest text-green-700">
-        Recycle and reuse
-      </p>
-
-      <h1 class="mt-2 text-4xl font-bold">
-        Scrap list and sample prices
-      </h1>
-
-      <p class="mt-3 text-gray-600">
-        These are sample prototype prices. Actual rates may vary.
+      <p class="font-semibold uppercase tracking-widest text-green-700 dark:text-green-400"
+         data-en="Recycle and reuse" data-hi="पुनर्चक्रण और पुनः उपयोग">Recycle and reuse</p>
+      <h1 class="mt-2 text-4xl font-bold" data-en="Scrap Market Rates" data-hi="कबाड़ बाज़ार की दरें">Scrap Market Rates</h1>
+      <p class="mt-3 text-gray-600 dark:text-gray-400"
+         data-en="Standard daily benchmark prices per kilogram. Actual pickup value depends on quantity and condition."
+         data-hi="प्रति किलोग्राम मानक दैनिक दरें। असली कीमत मात्रा और स्थिति पर निर्भर करती है।">
+        Standard daily benchmark prices per kilogram. Actual pickup value depends on quantity and condition.
       </p>
     </section>
 
-    <!-- Scrap item cards -->
-    <section class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-
-      <article class="rounded-xl border border-green-100 bg-white p-6 shadow-sm">
-        <div class="mb-3 text-4xl">🧴</div>
-        <h2 class="text-xl font-bold">Plastic</h2>
-        <p class="mt-2 text-green-700">₹15 per kg</p>
-      </article>
-
-      <article class="rounded-xl border border-green-100 bg-white p-6 shadow-sm">
-        <div class="mb-3 text-4xl">📄</div>
-        <h2 class="text-xl font-bold">Paper</h2>
-        <p class="mt-2 text-green-700">₹12 per kg</p>
-      </article>
-
-      <article class="rounded-xl border border-green-100 bg-white p-6 shadow-sm">
-        <div class="mb-3 text-4xl">🔩</div>
-        <h2 class="text-xl font-bold">Metal</h2>
-        <p class="mt-2 text-green-700">₹35 per kg</p>
-      </article>
-
-      <article class="rounded-xl border border-green-100 bg-white p-6 shadow-sm">
-        <div class="mb-3 text-4xl">💻</div>
-        <h2 class="text-xl font-bold">E-waste</h2>
-        <p class="mt-2 text-green-700">₹50 per kg</p>
-      </article>
-
-      <article class="rounded-xl border border-green-100 bg-white p-6 shadow-sm">
-        <div class="mb-3 text-4xl">🍂</div>
-        <h2 class="text-xl font-bold">Organic</h2>
-        <p class="mt-2 text-green-700">₹5 per kg</p>
-      </article>
-
-      <article class="rounded-xl border border-green-100 bg-white p-6 shadow-sm">
-        <div class="mb-3 text-4xl">📦</div>
-        <h2 class="text-xl font-bold">Other</h2>
-        <p class="mt-2 text-green-700">Price depends on the material</p>
-      </article>
-
+    <!-- Scrap item cards grid -->
+    <section id="scrapGrid" aria-live="polite" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-green-950 py-6 text-center text-green-100">
-    <p>Kabadiwala Connect · Making recycling easier</p>
+  <footer class="border-t border-green-900 bg-green-950 py-6 text-center text-green-100 dark:border-gray-800 dark:bg-black">
+    <p data-en="Kabadiwala Connect · Making recycling easier" data-hi="कबाड़ीवाला कनेक्ट · पुनर्चक्रण को आसान बनाना">Kabadiwala Connect · Making recycling easier</p>
   </footer>
 
-  <!-- Shared saved theme -->
+  <script src="app.js"></script>
   <script>
-    const themeToggle = document.getElementById("themeToggle");
+    // Hardcoded scrap rates matching backend specifications
+    const SCRAP_RATES = {
+      Plastic: 15,
+      Paper: 12,
+      Metal: 35,
+      "E-Waste": 50,
+      Organic: 5,
+      Other: null
+    };
 
-    function applyTheme() {
-      const isDark = localStorage.getItem("kabadiwala-theme") === "dark";
-      document.body.classList.toggle("dark-mode", isDark);
-      themeToggle.textContent = isDark ? "☀️ Light mode" : "🌙 Dark mode";
+    // Card metadata (icons and multilingual labels)
+    const SCRAP_META = {
+      Plastic:   { icon: "🧴", en: "Plastic",   hi: "प्लास्टिक" },
+      Paper:     { icon: "📄", en: "Paper",     hi: "कागज़" },
+      Metal:     { icon: "🔩", en: "Metal",     hi: "धातु" },
+      "E-Waste": { icon: "💻", en: "E-waste",   hi: "ई-कचरा" },
+      Organic:   { icon: "🍂", en: "Organic",   hi: "जैविक" },
+      Other:     { icon: "📦", en: "Other",     hi: "अन्य" },
+    };
+
+    const scrapGrid = document.getElementById("scrapGrid");
+
+    function cardHtml(type, rate) {
+      const meta = SCRAP_META[type] || { icon: "📦", en: type, hi: type };
+      const lang = document.documentElement.lang === "hi" ? "hi" : "en";
+      const priceText = typeof rate === "number"
+        ? `₹${rate} ${lang === "hi" ? "प्रति किलो" : "per kg"}`
+        : (lang === "hi" ? "सामग्री पर निर्भर" : "Price depends on material");
+
+      return `
+        <article class="rounded-xl border border-green-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
+          <div class="mb-3 text-4xl" aria-hidden="true">${meta.icon}</div>
+          <h2 class="text-xl font-bold dark:text-white">${meta[lang]}</h2>
+          <p class="mt-2 font-semibold text-green-700 dark:text-green-400">${priceText}</p>
+        </article>`;
     }
 
-    applyTheme();
+    function renderRates() {
+      const types = Object.keys(SCRAP_RATES);
+      scrapGrid.innerHTML = types.map((type) => cardHtml(type, SCRAP_RATES[type])).join("");
+    }
 
-    themeToggle.addEventListener("click", () => {
-      const isDark = !document.body.classList.contains("dark-mode");
-      localStorage.setItem("kabadiwala-theme", isDark ? "dark" : "light");
-      applyTheme();
-    });
+    // Initial render
+    renderRates();
+
+    // Re-render when language selector changes
+    const languageSelect = document.getElementById("languageSelect");
+    if (languageSelect) {
+      languageSelect.addEventListener("change", () => {
+        renderRates();
+      });
+    }
+
+    // Theme Toggle Handler
+    const themeToggle = document.getElementById("themeToggle");
+    const themeToggleIcon = document.getElementById("themeToggleIcon");
+    const themeToggleText = document.getElementById("themeToggleText");
+
+    function updateThemeUI(isDark) {
+      if (isDark) {
+        document.documentElement.classList.add("dark");
+        if (themeToggleIcon) themeToggleIcon.textContent = "☀️";
+        if (themeToggleText) themeToggleText.textContent = "Light mode";
+      } else {
+        document.documentElement.classList.remove("dark");
+        if (themeToggleIcon) themeToggleIcon.textContent = "🌙";
+        if (themeToggleText) themeToggleText.textContent = "Dark mode";
+      }
+    }
+
+    const isInitialDark = document.documentElement.classList.contains("dark");
+    updateThemeUI(isInitialDark);
+
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const isDark = !document.documentElement.classList.contains("dark");
+        localStorage.setItem("kabadiwala-theme", isDark ? "dark" : "light");
+        updateThemeUI(isDark);
+      });
+    }
   </script>
 </body>
 </html>
