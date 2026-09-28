@@ -360,103 +360,110 @@
       </div>
     </section>
 
-    <!-- OUR TEAM SECTION -->
-    <section id="team" aria-labelledby="team-heading" class="mx-auto max-w-6xl px-5 py-16">
-      <div class="text-center mb-12">
-        <p class="font-semibold uppercase tracking-widest text-green-700 dark:text-green-400 text-xs"
-           data-en="The Minds Behind Kabadiwala Connect" data-hi="कबाड़ीवाला कनेक्ट के पीछे की टीम">
-          The Minds Behind Kabadiwala Connect
-        </p>
-        <h2 id="team-heading" class="mt-2 text-3xl font-extrabold sm:text-4xl tracking-tight text-gray-900 dark:text-white"
-            data-en="Meet Our Team" data-hi="हमारी टीम से मिलें">
-          Meet Our Team
-        </h2>
-        <p class="mx-auto mt-3 max-w-xl text-gray-600 dark:text-gray-300 text-sm leading-relaxed"
-           data-en="Passionate developers and innovators building sustainable technology for cleaner communities."
-           data-hi="स्वच्छ समुदायों के लिए टिकाऊ तकनीक का निर्माण करने वाले जुनूनी डेवलपर्स और नवप्रवर्तक।">
-          Passionate developers and innovators building sustainable technology for cleaner communities.
-        </p>
-      </div>
+   <!-- OUR TEAM SECTION --> 
+<section id="team" aria-labelledby="team-heading" class="mx-auto max-w-6xl px-5 py-16">
+  <div class="mb-12 text-center">
+    <p class="text-xs font-semibold uppercase tracking-widest text-green-700 dark:text-green-400"
+       data-en="The Minds Behind Kabadiwala Connect"
+       data-hi="कबाड़ीवाला कनेक्ट के पीछे की टीम">
+      The Minds Behind Kabadiwala Connect
+    </p>
 
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <!-- Garvit Kumar -->
-        <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-xs dark:border-gray-800 dark:bg-gray-900">
-          <img src="Garhvit.jpeg" alt="Garvit Kumar" 
-               class="h-28 w-28 rounded-full object-cover border-4 border-green-600/20 shadow-md mb-4" 
-               onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Garvit+Kumar&background=dcfce7&color=166534';" />
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Garvit Kumar</h3>
-          <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1"
-             data-en="Project Lead" data-hi="प्रोजेक्ट लीड">
-            Project Lead
-          </p>
-        </article>
+    <h2 id="team-heading"
+        class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl"
+        data-en="Meet Our Team"
+        data-hi="हमारी टीम से मिलें">
+      Meet Our Team
+    </h2>
 
-        <!-- Madhav Kanswal -->
-        <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-xs dark:border-gray-800 dark:bg-gray-900">
-          <div class="h-28 w-28 rounded-full border-4 border-green-600/20 bg-green-50 dark:bg-gray-800 flex items-center justify-center shadow-md mb-4 text-green-700 dark:text-green-400">
-            <svg class="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Madhav Kanswal</h3>
-          <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1"
-             data-en="Frontend Developer" data-hi="फ़्रंटएंड डेवलपर">
-            Frontend Developer
-          </p>
-        </article>
+    <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-600 dark:text-gray-300"
+       data-en="Passionate developers and innovators building sustainable technology for cleaner communities."
+       data-hi="स्वच्छ समुदायों के लिए टिकाऊ तकनीक बनाने वाली हमारी टीम से मिलें।">
+      Passionate developers and innovators building sustainable technology for cleaner communities.
+    </p>
+  </div>
 
-        <!-- Sahil Bhist -->
-        <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-xs dark:border-gray-800 dark:bg-gray-900">
-          <img src="Ace.jpeg" alt="Sahil Bhist" 
-               class="h-28 w-28 rounded-full object-cover border-4 border-green-600/20 shadow-md mb-4" 
-               onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Sahil+Bhist&background=dcfce7&color=166534';" />
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Sahil Bhist</h3>
-          <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1"
-             data-en="Backend Developer" data-hi="बैकएंड डेवलपर">
-            Backend Developer
-          </p>
-        </article>
+  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 
-        <!-- Vamika Maithani -->
-        <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-xs dark:border-gray-800 dark:bg-gray-900">
-          <img src="Vamika.jpeg" alt="Vamika Maithani" 
-               class="h-28 w-28 rounded-full object-cover border-4 border-green-600/20 shadow-md mb-4" 
-               onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Vamika+Maithani&background=dcfce7&color=166534';" />
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Vamika Maithani</h3>
-          <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1"
-             data-en="Researcher" data-hi="शोधकर्ता">
-            Researcher
-          </p>
-        </article>
+    <!-- Garvit Kumar -->
+    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <img src="WhatsApp Image 2026-09-27 at 5.02.07 PM.jpeg"
+           alt="Garvit Kumar"
+           class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Garvit Kumar</h3>
+      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
+         data-en="Project Lead" data-hi="प्रोजेक्ट लीड">
+        Project Lead
+      </p>
+    </article>
 
-        <!-- Vanshika -->
-        <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-xs dark:border-gray-800 dark:bg-gray-900">
-          <img src="Vanshika.jpeg" alt="Vanshika" 
-               class="h-28 w-28 rounded-full object-cover border-4 border-green-600/20 shadow-md mb-4" 
-               onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Vanshika&background=dcfce7&color=166534';" />
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Vanshika</h3>
-          <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1"
-             data-en="Representative" data-hi="प्रतिनिधि">
-            Representative
-          </p>
-        </article>
+    <!-- Madhav Kanswal -->
+    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <img src="My photo .jpeg"
+           alt="Madhav Kanswal"
+           class="mb-4 h-28 w-28 scale-110 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Madhav Kanswal</h3>
+      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
+         data-en="Frontend Developer" data-hi="फ्रंटएंड डेवलपर">
+        Frontend Developer
+      </p>
+    </article>
 
-        <!-- Priyanshi Bora -->
-        <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-xs dark:border-gray-800 dark:bg-gray-900">
-          <div class="h-28 w-28 rounded-full border-4 border-green-600/20 bg-green-50 dark:bg-gray-800 flex items-center justify-center shadow-md mb-4 text-green-700 dark:text-green-400">
-            <svg class="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Priyanshi Bora</h3>
-          <p class="text-xs font-semibold text-green-700 dark:text-green-400 mt-1"
-             data-en="Presentation Designer" data-hi="प्रेजेंटेशन डिज़ाइनर">
-            Presentation Designer
-          </p>
-        </article>
-      </div>
-    </section>
-  </main>
+    <!-- Sahil Bhist -->
+    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <img src="WhatsApp Image 2026-09-27 at 4.00.13 PM.jpeg"
+           alt="Sahil Bhist"
+           class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Sahil Bhist</h3>
+      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
+         data-en="Backend Developer" data-hi="बैकएंड डेवलपर">
+        Backend Developer
+      </p>
+    </article>
+
+    <!-- Vamika Maithani -->
+    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <img src="WhatsApp Image 2026-09-27 at 6.39.15 PM.jpeg"
+           alt="Vamika Maithani"
+           class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Vamika Maithani</h3>
+      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
+         data-en="Researcher" data-hi="शोधकर्ता">
+        Researcher
+      </p>
+    </article>
+
+    <!-- Vanshika Arya -->
+    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <img src="WhatsApp Image 2026-09-27 at 6.35.01 PM.jpeg"
+           alt="Vanshika Arya"
+           class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Vanshika Arya</h3>
+      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
+         data-en="Representative" data-hi="प्रतिनिधि">
+        Representative
+      </p>
+    </article>
+
+    <!-- Priyanshi Bora -->
+    <article class="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <img src="priyanshi.jpg.jpg"
+           alt="Priyanshi Bora"
+           class="mb-4 h-28 w-28 rounded-full border-4 border-green-600/20 object-cover shadow-md" />
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Priyanshi Bora</h3>
+      <p class="mt-1 text-xs font-semibold text-green-700 dark:text-green-400"
+         data-en="Presentation Designer" data-hi="प्रेजेंटेशन डिज़ाइनर">
+        Presentation Designer
+      </p>
+    </article>
+
+  </div>
+</section>
+
+
+
+
+
 
   <!-- FOOTER -->
   <footer class="bg-green-950 border-t border-green-900 py-8 text-center text-green-100/90 dark:bg-black dark:border-gray-800">
