@@ -6,39 +6,41 @@
   <title>Request a Pickup | Kabadiwala Connect</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem("kabadiwala-theme");
+      if (savedTheme === "dark") document.documentElement.classList.add("dark");
+    })();
+  </script>
+
   <style>
     body { transition: background-color .25s, color .25s; }
-    body.dark-mode { background: #111827; color: #f3f4f6; }
-    body.dark-mode header,
-    body.dark-mode form { background: #1f2937; color: #f3f4f6; border-color: #374151; }
-    body.dark-mode input,
-    body.dark-mode textarea,
-    body.dark-mode select { background: #111827; color: #f3f4f6; border-color: #4b5563; }
-    body.dark-mode p { color: #d1d5db; }
-    body.dark-mode #themeToggle { background: #1f2937; color: #f3f4f6; }
+    body.dark { background-color: #111827; color: #f3f4f6; }
+    body.dark form { background-color: #1f2937; color: #f3f4f6; border-color: #374151; }
+    body.dark input, body.dark textarea { background-color: #111827; color: #f3f4f6; border-color: #4b5563; }
   </style>
 </head>
 
-<body class="min-h-screen bg-amber-50 text-gray-800">
+<body class="min-h-screen bg-amber-50 text-gray-800 dark:bg-gray-950 dark:text-gray-100">
 
   <!-- Header -->
-  <header class="bg-white shadow-sm">
+  <header class="bg-white shadow-sm dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
     <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-5 py-4">
-      <a href="index.html" class="font-bold text-green-800">♻ Kabadiwala Connect</a>
+      <a href="website.html" class="font-bold text-green-800 dark:text-green-400 text-lg">♻ Kabadiwala Connect</a>
 
       <div class="flex flex-wrap items-center gap-3">
         <select id="languageSelect" aria-label="Choose language"
-                class="rounded-lg border border-green-700 bg-white px-3 py-2 font-semibold text-green-800">
+                class="rounded-lg border border-green-700 bg-white px-3 py-2 text-sm font-semibold text-green-800 dark:border-green-600 dark:bg-gray-800 dark:text-green-300">
           <option value="en">English</option>
           <option value="hi">हिन्दी</option>
         </select>
 
         <button id="themeToggle" type="button"
-                class="rounded-lg border border-green-700 px-4 py-2 font-semibold text-green-800">
+                class="rounded-lg border border-green-700 px-4 py-2 text-sm font-semibold text-green-800 dark:border-green-600 dark:bg-gray-800 dark:text-green-300">
           🌙 Dark mode
         </button>
 
-        <a href="index.html" class="text-green-700 hover:underline"
+        <a href="website.html" class="text-sm text-green-700 hover:underline dark:text-green-400"
            data-en="Back to home" data-hi="मुखपृष्ठ पर वापस जाएँ">
           Back to home
         </a>
@@ -46,120 +48,284 @@
     </div>
   </header>
 
-  <main class="mx-auto max-w-3xl px-5 py-16">
-    <!-- Page introduction -->
+  <main class="mx-auto max-w-2xl px-5 py-12">
+    <!-- Heading -->
     <div class="mb-8 text-center">
-      <p class="font-semibold uppercase tracking-widest text-green-700"
+      <p class="font-semibold uppercase tracking-widest text-green-700 dark:text-green-400 text-xs"
          data-en="Book a collection" data-hi="कलेक्शन बुक करें">
         Book a collection
       </p>
 
-      <h1 class="mt-2 text-3xl font-bold"
+      <h1 class="mt-2 text-3xl font-bold dark:text-white"
           data-en="Request a scrap pickup" data-hi="कबाड़ पिकअप बुक करें">
         Request a scrap pickup
       </h1>
 
-      <p class="mt-3 text-gray-600"
-         data-en="Tell us what you have and where to collect it."
+      <p class="mt-2 text-sm text-gray-600 dark:text-gray-300"
+         data-en="Tell us what recyclables you have and where to collect them."
          data-hi="बताएं कि आपके पास क्या कबाड़ है और उसे कहाँ से लेना है।">
-        Tell us what you have and where to collect it.
+        Tell us what recyclables you have and where to collect them.
       </p>
     </div>
 
-    <!-- Pickup request form -->
-    <form class="rounded-2xl border border-green-100 bg-white p-6 shadow-sm md:p-8">
-      <label class="mb-4 block font-semibold">
-        <span data-en="Your name" data-hi="आपका नाम">Your name</span>
-        <input type="text" placeholder="Enter your name"
-               data-placeholder-en="Enter your name" data-placeholder-hi="अपना नाम लिखें"
-               class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3" />
-      </label>
+    <!-- User Auth Guard Notice -->
+    <div id="authGuardAlert" class="hidden mb-6 p-4 rounded-xl bg-amber-100 border border-amber-300 text-amber-900 dark:bg-amber-950/60 dark:border-amber-800 dark:text-amber-200">
+      <p class="font-bold text-sm" id="authGuardTitle"></p>
+      <p class="text-xs mt-1" id="authGuardBody"></p>
+      <a href="login.html" class="mt-3 inline-block rounded-lg bg-green-700 px-4 py-2 text-xs font-bold text-white hover:bg-green-800">Go to Login / Registration</a>
+    </div>
 
-      <label class="mb-4 block font-semibold">
-        <span data-en="Mobile number" data-hi="मोबाइल नंबर">Mobile number</span>
-        <input type="tel" placeholder="Enter your mobile number"
-               data-placeholder-en="Enter your mobile number" data-placeholder-hi="अपना मोबाइल नंबर लिखें"
-               class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3" />
-      </label>
+    <!-- Pickup Form -->
+    <form id="pickupForm" class="rounded-2xl border border-green-100 bg-white p-6 shadow-sm md:p-8 dark:border-gray-800 dark:bg-gray-900 space-y-5">
+      
+      <div>
+        <label for="userName" class="block text-sm font-semibold mb-1" data-en="Your Name" data-hi="आपका नाम">Your Name</label>
+        <input id="userName" type="text" required placeholder="Enter full name"
+               class="w-full rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm focus:ring-2 focus:ring-green-600 focus:outline-none" />
+      </div>
 
-      <label class="mb-4 block font-semibold">
-        <span data-en="Pickup address" data-hi="पिकअप का पता">Pickup address</span>
-        <textarea rows="3" placeholder="Enter your full address"
-                  data-placeholder-en="Enter your full address" data-placeholder-hi="अपना पूरा पता लिखें"
-                  class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3"></textarea>
-      </label>
+      <div>
+        <label for="mobileNumber" class="block text-sm font-semibold mb-1" data-en="Mobile Number" data-hi="मोबाइल नंबर">Mobile Number</label>
+        <input id="mobileNumber" type="tel" required placeholder="Registered mobile number"
+               class="w-full rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm focus:ring-2 focus:ring-green-600 focus:outline-none" />
+      </div>
 
-      <fieldset class="mb-6">
-        <legend class="mb-2 font-semibold"
-                data-en="What would you like collected?"
+      <div>
+        <label for="pickupAddress" class="block text-sm font-semibold mb-1" data-en="Pickup Address" data-hi="पिकअप का पता">Pickup Address</label>
+        <textarea id="pickupAddress" rows="3" required placeholder="House No., Street, Landmark, City..."
+                  class="w-full rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm focus:ring-2 focus:ring-green-600 focus:outline-none"></textarea>
+      </div>
+
+      <!-- Geolocation Coordinates Section -->
+      <div class="rounded-xl bg-gray-50 dark:bg-gray-800/60 p-4 border border-gray-200 dark:border-gray-700 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+            📍 Geolocation Coordinates
+          </span>
+          <button id="getGeoBtn" type="button" class="text-xs font-semibold text-green-700 hover:underline dark:text-green-400">
+            Re-detect Location
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="latitude" class="block text-xs font-medium text-gray-500 dark:text-gray-400">Latitude</label>
+            <input id="latitude" type="number" step="any" min="-90" max="90" required
+                   class="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-1.5 text-xs focus:ring-2 focus:ring-green-600" />
+          </div>
+          <div>
+            <label for="longitude" class="block text-xs font-medium text-gray-500 dark:text-gray-400">Longitude</label>
+            <input id="longitude" type="number" step="any" min="-180" max="180" required
+                   class="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-1.5 text-xs focus:ring-2 focus:ring-green-600" />
+          </div>
+        </div>
+        <p id="geoStatus" class="text-xs text-gray-500 italic">Detecting browser location...</p>
+      </div>
+
+      <!-- Scrap Type Checkbox Grid -->
+      <fieldset class="pt-2">
+        <legend class="mb-3 font-semibold text-sm"
+                data-en="What materials would you like collected?"
                 data-hi="आप कौन सा कबाड़ देना चाहते हैं?">
-          What would you like collected?
+          What materials would you like collected?
         </legend>
 
-        <div class="grid gap-2 sm:grid-cols-2">
-          <label><input type="checkbox" /> Plastic</label>
-          <label><input type="checkbox" /> Paper</label>
-          <label><input type="checkbox" /> Metal</label>
-          <label><input type="checkbox" /> E-waste</label>
-          <label><input type="checkbox" /> Organic</label>
-          <label><input type="checkbox" /> Other</label>
+        <div class="grid gap-3 sm:grid-cols-3 text-sm">
+          <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="scrapType" value="Organic" class="accent-green-700" /> Organic</label>
+          <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="scrapType" value="Plastic" class="accent-green-700" /> Plastic</label>
+          <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="scrapType" value="Paper" class="accent-green-700" /> Paper</label>
+          <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="scrapType" value="Metal" class="accent-green-700" /> Metal</label>
+          <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="scrapType" value="E-Waste" class="accent-green-700" /> E-Waste</label>
+          <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="scrapType" value="Other" class="accent-green-700" /> Other</label>
         </div>
       </fieldset>
 
-      <button type="button"
-              class="w-full rounded-lg bg-green-700 px-6 py-3 font-bold text-white hover:bg-green-800"
-              data-en="Submit pickup request" data-hi="पिकअप अनुरोध भेजें">
-        Submit pickup request
+      <button id="submitPickupBtn" type="button"
+              class="w-full rounded-lg bg-green-700 px-6 py-3.5 font-bold text-white hover:bg-green-800 transition-colors disabled:opacity-50"
+              data-en="Submit Pickup Request" data-hi="पिकअप अनुरोध भेजें">
+        Submit Pickup Request
       </button>
 
-      <p class="mt-3 text-center text-sm text-gray-500"
-         data-en="Prototype form: it does not send or save your information yet."
-         data-hi="यह नमूना फ़ॉर्म है: आपकी जानकारी अभी भेजी या सहेजी नहीं जाती।">
-        Prototype form: it does not send or save your information yet.
-      </p>
+      <!-- Feedback Area -->
+      <div id="pickupFeedback" aria-live="polite" class="mt-4 rounded-lg p-3 text-sm hidden"></div>
     </form>
   </main>
 
-  <!-- Shared theme and language preferences -->
   <script>
+    const API_URL = "http://127.0.0.1:8000";
+
     const themeToggle = document.getElementById("themeToggle");
     const languageSelect = document.getElementById("languageSelect");
+    const pickupFeedback = document.getElementById("pickupFeedback");
 
     function applyTheme() {
       const isDark = localStorage.getItem("kabadiwala-theme") === "dark";
-      document.body.classList.toggle("dark-mode", isDark);
+      document.documentElement.classList.toggle("dark", isDark);
+      document.body.classList.toggle("dark", isDark);
       themeToggle.textContent = isDark ? "☀️ Light mode" : "🌙 Dark mode";
     }
 
     function applyLanguage(language) {
       document.documentElement.lang = language;
-
-      document.querySelectorAll("[data-en][data-hi]").forEach((element) => {
-        element.textContent = element.dataset[language];
+      document.querySelectorAll("[data-en][data-hi]").forEach((el) => {
+        el.textContent = el.dataset[language];
       });
-
-      document.querySelectorAll("[data-placeholder-en][data-placeholder-hi]").forEach((element) => {
-        element.placeholder = language === "hi"
-          ? element.dataset.placeholderHi
-          : element.dataset.placeholderEn;
-      });
-
-      languageSelect.value = language;
+      if (languageSelect) languageSelect.value = language;
     }
 
     applyTheme();
     applyLanguage(localStorage.getItem("kabadiwala-language") || "en");
 
     themeToggle.addEventListener("click", () => {
-      const isDark = !document.body.classList.contains("dark-mode");
+      const isDark = !document.body.classList.contains("dark");
       localStorage.setItem("kabadiwala-theme", isDark ? "dark" : "light");
       applyTheme();
     });
 
-    languageSelect.addEventListener("change", (event) => {
-      localStorage.setItem("kabadiwala-language", event.target.value);
-      applyLanguage(event.target.value);
+    languageSelect.addEventListener("change", (e) => {
+      localStorage.setItem("kabadiwala-language", e.target.value);
+      applyLanguage(e.target.value);
     });
+
+    // 1. Session & Role Verification
+    let currentUser = null;
+    function verifySessionAndRole() {
+      const rawUser = localStorage.getItem("kabadiwala_user");
+      const authGuardAlert = document.getElementById("authGuardAlert");
+      const pickupForm = document.getElementById("pickupForm");
+
+      if (!rawUser) {
+        authGuardAlert.classList.remove("hidden");
+        document.getElementById("authGuardTitle").textContent = "Login Required";
+        document.getElementById("authGuardBody").textContent = "You must be logged in as a Household user to request a pickup.";
+        pickupForm.classList.add("opacity-50", "pointer-events-none");
+        return false;
+      }
+
+      try {
+        currentUser = JSON.parse(rawUser);
+        if (currentUser.user_type !== "Household") {
+          authGuardAlert.classList.remove("hidden");
+          document.getElementById("authGuardTitle").textContent = "Access Restricted";
+          document.getElementById("authGuardBody").textContent = `Logged in as '${currentUser.user_type}'. Only 'Household' accounts can request scrap pickups.`;
+          pickupForm.classList.add("opacity-50", "pointer-events-none");
+          return false;
+        }
+
+        // Auto-fill form from user session
+        document.getElementById("userName").value = currentUser.name || "";
+        document.getElementById("mobileNumber").value = currentUser.mobile_number || "";
+        return true;
+      } catch (e) {
+        localStorage.removeItem("kabadiwala_user");
+        return false;
+      }
+    }
+
+    verifySessionAndRole();
+
+    // 2. Geolocation API Logic with Default Fallbacks
+    const latInput = document.getElementById("latitude");
+    const lonInput = document.getElementById("longitude");
+    const geoStatus = document.getElementById("geoStatus");
+
+    function fetchLocation() {
+      geoStatus.textContent = "Detecting current coordinates...";
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            latInput.value = pos.coords.latitude.toFixed(6);
+            lonInput.value = pos.coords.longitude.toFixed(6);
+            geoStatus.textContent = "📍 Current location captured accurately.";
+          },
+          (err) => {
+            // Default fallback location (New Delhi center)
+            latInput.value = "28.613900";
+            lonInput.value = "77.209000";
+            geoStatus.textContent = "⚠️ Geolocation permission denied or unavailable. Using default coordinates.";
+          },
+          { timeout: 8000 }
+        );
+      } else {
+        latInput.value = "28.613900";
+        lonInput.value = "77.209000";
+        geoStatus.textContent = "⚠️ Browser does not support geolocation. Used defaults.";
+      }
+    }
+
+    fetchLocation();
+    document.getElementById("getGeoBtn").addEventListener("click", fetchLocation);
+
+    // 3. POST /pickups Request Submission
+    document.getElementById("submitPickupBtn").addEventListener("click", async () => {
+      if (!verifySessionAndRole()) return;
+
+      const user_name = document.getElementById("userName").value.trim();
+      const mobile_number = document.getElementById("mobileNumber").value.trim();
+      const address = document.getElementById("pickupAddress").value.trim();
+      const latitude = parseFloat(latInput.value);
+      const longitude = parseFloat(lonInput.value);
+
+      // Collect checked scrap categories
+      const checkedBoxes = document.querySelectorAll('input[name="scrapType"]:checked');
+      const scrap_type = Array.from(checkedBoxes).map(cb => cb.value);
+
+      // Frontend Validations aligned with Pydantic model
+      if (!user_name || !mobile_number || !address) {
+        showFeedback("Please fill out all required fields.", true);
+        return;
+      }
+      if (isNaN(latitude) || latitude < -90 || latitude > 90) {
+        showFeedback("Latitude must be a valid number between -90 and 90.", true);
+        return;
+      }
+      if (isNaN(longitude) || longitude < -180 || longitude > 180) {
+        showFeedback("Longitude must be a valid number between -180 and 180.", true);
+        return;
+      }
+      if (scrap_type.length === 0) {
+        showFeedback("Please select at least one scrap material category.", true);
+        return;
+      }
+
+      const submitBtn = document.getElementById("submitPickupBtn");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting Pickup Request...";
+
+      try {
+        const response = await fetch(`${API_URL}/pickups`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_name,
+            mobile_number,
+            address,
+            latitude,
+            longitude,
+            scrap_type
+          })
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.detail || "Failed to create pickup request.");
+        }
+
+        showFeedback(`🎉 Pickup request successfully created! Pickup ID: ${data.pickup.pickup_id}`, false);
+        document.getElementById("pickupAddress").value = "";
+      } catch (err) {
+        showFeedback(err.message, true);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Pickup Request";
+      }
+    });
+
+    function showFeedback(msg, isError) {
+      pickupFeedback.classList.remove("hidden", "bg-red-100", "text-red-800", "bg-green-100", "text-green-800", "dark:bg-red-950", "dark:text-red-200", "dark:bg-green-950", "dark:text-green-200");
+      pickupFeedback.classList.add(isError ? "bg-red-100" : "bg-green-100", isError ? "text-red-800" : "text-green-800");
+      pickupFeedback.textContent = msg;
+    }
   </script>
 </body>
 </html>
